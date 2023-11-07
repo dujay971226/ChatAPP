@@ -1,0 +1,36 @@
+package interface_adapter.showsetting;
+
+import interface_adapter.ViewManagerModel;
+import use_case.room.ShowSettingOutputBoundary;
+import use_case.room.ShowSettingOutputData;
+
+public class ShowSettingPresenter implements ShowSettingOutputBoundary {
+    private final SettingViewModel settingViewModel;
+    private final ViewManagerModel viewManagerModel;
+
+    public ShowSettingPresenter(ViewManagerModel viewManagerModel,
+                          SettingViewModel settingViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.settingViewModel = settingViewModel;
+    }
+
+    @Override
+    public void prepareSuccessView(ShowSettingOutputData response) {
+        // On success, switch to the channel setting view.
+        SettingState settingState = settingViewModel.getState();
+//        settingState.setUsername(response.getUsername());
+        this.settingViewModel.setState(settingState);
+        this.settingViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setActiveView(settingViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        SettingState settingState = settingViewModel.getState();
+//        settingState.setUsernameError(error);
+        this.settingViewModel.setState(settingState);
+        this.settingViewModel.firePropertyChanged();
+    }
+}

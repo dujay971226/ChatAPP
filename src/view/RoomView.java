@@ -1,6 +1,5 @@
 package view;
 
-
 import java.util.Collections;
 
 import com.google.gson.JsonElement;
@@ -27,8 +26,8 @@ public class RoomView {
     public static void main(String[] args) throws PubNubException {
         final UserId userId = new UserId("myUniqueUserId");
         PNConfiguration pnConfiguration = new PNConfiguration(userId);
-        pnConfiguration.setSubscribeKey("mySubscribeKey");
-        pnConfiguration.setPublishKey("myPublishKey");
+        pnConfiguration.setSubscribeKey("sub-c-95fc8d60-6366-44ad-a62a-9e48a8f95dbd");
+        pnConfiguration.setPublishKey("pub-c-74cbd6ab-53ea-4baa-9a65-316b1574fcd0");
 
         PubNub pubnub = new PubNub(pnConfiguration);
 
@@ -36,7 +35,7 @@ public class RoomView {
 
         // create message payload using Gson
         final JsonObject messageJsonObject = new JsonObject();
-        messageJsonObject.addProperty("msg", "Hello World");
+        messageJsonObject.addProperty("msg", " ");
 
         System.out.println("Message to send: " + messageJsonObject.toString());
 
@@ -51,20 +50,21 @@ public class RoomView {
                     // Or just use the connected event to confirm you are subscribed for
                     // UI / internal notifications, etc
                     pubnub.publish()
-                            .channel(channelName)
-                            .message(messageJsonObject)
-                            .async((result, publishStatus) -> {
-                                if (!publishStatus.isError()) {
-                                    // Message successfully published to specified channel.
-                                }
-                                // Request processing failed.
-                                else {
-                                    // Handle message publish error.
-                                    // Check 'category' property to find out
-                                    // issues because of which the request failed.
-                                    // Request can be resent using: [status retry];
-                                }
-                            });
+                        .channel(channelName)
+                        .message(messageJsonObject)
+                        .async((result, publishStatus) -> {
+                            if (!publishStatus.isError()) {
+                                // Message successfully published to specified channel.
+                            }
+                            // Request processing failed.
+                            else {
+                                // Handle message publish error.
+                                // Check 'category' property to find out
+                                // issues because of which the request failed.
+                                // Request can be resent using: [status retry];
+                            }
+                        });
+
                 } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
                     // Happens as part of our regular operation. This event happens when
                     // radio / connectivity is lost, then regained.
@@ -135,5 +135,6 @@ public class RoomView {
 
         pubnub.subscribe()
                 .channels(Collections.singletonList(channelName))
-                .execute();    }
+                .execute();
+    }
 }

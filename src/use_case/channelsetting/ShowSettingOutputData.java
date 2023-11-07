@@ -1,3 +1,3 @@
-package use_case.room;
+package use_case.channelsetting;
 public class ShowSettingOutputData {
 }

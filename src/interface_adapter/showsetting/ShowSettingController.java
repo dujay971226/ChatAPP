@@ -1,7 +1,7 @@
 package interface_adapter.showsetting;
 
-import use_case.room.ShowSettingInputBoundary;
-import use_case.room.ShowSettingInputData;
+import use_case.channelsetting.ShowSettingInputBoundary;
+import use_case.channelsetting.ShowSettingInputData;
 
 public class ShowSettingController {
     final ShowSettingInputBoundary showSettingInteractor;

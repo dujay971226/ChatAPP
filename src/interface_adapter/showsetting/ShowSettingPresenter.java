@@ -1,8 +1,8 @@
 package interface_adapter.showsetting;
 
 import interface_adapter.ViewManagerModel;
-import use_case.room.ShowSettingOutputBoundary;
-import use_case.room.ShowSettingOutputData;
+import use_case.channelsetting.ShowSettingOutputBoundary;
+import use_case.channelsetting.ShowSettingOutputData;
 
 public class ShowSettingPresenter implements ShowSettingOutputBoundary {
     private final SettingViewModel settingViewModel;

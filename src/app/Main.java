@@ -46,23 +46,23 @@ public class Main {
         ChannelViewModel channelViewModel = new ChannelViewModel();
 
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
-        views.add(signupView, signupView.viewName);
-
-        LoginView loginView = new LoginView(loginViewModel);
-        views.add(loginView, loginView.viewName);
-
-        PorfolioView porfolioView = PorfolioUseCaseFactory.create();
-        views.add(porfolioView, porfolioView.viewName);
-
-        ChannelView channelView = ChannelUseCaseFactory.create();
-        views.add(channelView, channelView.viewName);
-
-        NewChannelView newChannelView = ChannelUseCaseFactory.create();
-        views.add(newChannelView, newChannelView.viewName);
-
-        viewManagerModel.setActiveView(loginView.viewName);
-        viewManagerModel.firePropertyChanged();
+//        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
+//        views.add(signupView, signupView.viewName);
+//
+//        LoginView loginView = new LoginView(loginViewModel);
+//        views.add(loginView, loginView.viewName);
+//
+//        PorfolioView porfolioView = PorfolioUseCaseFactory.create();
+//        views.add(porfolioView, porfolioView.viewName);
+//
+//        ChannelView channelView = ChannelUseCaseFactory.create();
+//        views.add(channelView, channelView.viewName);
+//
+//        NewChannelView newChannelView = ChannelUseCaseFactory.create();
+//        views.add(newChannelView, newChannelView.viewName);
+//
+//        viewManagerModel.setActiveView(loginView.viewName);
+//        viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);

@@ -5,11 +5,11 @@ import use_case.create_room.CreateRoomOutputBoundary;
 import use_case.create_room.CreateRoomOutputData;
 
 public class CreateRoomPresenter implements CreateRoomOutputBoundary {
-    private final CreateRoomViewModel joinRoomViewModel;
+    private final CreateRoomViewModel createRoomViewModel;
     private ViewManagerModel viewManagerModel;
 
-    public CreateRoomPresenter(CreateRoomViewModel joinRoomViewModel) {
-        this.joinRoomViewModel = joinRoomViewModel;
+    public CreateRoomPresenter(CreateRoomViewModel createRoomViewModel) {
+        this.createRoomViewModel = createRoomViewModel;
     }
 
     @Override
@@ -19,6 +19,8 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-
+        CreateRoomState state = createRoomViewModel.getState();
+        state.setChannelNameError(error);
+        createRoomViewModel.firePropertyChanged();
     }
 }

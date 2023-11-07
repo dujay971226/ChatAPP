@@ -6,6 +6,5 @@ import entity.User;
 public interface CreateRoomDataAcessInterface {
     boolean existsByName(String identifier);
 
-    void save(Channel channel);
-
+    void save(String channelName);
 }

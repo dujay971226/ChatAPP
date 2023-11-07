@@ -10,15 +10,18 @@ import java.beans.PropertyChangeListener;
 
 public class CreateRoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private CreateRoomViewModel joinRoomViewModel;
+    private CreateRoomViewModel createRoomViewModel;
 
-    public CreateRoomView(CreateRoomViewModel joinRoomViewModel) {
-        this.joinRoomViewModel = joinRoomViewModel;
-        this.joinRoomViewModel.addPropetyChangedListener();
+    public CreateRoomView(CreateRoomViewModel createRoomViewModel) {
+        this.createRoomViewModel = createRoomViewModel;
+        this.createRoomViewModel.addPropertyChangeListener(this);
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        JTextField channelNameField = new JTextField(15);
+        JButton createButton = new JButton("create");
+        this.add(channelNameField);
+        this.add(createButton);
     }
 
     @Override

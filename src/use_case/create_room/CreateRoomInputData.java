@@ -7,10 +7,14 @@ import entity.User;
  */
 public class CreateRoomInputData {
 
-    final private User user;
+    final private String channelName;
 
-    public CreateRoomInputData(User user) {
-        this.user = user;
+    public CreateRoomInputData(String channelName) {
+        this.channelName = channelName;
+    }
+
+    public String getChannelName() {
+        return this.channelName;
     }
 
 }

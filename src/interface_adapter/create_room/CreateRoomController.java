@@ -10,8 +10,8 @@ public class CreateRoomController {
         this.joinRoomUseCaseInteractor = joinRoomUseCaseInteractor;
     }
 
-    public void execute(User user) {
-        CreateRoomInputData joinRoomInputData = new CreateRoomInputData(user);
+    public void execute(String channelName) {
+        CreateRoomInputData joinRoomInputData = new CreateRoomInputData(channelName);
         joinRoomUseCaseInteractor.execute(joinRoomInputData);
     }
 }

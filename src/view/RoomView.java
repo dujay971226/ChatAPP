@@ -26,8 +26,8 @@ public class RoomView {
     public static void main(String[] args) throws PubNubException {
         final UserId userId = new UserId("myUniqueUserId");
         PNConfiguration pnConfiguration = new PNConfiguration(userId);
-        pnConfiguration.setSubscribeKey("sub-c-95fc8d60-6366-44ad-a62a-9e48a8f95dbd");
-        pnConfiguration.setPublishKey("pub-c-74cbd6ab-53ea-4baa-9a65-316b1574fcd0");
+        pnConfiguration.setSubscribeKey("your key");
+        pnConfiguration.setPublishKey("your key");
 
         PubNub pubnub = new PubNub(pnConfiguration);
 

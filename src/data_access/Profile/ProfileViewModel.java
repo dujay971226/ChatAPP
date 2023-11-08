@@ -19,4 +19,5 @@ public class ProfileViewModel {
     public void setState(ProfileState state){
         this.state = state;
     }
+
 }

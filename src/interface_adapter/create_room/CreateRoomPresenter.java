@@ -13,8 +13,8 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(CreateRoomOutputData user) {
-
+    public void prepareSuccessView(CreateRoomOutputData channelName) {
+        // TODO finish RoomViewModel
     }
 
     @Override

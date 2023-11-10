@@ -5,6 +5,6 @@ import entity.User;
 
 public interface SubscribeRoomDataAccessInterface {
     boolean existsByName(String identifier);
-    void save(Channel channel);
-    Channel get();
+    void save(String channelName);
+    String getChannelNames();
 }

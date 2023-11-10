@@ -1,11 +1,8 @@
 package api;
 
+import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,7 +45,60 @@ public class api{
         return converter.toArray(new String[size]);
     }
 
-    public static String searchWork
+    public static String searchJournalsByISSN(String issn) throws IOException{
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://api.core.ac.uk/v3/journals/issn:" + issn;
+        HttpUrl.Builder urlBuilder
+                = HttpUrl.parse(url)
+                .newBuilder();
+        urlBuilder.addQueryParameter("api_key", "VvHk7Ywj3rcgPLx1SNlmCMiBG2odIyDZ");
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Response response = client.newCall(request).execute();
+        String responseBodyString = response.body().string();
+        JSONObject responseBody = new JSONObject(responseBodyString);
+        List<String> theJournal = new ArrayList<>();
+
+        theJournal.add("The title: " + responseBody.getString("title").toString());
+
+        if(responseBody.getJSONArray("identifiers").get(2).toString().startsWith("url")) {
+            theJournal.add(responseBody.getJSONArray("identifiers").get(2).toString());
+        }
+        else{
+            theJournal.add("no url provided");
+        }
+
+        return theJournal.toString();
+
+
+
+    }
+
+    public static String searchByDOI(String DOI) throws IOException{
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://api.core.ac.uk/v3/discover";
+
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("doi", DOI);
+        RequestBody body = RequestBody.create(mediaType, jsonBody.toString());
+
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("api_key", "VvHk7Ywj3rcgPLx1SNlmCMiBG2odIyDZ")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        String responseBodyString = response.body().string();
+        JSONObject responseBody = new JSONObject(responseBodyString);
+
+        return responseBody.getString("fullTextLink");
+
+    }
 
 }
 

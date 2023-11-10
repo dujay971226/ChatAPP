@@ -1,4 +1,4 @@
-package data_access.Profile;
+package interface_adapter.Profile;
 
 import entity.User;
 

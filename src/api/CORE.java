@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class api{
+public class CORE {
 
     public static String[] searchJournals(String content, String entityType) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()

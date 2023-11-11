@@ -14,7 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ProfileView extends JPanel implements ActionListener, PropertyChangeListener{
-    public final String viewName = "sign up";
+    public final String viewName = "profile";
     private final ProfileViewModel profileViewModel;
     private final JTextField channelidinputField = new JTextField(15);
         //private final ProfileController profileController;

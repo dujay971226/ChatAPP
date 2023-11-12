@@ -18,7 +18,9 @@ public class SubscribeRoomDataAccessObject implements SubscribeRoomDataAccessInt
     }
 
     @Override
-    public String getChannelNames() {
-        return null;
+    public String[] getChannelNames() {
+        // TODO: write pubnub and get channel names
+        // fake channel names below;
+        return new String[]{"C1", "C2"};
     }
 }

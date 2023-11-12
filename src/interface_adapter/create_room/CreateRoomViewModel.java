@@ -1,14 +1,22 @@
 package interface_adapter.create_room;
 
 import interface_adapter.ViewModel;
-import view.create_room.CreateRoomView;
 
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class CreateRoomViewModel extends ViewModel {
+
+    public final String TITLE_LABEL = "Create Room";
+
+    public final String CREATE_ROOM_LABEL = "Enter Room Name";
+
+    public final String CREATE_BUTTON_LABEL = "Create";
+
     private CreateRoomState state = new CreateRoomState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
 
     public CreateRoomViewModel() {
         super("create room");

@@ -23,10 +23,10 @@ public class ShowSettingInteractor implements ShowSettingInputBoundary {
 
     @Override
     public void execute(ShowSettingInputData showSettingInputData){
-        showSettingInputData.getCurrentChannel();
+        String currentChannel = showSettingInputData.getCurrentChannel();
         this.pubnub.hereNow()
             // tailor the next two lines to example
-            .channels(Arrays.asList("coolChannel", "coolChannel2"))
+            .channels(Arrays.asList(currentChannel))
             .includeUUIDs(true)
             .async(new PNCallback<PNHereNowResult>() {
                 @Override

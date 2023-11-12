@@ -1,0 +1,6 @@
+package interface_adapter.showchannelhistory;
+
+import use_case.showchannelhistory.ShowChannelHistoryOutputBoundary;
+
+public class ShowChannelHistoryPresenter implements ShowChannelHistoryOutputBoundary {
+}

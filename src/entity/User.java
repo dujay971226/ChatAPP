@@ -1,11 +1,13 @@
 package entity;
 
+import com.pubnub.api.UserId;
+
 public class User {
     private final String name;
 
-    private final String userid;
+    private final UserId userid;
 
-    public User(String name, String userid, String createtime){
+    public User(String name, UserId userid, String createtime){
         this.name = name;
         this.userid = userid;
 
@@ -15,7 +17,7 @@ public class User {
         return this.name;
     }
 
-    public String getuserid(){
+    public UserId getuserid(){
         return this.userid;
     }
 

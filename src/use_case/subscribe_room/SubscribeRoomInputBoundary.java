@@ -5,5 +5,5 @@ import java.awt.*;
 public interface SubscribeRoomInputBoundary {
     void execute(SubscribeRoomInputData subscribeRoomInputData);
 
-    List getChannels();
+    String[] getChannels();
 }

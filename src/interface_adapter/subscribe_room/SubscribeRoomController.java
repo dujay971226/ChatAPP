@@ -1,6 +1,7 @@
 package interface_adapter.subscribe_room;
 
 import use_case.subscribe_room.SubscribeRoomInputBoundary;
+import use_case.subscribe_room.SubscribeRoomInputData;
 
 import java.awt.*;
 
@@ -13,11 +14,11 @@ public class SubscribeRoomController {
     }
 
     public void execute(String channelName) {
-        //
-        //subscribeRoomUseCaseInteractor.execute();
+        SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName);
+        subscribeRoomUseCaseInteractor.execute(inputData);
     }
 
-    public List getChannels() {
+    public String[] getChannels() {
         return subscribeRoomUseCaseInteractor.getChannels();
     }
 

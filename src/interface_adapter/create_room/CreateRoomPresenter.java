@@ -13,8 +13,9 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(CreateRoomOutputData channelName) {
-        // TODO finish RoomViewModel
+    public void prepareSuccessView(CreateRoomOutputData outputData) {
+        System.out.println("Successfully passed output data: " + outputData.getChannelName());
+        // TODO send output data to room.
     }
 
     @Override

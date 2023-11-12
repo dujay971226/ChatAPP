@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
 
 public class CreateRoomViewModel extends ViewModel {
 
-    public final String TITLE_LABEL = "Create Room";
+    public final String TITLE_LABEL = "Create a room";
 
     public final String CREATE_ROOM_LABEL = "Enter Room Name";
 

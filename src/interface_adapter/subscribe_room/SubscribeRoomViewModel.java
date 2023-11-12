@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
 
 public class SubscribeRoomViewModel extends ViewModel {
 
-    public final String TITLE_LABEL = "Subscribe";
+    public final String TITLE_LABEL = "Join a room";
     public final String SUBSCRIBE_BUTTON_LABEL = "Join";
 
     private SubscribeRoomState state = new SubscribeRoomState();

@@ -46,7 +46,7 @@ public class Main {
         CreateRoomController controller = new CreateRoomController(interactor);
         CreateRoomView view = new CreateRoomView(controller, viewModel);*/
 
-        SubscribeRoomViewModel viewModel = new SubscribeRoomViewModel();
+        /*SubscribeRoomViewModel viewModel = new SubscribeRoomViewModel();
         SubscribeRoomDataAccessInterface dataAccessObject = new SubscribeRoomDataAccessObject();
         SubscribeRoomOutputBoundary presenter = new SubscribeRoomPresenter(viewModel);
         SubscribeRoomInteractor interactor = new SubscribeRoomInteractor(dataAccessObject, presenter);
@@ -54,16 +54,9 @@ public class Main {
         SubscribeRoomView view = new SubscribeRoomView(controller, viewModel);
         application.add(view);
         application.pack();
-        application.setVisible(true);
+        application.setVisible(true);*/
     }
 
-
-    private static void setUp() throws PubNubException {
-        final UserId userid = new UserId("userid");
-        PNConfiguration config = new PNConfiguration(userid);
-        PubNub pubNub = new PubNub(config);
-        System.out.println(pubNub.getSubscribedChannels());
-    }
 
 
 }

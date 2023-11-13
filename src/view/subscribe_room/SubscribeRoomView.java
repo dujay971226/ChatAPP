@@ -32,7 +32,6 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         subscribeRoomViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(subscribeRoomViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         channelNames = subscribeRoomController.getChannels();
 
@@ -79,7 +78,11 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(subscribeButton)) {
-            subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName());
+            if (subscribeRoomViewModel.getState().getChannelName().equals("")) { // no selection
+                JOptionPane.showMessageDialog(this, subscribeRoomViewModel.getState().getNoSelectionMsg());
+            } else {
+                subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName());
+            }
         }
     }
 }

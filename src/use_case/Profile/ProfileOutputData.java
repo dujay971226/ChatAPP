@@ -8,6 +8,8 @@ public class ProfileOutputData {
     public ProfileOutputData(User user){
         this.user = user;
     }
+    //create ---user + config
+    //新outputdata user + channellist + config
 
     public User getUser(){
         return this.user;

@@ -2,6 +2,7 @@ package view;
 
 import entity.User;
 import interface_adapter.Profile.ProfileController;
+import interface_adapter.Profile.ProfileState;
 import interface_adapter.Profile.ProfileViewModel;
 
 import javax.swing.*;
@@ -23,7 +24,8 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     private final JButton subscribechannel;
     private final JButton logout;
 
-    public ProfileView(ProfileViewModel profileViewModel, User user){
+
+    public ProfileView(ProfileViewModel profileViewModel, ProfileController profileController){
 
 
 
@@ -31,9 +33,9 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.profileViewModel = profileViewModel;
         //this.profileController = controller;
         profileViewModel.addPropertyChangeListener(this);
-
+        ProfileState profileState = profileViewModel.getState();
         JLabel title = new JLabel(ProfileViewModel.TITLE);
-        title.setText(user.getname() + ProfileViewModel.TITLE);
+        title.setText(profileState.get() + ProfileViewModel.TITLE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JPanel buttons = new JPanel();
 
@@ -44,7 +46,10 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         channelidinputinfo.add(channelidinputField);
 
         createchannel = new JButton((ProfileViewModel.CREATE_BUTTON_LABEL));
+        //listener
+        createchannel.addActionListener();
         subscribechannel = new JButton(ProfileViewModel.SUBSRIBE_BUTTON_LABEL);
+        //listener
         logout = new JButton(ProfileViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(createchannel);
         buttons.add(subscribechannel);
@@ -54,6 +59,8 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         JLabel userid = new JLabel("userid");
         userid.setText("ID:" + user.getuserid());
         userid.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
 
 
         this.add(title);

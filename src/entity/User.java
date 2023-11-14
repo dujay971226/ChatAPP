@@ -7,9 +7,12 @@ public class User {
 
     private final UserId userid;
 
-    public User(String name, UserId userid, String createtime){
+    private final String password;
+
+    public User(String name, UserId userid, String password){
         this.name = name;
         this.userid = userid;
+        this.password = password;
 
     }
 
@@ -20,6 +23,8 @@ public class User {
     public UserId getuserid(){
         return this.userid;
     }
+
+    public String getPassword(){return this.password;}
 
 
 }

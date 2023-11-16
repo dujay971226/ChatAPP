@@ -1,55 +1,68 @@
 package view;
 
-import entity.User;
-import interface_adapter.Profile.ProfileController;
+import interface_adapter.Profile.profiletocreate.ProfiletocreateController;
 import interface_adapter.Profile.ProfileState;
 import interface_adapter.Profile.ProfileViewModel;
+import interface_adapter.Profile.profiletosubscribe.ProfiletosubscribeController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ProfileView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "profile";
     private final ProfileViewModel profileViewModel;
-    private final JTextField channelidinputField = new JTextField(15);
-        //private final ProfileController profileController;
-
     private final JButton createchannel;
     private final JButton subscribechannel;
     private final JButton logout;
 
+    private final ProfiletocreateController profiletocreateController;
+    private final ProfiletosubscribeController profiletosubscribeController;
 
-    public ProfileView(ProfileViewModel profileViewModel, ProfileController profileController){
 
-
-
+    public ProfileView(ProfileViewModel profileViewModel,ProfiletocreateController profiletocreateController, ProfiletosubscribeController profiletosubscribeController){
 
         this.profileViewModel = profileViewModel;
-        //this.profileController = controller;
+        this.profiletocreateController = profiletocreateController;
+        this.profiletosubscribeController = profiletosubscribeController;
+
+
         profileViewModel.addPropertyChangeListener(this);
         ProfileState profileState = profileViewModel.getState();
         JLabel title = new JLabel(ProfileViewModel.TITLE);
-        title.setText(profileState.get() + ProfileViewModel.TITLE);
+        title.setText(profileState.getUser().getname() + ProfileViewModel.TITLE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JPanel buttons = new JPanel();
 
-        JLabel channelidinputlabel = new JLabel("Channel ID");
-        JPanel channelidinputinfo = new JPanel();
-
-        channelidinputinfo.add(channelidinputlabel);
-        channelidinputinfo.add(channelidinputField);
 
         createchannel = new JButton((ProfileViewModel.CREATE_BUTTON_LABEL));
         //listener
-        createchannel.addActionListener();
+        createchannel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if(evt.getSource().equals(createchannel)){
+                            ProfileState currentState = profileViewModel.getState();
+                            profiletocreateController.execute(currentState.getUser(),currentState.getConfig());
+                        }
+                    }
+                }
+        );
         subscribechannel = new JButton(ProfileViewModel.SUBSRIBE_BUTTON_LABEL);
-        //listener
+        subscribechannel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if(evt.getSource().equals(subscribechannel)){
+                            ProfileState currentState = profileViewModel.getState();
+                            profiletosubscribeController.execute(currentState.getUser(),currentState.getConfig());
+                        }
+                    }
+                }
+        );
         logout = new JButton(ProfileViewModel.LOGOUT_BUTTON_LABEL);
         buttons.add(createchannel);
         buttons.add(subscribechannel);
@@ -57,7 +70,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel userid = new JLabel("userid");
-        userid.setText("ID:" + user.getuserid());
+        userid.setText("ID:" + profileViewModel.getState().getUser().getuserid().toString());
         userid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
@@ -65,7 +78,6 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
         this.add(title);
         this.add(userid);
-        this.add(channelidinputinfo);
         this.add(buttons);
 
 

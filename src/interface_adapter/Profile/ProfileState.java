@@ -16,4 +16,12 @@ public class ProfileState {
     public void setConfig(PubNub config){
         this.config = config;
     }
+
+    public PubNub getConfig() {
+        return config;
+    }
+
+    public User getUser() {
+        return user;
+    }
 }

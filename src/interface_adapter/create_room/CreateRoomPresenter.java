@@ -23,7 +23,7 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
         System.out.println("Successfully passed output data: " + outputData.getChannelName());
         RoomState state = roomViewModel.getState();
         state.setChannel(new Channel(outputData.getChannelName()));
-        state.setUser(user);
+        //state.setUser(user);
         // RoomState.setConfig()
         // setChannel() setUser()
         //
@@ -33,7 +33,7 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         CreateRoomState state = createRoomViewModel.getState();
-        state.setChannelNameError(error);
+        //state.setChannelNameError(error);
         createRoomViewModel.firePropertyChanged();
     }
 }

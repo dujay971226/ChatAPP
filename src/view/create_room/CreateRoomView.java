@@ -76,7 +76,8 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(createButton)) {
             CreateRoomState currentState = createRoomViewModel.getState();
-            createRoomController.execute(currentState.getChannelName());
+            createRoomController.execute(currentState.getChannelName(), currentState.getConfig(),
+                    currentState.getUser());
         }
     }
 

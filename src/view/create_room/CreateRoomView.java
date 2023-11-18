@@ -81,6 +81,11 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
         }
     }
 
+    /**
+     * When called, checks if channel name error is not null. Shows error message if exists.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         CreateRoomState state = createRoomViewModel.getState();

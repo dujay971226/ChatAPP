@@ -15,17 +15,23 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * View shown when user is asked to join a room.
+ */
 public class SubscribeRoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final SubscribeRoomViewModel subscribeRoomViewModel;
     private final SubscribeRoomController subscribeRoomController;
-
     private final String[] channelNames;
-
-    private final JList channelList;
+    private final JList<String> channelList;
     private final JScrollPane channelPane;
     private final JButton subscribeButton;
 
+    /**
+     * Initializes a SubscribeRoomView instance.
+     * @param controller controller of subscribe room
+     * @param viewModel view model of subscribe room
+     */
     public SubscribeRoomView(SubscribeRoomController controller, SubscribeRoomViewModel viewModel) {
         this.subscribeRoomController = controller;
         this.subscribeRoomViewModel = viewModel;
@@ -35,9 +41,14 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
         channelNames = subscribeRoomController.getChannels();
 
-        channelList = new JList(channelNames);
+        channelList = new JList<String>(channelNames);
         channelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         channelList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+            /**
+             * Gets the selection and record it in state.
+             * @param e the event that characterizes the change.
+             */
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
@@ -67,6 +78,14 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
 
     }
+
+
+    // property change not used
+    /**
+     * Not used for now.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SubscribeRoomState state = (SubscribeRoomState) evt.getNewValue();
@@ -75,11 +94,17 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         }
     }
 
+    /**
+     * When button is clicked, controller executes according to the selection made. If one selection was recorded,
+     * then prompts user to make one.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(subscribeButton)) {
-            if (subscribeRoomViewModel.getState().getChannelName().equals("")) { // no selection
-                JOptionPane.showMessageDialog(this, subscribeRoomViewModel.getState().getNoSelectionMsg());
+            if (subscribeRoomViewModel.getState().getChannelName().isEmpty()) { // no selection
+                JOptionPane.showMessageDialog(this,
+                        subscribeRoomViewModel.getState().getNoSelectionMsg());
             } else {
                 subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName());
             }

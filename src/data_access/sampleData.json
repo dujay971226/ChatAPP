@@ -1,7 +1,12 @@
 {
-  "channels": {
-    "channel1": ["userA", "userB"],
-    "channel2": ["userA", "userC"]
-  }
-
+  "channel1": [
+    "user1",
+    "new -- "
+  ],
+  "newChannel": [
+    "newUser1"
+  ],
+  "newChannel2": [
+    "newUser"
+  ]
 }

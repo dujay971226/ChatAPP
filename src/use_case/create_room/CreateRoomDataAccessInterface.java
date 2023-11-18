@@ -16,8 +16,9 @@ public interface CreateRoomDataAccessInterface {
     boolean existsByName(String identifier);
 
     /**
-     * Saves the channel name locally.
+     * Saves the channel name and username locally.
      * @param channelName channel name
+     * @param userName name of user
      */
-    void save(String channelName, User user);
+    void save(String channelName, String userName);
 }

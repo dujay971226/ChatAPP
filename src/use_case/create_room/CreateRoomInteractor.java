@@ -31,7 +31,7 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
         } else {
 
             // TODO save it as channel
-            createRoomDataAccessObject.save(createRoomInputData.getChannelName(), createRoomInputData.getUser());
+            createRoomDataAccessObject.save(createRoomInputData.getChannelName(), createRoomInputData.getUser().getName());
 
 
             CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName());

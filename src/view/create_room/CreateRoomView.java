@@ -14,12 +14,20 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * View shown when user is asked to create a room.
+ */
 public class CreateRoomView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CreateRoomViewModel createRoomViewModel;
     private final JTextField createRoomTextField = new JTextField(15);
     private final CreateRoomController createRoomController;
     private final JButton createButton;
 
+    /**
+     * Creates a CreateRoomView instance.
+     * @param controller controller of create room
+     * @param viewModel view model of create room
+     */
     public CreateRoomView(CreateRoomController controller, CreateRoomViewModel viewModel) {
         this.createRoomController = controller;
         this.createRoomViewModel = viewModel;
@@ -35,6 +43,11 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
         createButton.addActionListener(this);
 
         createRoomTextField.addKeyListener(new KeyListener() {
+
+            /**
+             * Changes channel name stored in create room state.
+             * @param e the event to be processed
+             */
             @Override
             public void keyTyped(KeyEvent e) {
                 CreateRoomState currentState = createRoomViewModel.getState();
@@ -55,18 +68,18 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
         this.add(createButton);
     }
 
+    /**
+     * Controller executes when button is clicked.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(createButton)) {
-            createRoomController.execute(createRoomTextField.getText());
+            CreateRoomState currentState = createRoomViewModel.getState();
+            createRoomController.execute(currentState.getChannelName());
         }
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        CreateRoomState state = (CreateRoomState) evt.getNewValue();
-        if (state.getChannelNameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getChannelNameError());
-        }
-    }
+    public void propertyChange(PropertyChangeEvent evt) {}
 }

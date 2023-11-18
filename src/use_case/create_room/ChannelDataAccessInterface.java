@@ -4,6 +4,8 @@ import com.pubnub.api.UserId;
 
 public interface ChannelDataAccessInterface {
 
-    String generateToken(UserId userid, Integer ttl);
+    void save();
+
+    boolean existsByName();
 
 }

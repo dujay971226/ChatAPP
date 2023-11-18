@@ -16,12 +16,12 @@ public class ChannelDataAccessObject implements ChannelDataAccessInterface {
     public ChannelDataAccessObject() {}
 
     @Override
-    public String generateToken(UserId userid, Integer ttl) {
-        try {
-            PubNub pubNub = new PubNub(new PNConfiguration(userid));
-            return pubNub.grantToken(ttl).toString();
-        } catch (PubNubException e) {
-            throw new RuntimeException(e);
-        }
+    public void save() {
+
+    }
+
+    @Override
+    public boolean existsByName() {
+        return false;
     }
 }

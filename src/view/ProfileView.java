@@ -3,6 +3,7 @@ package view;
 import interface_adapter.Profile.profiletocreate.ProfiletocreateController;
 import interface_adapter.Profile.ProfileState;
 import interface_adapter.Profile.ProfileViewModel;
+import interface_adapter.Profile.profiletologout.ProfiletologoutController;
 import interface_adapter.Profile.profiletosubscribe.ProfiletosubscribeController;
 
 import javax.swing.*;
@@ -64,6 +65,17 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
                 }
         );
         logout = new JButton(ProfileViewModel.LOGOUT_BUTTON_LABEL);
+        logout.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(e.getSource().equals(logout)){
+                            ProfiletologoutController.execute();
+                        }
+                    }
+                }
+        );
+
         buttons.add(createchannel);
         buttons.add(subscribechannel);
         buttons.add(logout);

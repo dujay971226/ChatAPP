@@ -66,17 +66,4 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
             throw new RuntimeException(e);
         }
     }
-
-
-    /// for testing !!!
-
-    //// delete after
-    public static void main(String[] args) throws IOException {
-        CreateRoomDataAccessObject da = new CreateRoomDataAccessObject("src/data_access/sampleData.json");
-        boolean b = da.existsByName("channel1");
-        System.out.println(b);
-        da.save("newChannel", "newUser1");
-    } //// warning: DELETE
-
-
 }

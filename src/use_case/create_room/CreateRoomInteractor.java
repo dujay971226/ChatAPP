@@ -27,14 +27,12 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
     @Override
     public void execute(CreateRoomInputData createRoomInputData) {
         if (createRoomDataAccessObject.existsByName(createRoomInputData.getChannelName())) {
-            createRoomPresenter.prepareFailView("Channel name already exists");
+            createRoomPresenter.prepareFailView("Channel name already exists, try again.");
         } else {
-
-            // TODO save it as channel
+            //createRoomDataAccessObject.save("channelName n", "User n"); // for testing only
             createRoomDataAccessObject.save(createRoomInputData.getChannelName(), createRoomInputData.getUser().getName());
-
-
-            CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName());
+            CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName(),
+                    createRoomInputData.getConfig(), createRoomInputData.getUser());
             createRoomPresenter.prepareSuccessView(createRoomOutputData);
         }
     }

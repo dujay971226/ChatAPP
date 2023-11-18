@@ -13,6 +13,7 @@ public class CreateRoomState {
     private String channelName = "";
     private PubNub config;
     private User user;
+    private String channelNameError = null;
 
     /**
      * Initializes a CreateRoomState instance.
@@ -20,7 +21,7 @@ public class CreateRoomState {
     public CreateRoomState() {}
 
     /**
-     * Set channel name.
+     * Sets channel name.
      * @param channelName channel name
      */
     public void setChannelName(String channelName) {
@@ -28,19 +29,27 @@ public class CreateRoomState {
     }
 
     /**
-     * Set user.
+     * Sets user.
      * @param user user
      */
     public void setUser(User user) {this.user = user; }
 
     /**
-     * Set config.
+     * Sets config.
      * @param config instance of PubNub class
      */
     public void setConfig(PubNub config) {this.config = config; }
 
     /**
-     *  Get channel name.
+     * Sets channel name error.
+     * @param error channel name error
+     */
+    public void setChannelNameError(String error) {
+        this.channelNameError = error;
+    }
+
+    /**
+     *  Gets channel name.
      * @return channel name
      */
     public String getChannelName() {
@@ -48,17 +57,22 @@ public class CreateRoomState {
     }
 
     /**
-     * Get user.
+     * Gets user.
      * @return user
      */
     public User getUser() {return user; }
 
     /**
-     * Get config.
+     * Gets config.
      * @return config
      */
     public PubNub getConfig() {return config; }
 
+    /**
+     * Gets channel name error.
+     * @return channel name error message
+     */
+    public String getChannelNameError() {return channelNameError; }
 
 
 

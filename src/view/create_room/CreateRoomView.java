@@ -51,7 +51,7 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void keyTyped(KeyEvent e) {
                 CreateRoomState currentState = createRoomViewModel.getState();
-                currentState.setChannelName(createRoomTextField.getText());
+                currentState.setChannelName(createRoomTextField.getText() + e.getKeyChar());
                 createRoomViewModel.setState(currentState);
             }
 
@@ -82,5 +82,10 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {}
+    public void propertyChange(PropertyChangeEvent evt) {
+        CreateRoomState state = createRoomViewModel.getState();
+        if (state.getChannelNameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getChannelNameError());
+        }
+    }
 }

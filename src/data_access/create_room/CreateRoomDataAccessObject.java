@@ -56,7 +56,6 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
     public void save(String channelName, User user) {
         JsonArray userArray = new JsonArray();
         userArray.add(user.getName());
-        userArray.add(user.getUserid().toString());
         userArray.add(user.getPassword());
 
         jsonObject.add(channelName, userArray);
@@ -75,6 +74,6 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
 
     public static void main(String[] args) {
         CreateRoomDataAccessObject da = new CreateRoomDataAccessObject("src/data_access/sampleData.json");
-        da.save("channel1", new User("name1", new UserId("id1"), "password1"));
+        da.save("channel2", new User("name2", "password2"));
     }
 }

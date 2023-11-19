@@ -16,9 +16,9 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     private RoomViewModel roomViewModel;
 
     /**
-     *
-     * @param createRoomViewModel
-     * @param roomViewModel
+     * Initializes a CreateRoomPresenter instance.
+     * @param createRoomViewModel create room view model
+     * @param roomViewModel room view model
      */
     public CreateRoomPresenter(ViewManagerModel managerModel, CreateRoomViewModel createRoomViewModel, RoomViewModel roomViewModel) {
         this.viewManagerModel = managerModel;
@@ -33,9 +33,10 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     @Override
     public void prepareSuccessView(CreateRoomOutputData outputData) {
         RoomState state = roomViewModel.getState();
-        state.setChannel(new Channel(outputData.getChannelName(), ""));
+        state.setChannel(new Channel(outputData.getChannelName(), outputData.getUser()));
         state.setConfig(outputData.getConfig());
         state.setUser(outputData.getUser());
+        state.setNotice();
     }
 
     /**

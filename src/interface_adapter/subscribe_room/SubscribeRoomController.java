@@ -6,6 +6,7 @@ import use_case.subscribe_room.SubscribeRoomInputBoundary;
 import use_case.subscribe_room.SubscribeRoomInputData;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Controller of subscribe room.
@@ -29,14 +30,6 @@ public class SubscribeRoomController {
     public void execute(String channelName, PubNub config, User user) {
         SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName, config, user);
         subscribeRoomUseCaseInteractor.execute(inputData);
-    }
-
-    /**
-     * Gets channel information.
-     * @return channel string array.
-     */
-    public String[] getChannels() {
-        return subscribeRoomUseCaseInteractor.getChannels();
     }
 
 

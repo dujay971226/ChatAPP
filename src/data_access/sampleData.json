@@ -1,7 +1,12 @@
 {
   "channel1": [
-    "name1",
-    "UserId(value\u003did1)",
-    "password1"
+    {"name1": "password1"},
+    {"name1": "password1"},
+    {"name1": "password1"}
+  ],
+  "channel2": [
+    {"name2": "password2"},
+    {"name1": "password1"},
+    {"name1": "password1"}
   ]
 }

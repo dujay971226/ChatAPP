@@ -1,7 +1,10 @@
 package interface_adapter.subscribe_room;
 
 import com.pubnub.api.PubNub;
+import entity.Channel;
 import entity.User;
+
+import java.util.ArrayList;
 
 /**
  * State of subscribe room.
@@ -9,6 +12,7 @@ import entity.User;
 public class SubscribeRoomState {
 
     private String channelName = "";
+    private ArrayList<Channel> channelLog = null;
     private final String noSelectionMsg = "Make a selection to join room";
     private PubNub config;
     private User user;
@@ -24,6 +28,11 @@ public class SubscribeRoomState {
      */
     public String getChannelName() {return channelName; }
 
+    /**
+     * Gets all past channels.
+     * @return channel log
+     */
+    public ArrayList<Channel> getChannelLog() {return channelLog; }
     /**
      * Gets no selection message.
      * @return no selection message string
@@ -62,4 +71,9 @@ public class SubscribeRoomState {
      */
     public void setUser(User user) {this.user = user; }
 
+    /**
+     * Sets all past channels.
+     * @param channelLog channel log
+     */
+    public void setChannelLog(ArrayList<Channel> channelLog) {this.channelLog = channelLog; }
 }

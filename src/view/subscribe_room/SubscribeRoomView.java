@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * View shown when user is asked to join a room.
@@ -44,7 +45,8 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
         JLabel title = new JLabel(subscribeRoomViewModel.TITLE_LABEL);
 
-        channelNames = subscribeRoomController.getChannels();
+        ArrayList<String> channelNameArrList = subscribeRoomController.getChannels();
+        channelNames = channelNameArrList.toArray(new String[0]);
 
         channelList = new JList<String>(channelNames);
         channelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

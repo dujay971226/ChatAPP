@@ -15,4 +15,6 @@ public class RoomState {
 
     public void setUser(User user) {};
     public void setMessageLog(ArrayList<Message> messageLog) {};
+
+    public void setNotice() {};
 }

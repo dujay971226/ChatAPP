@@ -20,7 +20,7 @@ public interface CreateRoomDataAccessInterface {
     /**
      * Saves the channel name and username locally.
      * @param channelName channel name
-     * @param userName name of user
+     * @param user user
      */
     void save(String channelName, User user);
 }

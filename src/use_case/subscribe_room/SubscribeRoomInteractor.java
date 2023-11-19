@@ -1,6 +1,9 @@
 package use_case.subscribe_room;
 
+import com.pubnub.api.PubNub;
+
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Interactor of subscribe room.
@@ -27,6 +30,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
      */
     @Override
     public void execute(SubscribeRoomInputData subscribeRoomInputData) {
+        PubNub pubNub = subscribeRoomInputData.getConfig();
         subscribeRoomDataAccessObject.getMessageLog(subscribeRoomInputData.getUser().getName(),
                 subscribeRoomInputData.getChannelName());
     }
@@ -36,7 +40,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
      * @return channels.
      */
     @Override
-    public String[] getChannels() {
+    public ArrayList<String> getChannels() {
         return subscribeRoomDataAccessObject.getChannelNames();
     }
 

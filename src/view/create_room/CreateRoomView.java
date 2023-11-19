@@ -74,6 +74,7 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
         this.add(title);
         this.add(createRoomInfo);
         this.add(createButton);
+        this.add(toSubscribeButton);
     }
 
     /**
@@ -85,7 +86,7 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
         if (e.getSource().equals(createButton)) {
             CreateRoomState currentState = createRoomViewModel.getState();
             createRoomController.execute(currentState.getChannelName(), currentState.getConfig(),
-                    currentState.getUser());
+                    currentState.getUser(), currentState.getChannelLog());
         } else if (e.getSource().equals(toSubscribeButton)) {
             CreateRoomState currentState = createRoomViewModel.getState();
             profileToSubscribeController.execute(currentState.getUser(),

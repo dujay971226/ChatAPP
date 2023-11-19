@@ -8,6 +8,8 @@ import use_case.subscribe_room.SubscribeRoomDataAccessInterface;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Data access object of subscribe room.
@@ -30,6 +32,8 @@ public class SubscribeRoomDataAccessObject implements SubscribeRoomDataAccessInt
             throw new RuntimeException(e);
         }
     }
+
+
 
     /**
      * Saves the username to an existing channel. Use CreateRoomDataAccessObject's
@@ -62,14 +66,20 @@ public class SubscribeRoomDataAccessObject implements SubscribeRoomDataAccessInt
         return null;
     }
 
-    //TODO
     @Override
-    public String[] getChannelNames() {
-        return new String[0];
+    public ArrayList<String> getChannelNames() {
+        Set<String> channelSet = jsonObject.keySet();
+        ArrayList<String> channelArrayList = new ArrayList<>();
+        for (String channel: channelSet) {
+            channelArrayList.add(channel);
+        }
+        return channelArrayList;
     }
 
     public static void main(String[] args) {
         SubscribeRoomDataAccessObject da = new SubscribeRoomDataAccessObject("src/data_access/sampleData.json");
-        da.save("channel1", "new -- ");
+        for (String x: da.getChannelNames().toArray(new String[0])) {
+            System.out.println(x);
+        }
     }
 }

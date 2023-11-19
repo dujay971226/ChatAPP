@@ -5,6 +5,8 @@ import com.pubnub.api.PubNub;
 import entity.Channel;
 import entity.User;
 
+import java.util.ArrayList;
+
 /**
  * Stores the state for the CreateRoomViewModel class.
  */
@@ -14,11 +16,18 @@ public class CreateRoomState {
     private PubNub config;
     private User user;
     private String channelNameError = null;
+    private ArrayList<Channel> channelLog;
 
     /**
      * Initializes a CreateRoomState instance.
      */
     public CreateRoomState() {}
+
+    /**
+     * Sets past channels.
+     * @param channelLog channel log
+     */
+    public void setChannelLog(ArrayList<Channel> channelLog) {this.channelLog = channelLog; }
 
     /**
      * Sets channel name.
@@ -49,7 +58,13 @@ public class CreateRoomState {
     }
 
     /**
-     *  Gets channel name.
+     * Gets past channels.
+     * @return channel log
+     */
+    public ArrayList<Channel> getChannelLog() {return channelLog; }
+
+    /**
+     * Gets channel name.
      * @return channel name
      */
     public String getChannelName() {

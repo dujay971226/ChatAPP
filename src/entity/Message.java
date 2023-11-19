@@ -9,6 +9,7 @@ public class Message {
     private final User user;
 
     public Message(String msg) {
+        this.user = null;
         this.msgDate = LocalDateTime.now();
         this.content = msg;
     }

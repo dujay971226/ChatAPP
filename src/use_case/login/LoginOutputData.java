@@ -1,15 +1,26 @@
 package use_case.login;
 
-public class LoginOutputData {
-    private final String username;
-    private boolean useCaseFailed;
+import entity.User;
+import com.pubnub.api.PubNub;
 
-    public LoginOutputData(String username, boolean useCaseFailed) {
-        this.username = username;
+public class LoginOutputData {
+    private final User user;
+    private boolean useCaseFailed;
+    private PubNub config;
+
+    public LoginOutputData(User user, PubNub config, boolean useCaseFailed) {
+        this.user = user;
         this.useCaseFailed = useCaseFailed;
+        this.config = config;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUsername() {
+        return user;
+    }
+
+    public PubNub getConfig() {
+        return config;
     }
 }
+
+

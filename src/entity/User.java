@@ -1,7 +1,30 @@
 package entity;
 
-public interface User {
-    String getName();
+import com.pubnub.api.UserId;
 
-    String getPassword();
+public class User {
+
+    private final String name;
+
+    private final UserId userid;
+
+    private final String password;
+
+    public User(String name, UserId userid, String password){
+        this.name = name;
+        this.userid = userid;
+        this.password = password;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public UserId getUserid(){
+        return this.userid;
+    }
+
+    public String getPassword(){
+        return this.password;
+    }
 }

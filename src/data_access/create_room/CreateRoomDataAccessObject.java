@@ -6,7 +6,7 @@ import com.google.gson.*;
 import use_case.create_room.CreateRoomDataAccessInterface;
 
 import java.io.*;
-
+import java.time.LocalDateTime;
 
 
 /**
@@ -48,11 +48,15 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
      * SubscribeRoomDataAccessObject's save() instead.
      * @see data_access.subscribe_room.SubscribeRoomDataAccessObject
      * @param channelName channel name
+     * @param userName user name
+     * @param creationTime time created
      */
     @Override
-    public void save(String channelName, String userName) {
+    public void save(String channelName, String userName, LocalDateTime creationTime) {
+        JsonObject userTime = new JsonObject();
+        userTime.addProperty(userName, creationTime.toString());
         JsonArray userArray = new JsonArray();
-        userArray.add(userName);
+        userArray.add(userTime);
         jsonObject.add(channelName, userArray);
         Gson g = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = g.toJson(jsonObject);
@@ -65,5 +69,10 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void main(String[] args) {
+        CreateRoomDataAccessObject da = new CreateRoomDataAccessObject("src/data_access/sampleData.json");
+        da.save("testChannel", "testUserName", LocalDateTime.now());
     }
 }

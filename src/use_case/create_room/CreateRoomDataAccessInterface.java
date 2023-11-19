@@ -3,6 +3,8 @@ package use_case.create_room;
 import entity.Channel;
 import entity.User;
 
+import java.time.LocalDateTime;
+
 /**
  * Data access interface of create room.
  */
@@ -20,5 +22,5 @@ public interface CreateRoomDataAccessInterface {
      * @param channelName channel name
      * @param userName name of user
      */
-    void save(String channelName, String userName);
+    void save(String channelName, String userName, LocalDateTime creationTime);
 }

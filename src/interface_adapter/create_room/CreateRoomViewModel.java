@@ -31,7 +31,7 @@ public class CreateRoomViewModel extends ViewModel {
 
 
     /**
-     * Creates an instance of CreateRoomViewModel.
+     * Creates an instance of CreateRoomViewModel and calls super class instructor.
      */
     public CreateRoomViewModel() {
         super("create room");

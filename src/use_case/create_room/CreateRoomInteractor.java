@@ -1,5 +1,7 @@
 package use_case.create_room;
 
+import java.time.LocalDateTime;
+
 /**
  * Interactor of create room.
  */
@@ -29,8 +31,10 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
         if (createRoomDataAccessObject.existsByName(createRoomInputData.getChannelName())) {
             createRoomPresenter.prepareFailView("Channel name already exists, try again.");
         } else {
-            //createRoomDataAccessObject.save("channelName n", "User n"); // for testing only
-            createRoomDataAccessObject.save(createRoomInputData.getChannelName(), createRoomInputData.getUser().getName());
+            //createRoomDataAccessObject.save("channelName n", "User n", LocalDateTime.now()); // for testing only
+            LocalDateTime creationTime = LocalDateTime.now(); // creation time
+            createRoomDataAccessObject.save(createRoomInputData.getChannelName(),
+                    createRoomInputData.getUser().getName(), creationTime);
             CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName(),
                     createRoomInputData.getConfig(), createRoomInputData.getUser());
             createRoomPresenter.prepareSuccessView(createRoomOutputData);

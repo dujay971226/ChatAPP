@@ -44,4 +44,5 @@ public class CreateRoomInputData {
      * @return user
      */
     public User getUser() {return user; }
+
 }

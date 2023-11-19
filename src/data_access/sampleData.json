@@ -1,15 +1,7 @@
 {
-  "channel1": [
-    "user1",
-    "new -- "
-  ],
-  "newChannel": [
-    "newUser1"
-  ],
-  "newChannel2": [
-    "newUser"
-  ],
-  "channelName n": [
-    "User n"
+  "testChannel": [
+    {
+      "testUserName": "2023-11-18T19:42:52.605846"
+    }
   ]
 }

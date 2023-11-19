@@ -81,18 +81,8 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
 
     // property change not used
-    /**
-     * Not used for now.
-     * @param evt A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
-     */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        SubscribeRoomState state = (SubscribeRoomState) evt.getNewValue();
-        if (state.getChannelNameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getChannelNameError());
-        }
-    }
+    public void propertyChange(PropertyChangeEvent evt) {}
 
     /**
      * When button is clicked, controller executes according to the selection made. If one selection was recorded,

@@ -40,7 +40,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public final String viewName = "Room";
 
     private final RoomViewModel roomViewModel;
-    private final JTextArea messaageDisplayField = new JTextArea(100,50);
+    private final BoxLayout messaageDisplayLayout = new BoxLayout(this, );
     private final JScrollPane scrollPane = new JScrollPane(messaageDisplayField);
     private final JTextArea messageInputField = new JTextArea(20,50);
     private final RoomMessageController roomMessageController;
@@ -88,11 +88,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
-                            RoomState currentState = roomViewModel.getState();
+                            RoomState currState = roomViewModel.getState();
+                            String text = messageInputField.getText();
                             roomMessageController.execute(
-                                    currentState.getMessage(),
-                                    currentState.getChannel(),
-                                    currentState.getUser(),
+                                    currState.getUser(),
+                                    currState.getChannel(),
+                                    currState.getConfig(),
+                                    text
                             );
                         }
                     }
@@ -117,7 +119,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(setting)) {
-                            settingController.execute();
+                            RoomState currState = roomViewModel.getState();
+                            settingController.execute(
+                                    currState.getUser(),
+                                    currState.getChannel(),
+                                    currState.getConfig()
+                            );
+                            // channel, user, config,
                         }
                     }
                 }
@@ -128,7 +136,12 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(journal)) {
-                            journalController.execute();
+                            RoomState currState = roomViewModel.getState();
+                            journalController.execute(
+                                    currState.getUser(),
+                                    currState.getChannel(),
+                                    currState.getConfig()
+                            );
                         }
                     }
                 }
@@ -140,8 +153,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void keyTyped(KeyEvent e) {
                         RoomState currentState = roomViewModel.getState();
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                            RoomState currState = roomViewModel.getState();
+                            String text = messageInputField.getText();
                             roomMessageController.execute(
-                                    currentState.getMessage()
+                                    currState.getUser(),
+                                    currState.getChannel(),
+                                    currState.getConfig(),
+                                    text
                             );
                         }
                         else {
@@ -161,11 +179,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 });
 
-        public void displayMessage(User user, Message msg) {
-            String chat = messageInputField.getText() + e.getKeyChar();
-            currentState.setMessage(text);
-            roomViewModel.setState(currentState);
-        }
+
     }
     public static void main(String[] args) throws PubNubException {
         final UserId userId = new UserId("myUniqueUserId");

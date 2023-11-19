@@ -1,2 +1,4 @@
-package use_case.room;public class RoomOutputData {
+package use_case.room;
+
+public class RoomOutputData {
 }

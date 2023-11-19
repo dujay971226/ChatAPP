@@ -1,2 +1,4 @@
-package use_case.room;public class RoomOutputBoundary {
+package use_case.room;
+public interface RoomOutputBoundary {
+    void prepareLostConnectionView();
 }

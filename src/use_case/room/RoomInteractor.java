@@ -7,6 +7,13 @@ import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
 
 public class RoomInteractor implements RoomInputBoundary{
+
+    final RoomOutputBoundary RoomPresenter;
+
+    public RoomInteractor(RoomOutputBoundary roomOutputBoundary) {
+        this.RoomPresenter = roomOutputBoundary;
+    }
+
     @Override
     public void execute(RoomFileInputData roomFileInputData) throws PubNubException {
 
@@ -14,15 +21,11 @@ public class RoomInteractor implements RoomInputBoundary{
 
     @Override
     public void execute(RoomMessageInputData roomMessageInputData) {
-        UserId userId = RoomMessageInputData.getUser().getID();
-        PNConfiguration pnConfiguration = new PNConfiguration(userId);
-        pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");
-        pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd304abc");
 
-        PubNub pubnub = new PubNub(pnConfiguration);
+        PubNub pubnub = roomMessageInputData.getConfig();
 
         final JsonObject messageJsonObject = new JsonObject();
-        messageJsonObject.addProperty("msg", roomMessageInputData.getContent());
+        messageJsonObject.addProperty("msg", roomMessageInputData.getMessage());
 
         pubnub.publish()
                 .channel(roomMessageInputData.getChannel().getChannelName())
@@ -30,9 +33,8 @@ public class RoomInteractor implements RoomInputBoundary{
                 .async((result, publishStatus) -> {
                     if (!publishStatus.isError()) {
                     }
-                    // Request processing failed.
                     else {
-                        System.out.println("Send Message Failed");
+                        RoomPresenter.prepareLostConnectionView();
                     }
                 });
     }

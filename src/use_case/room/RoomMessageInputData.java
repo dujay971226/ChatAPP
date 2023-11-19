@@ -1,28 +1,40 @@
 package use_case.room;
+import com.pubnub.api.PubNub;
 import entity.Message;
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class RoomMessageInputData {
-    private LocalDateTime timeSent = null;
-    private String messageContent = null;
     private Channel channel = null;
-    private User user = null;
 
-    public RoomMessageInputData (User user, Channel channel, String msg) {
-        this.messageContent = msg;
-    }
+    private User currUser = null;
 
-    public String getContent() {
-        return messageContent;
+    private String message = "";
+
+    private PubNub config = null;
+
+    public RoomMessageInputData (User user, Channel channel, PubNub config, String msg) {
+        this.channel = channel;
+        this.currUser = user;
+        this.config = config;
+        this.message = msg;
     }
 
     public Channel getChannel() {
-        return channel;
+        return this.channel;
     }
 
     public User getUser() {
-        return user;
+        return this.currUser;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public PubNub getConfig() {
+        return config;
     }
 
 }

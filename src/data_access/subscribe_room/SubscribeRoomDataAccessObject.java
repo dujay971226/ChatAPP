@@ -2,10 +2,12 @@ package data_access.subscribe_room;
 
 import com.google.gson.*;
 import entity.Channel;
+import entity.Message;
 import entity.User;
 import use_case.subscribe_room.SubscribeRoomDataAccessInterface;
 
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Data access object of subscribe room.

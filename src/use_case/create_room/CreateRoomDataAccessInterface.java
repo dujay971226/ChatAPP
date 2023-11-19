@@ -22,5 +22,5 @@ public interface CreateRoomDataAccessInterface {
      * @param channelName channel name
      * @param userName name of user
      */
-    void save(String channelName, String userName, LocalDateTime creationTime);
+    void save(String channelName, User user);
 }

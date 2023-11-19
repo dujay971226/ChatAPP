@@ -34,7 +34,7 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
             //createRoomDataAccessObject.save("channelName n", "User n", LocalDateTime.now()); // for testing only
             LocalDateTime creationTime = LocalDateTime.now(); // creation time
             createRoomDataAccessObject.save(createRoomInputData.getChannelName(),
-                    createRoomInputData.getUser().getName(), creationTime);
+                    createRoomInputData.getUser());
             CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName(),
                     createRoomInputData.getConfig(), createRoomInputData.getUser());
             createRoomPresenter.prepareSuccessView(createRoomOutputData);

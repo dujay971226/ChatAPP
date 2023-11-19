@@ -26,6 +26,11 @@ public class CreateRoomViewModel extends ViewModel {
      */
     public final String CREATE_BUTTON_LABEL = "Create";
 
+    /**
+     * Label of subscribe button
+     */
+    public final String TO_SUB_BUTTON_LABEL = "Subscribe";
+
     private CreateRoomState state = new CreateRoomState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

@@ -1,5 +1,6 @@
 package view.create_room;
 
+import interface_adapter.ProfileToSubscribeController;
 import interface_adapter.create_room.CreateRoomController;
 import interface_adapter.create_room.CreateRoomState;
 import interface_adapter.create_room.CreateRoomViewModel;
@@ -21,16 +22,20 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
     private final CreateRoomViewModel createRoomViewModel;
     private final JTextField createRoomTextField = new JTextField(15);
     private final CreateRoomController createRoomController;
+    private final ProfileToSubscribeController profileToSubscribeController;
     private final JButton createButton;
+    private final JButton toSubscribeButton;
 
     /**
      * Creates a CreateRoomView instance.
      * @param controller controller of create room
      * @param viewModel view model of create room
      */
-    public CreateRoomView(CreateRoomController controller, CreateRoomViewModel viewModel) {
+    public CreateRoomView(CreateRoomController controller, CreateRoomViewModel viewModel,
+                          ProfileToSubscribeController profileToSubscribeController) {
         this.createRoomController = controller;
         this.createRoomViewModel = viewModel;
+        this.profileToSubscribeController = profileToSubscribeController;
         createRoomViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(createRoomViewModel.TITLE_LABEL);
@@ -41,6 +46,9 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
 
         createButton = new JButton(createRoomViewModel.CREATE_BUTTON_LABEL);
         createButton.addActionListener(this);
+        toSubscribeButton = new JButton(createRoomViewModel.TO_SUB_BUTTON_LABEL);
+        toSubscribeButton.addActionListener(this);
+
 
         createRoomTextField.addKeyListener(new KeyListener() {
 
@@ -78,6 +86,10 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
             CreateRoomState currentState = createRoomViewModel.getState();
             createRoomController.execute(currentState.getChannelName(), currentState.getConfig(),
                     currentState.getUser());
+        } else if (e.getSource().equals(toSubscribeButton)) {
+            CreateRoomState currentState = createRoomViewModel.getState();
+            profileToSubscribeController.execute(currentState.getUser(),
+                    currentState.getConfig());
         }
     }
 

@@ -1,6 +1,8 @@
 package use_case.subscribe_room;
 
 import com.pubnub.api.PubNub;
+import entity.Message;
+import entity.User;
 
 import java.util.ArrayList;
 

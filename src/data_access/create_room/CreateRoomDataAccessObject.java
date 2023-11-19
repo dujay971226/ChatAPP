@@ -3,6 +3,8 @@ package data_access.create_room;
 
 import com.google.gson.*;
 
+import com.pubnub.api.UserId;
+import entity.User;
 import use_case.create_room.CreateRoomDataAccessInterface;
 
 import java.io.*;
@@ -48,15 +50,15 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
      * SubscribeRoomDataAccessObject's save() instead.
      * @see data_access.subscribe_room.SubscribeRoomDataAccessObject
      * @param channelName channel name
-     * @param userName user name
-     * @param creationTime time created
+     * @param user user
      */
     @Override
-    public void save(String channelName, String userName, LocalDateTime creationTime) {
-        JsonObject userTime = new JsonObject();
-        userTime.addProperty(userName, creationTime.toString());
+    public void save(String channelName, User user) {
         JsonArray userArray = new JsonArray();
-        userArray.add(userTime);
+        userArray.add(user.getName());
+        userArray.add(user.getUserid().toString());
+        userArray.add(user.getPassword());
+
         jsonObject.add(channelName, userArray);
         Gson g = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = g.toJson(jsonObject);
@@ -73,6 +75,6 @@ public class CreateRoomDataAccessObject implements CreateRoomDataAccessInterface
 
     public static void main(String[] args) {
         CreateRoomDataAccessObject da = new CreateRoomDataAccessObject("src/data_access/sampleData.json");
-        da.save("testChannel", "testUserName", LocalDateTime.now());
+        da.save("channel1", new User("name1", new UserId("id1"), "password1"));
     }
 }

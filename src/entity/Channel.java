@@ -8,14 +8,13 @@ public class Channel {
     public Channel(String name, String token){
         this.channelname = name;
         this.token = token;
-
     }
 
-    public String getname(){
+    public String getName(){
         return this.channelname;
     }
 
-    public String gettoken(){
+    public String getToken(){
         return this.token;
     }
 

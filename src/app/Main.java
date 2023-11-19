@@ -2,6 +2,7 @@ package app;
 
 import com.pubnub.api.PubNubException;
 import data_access.create_room.CreateRoomDataAccessObject;
+import interface_adapter.ProfileToSubscribeController;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomController;
 import interface_adapter.create_room.CreateRoomPresenter;
@@ -15,6 +16,7 @@ import view.create_room.CreateRoomView;
 import javax.swing.*;
 
 public class Main {
+    /*
     public static void main(String[] args) throws PubNubException {
 
         JFrame application = new JFrame("ChatAPP");
@@ -25,19 +27,20 @@ public class Main {
         CreateRoomOutputBoundary presenter = new CreateRoomPresenter(new ViewManagerModel(), viewModel, new RoomViewModel());
         CreateRoomInteractor interactor = new CreateRoomInteractor(dataAccessObject, presenter);
         CreateRoomController controller = new CreateRoomController(interactor);
-        CreateRoomView view = new CreateRoomView(controller, viewModel);
+        ProfileToSubscribeController c = new ProfileToSubscribeController();
+        CreateRoomView view = new CreateRoomView(controller, viewModel, c);
 
         /*SubscribeRoomViewModel viewModel = new SubscribeRoomViewModel();
         SubscribeRoomDataAccessInterface dataAccessObject = new SubscribeRoomDataAccessObject();
         SubscribeRoomOutputBoundary presenter = new SubscribeRoomPresenter(viewModel);
         SubscribeRoomInteractor interactor = new SubscribeRoomInteractor(dataAccessObject, presenter);
         SubscribeRoomController controller = new SubscribeRoomController(interactor);
-        SubscribeRoomView view = new SubscribeRoomView(controller, viewModel); */
+        SubscribeRoomView view = new SubscribeRoomView(controller, viewModel);
         application.add(view);
         application.pack();
         application.setVisible(true);
 
-    }
+    }*/
 
 
 

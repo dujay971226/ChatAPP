@@ -1,7 +1,7 @@
 {
-  "testChannel": [
-    {
-      "testUserName": "2023-11-18T19:42:52.605846"
-    }
+  "channel1": [
+    "name1",
+    "UserId(value\u003did1)",
+    "password1"
   ]
 }

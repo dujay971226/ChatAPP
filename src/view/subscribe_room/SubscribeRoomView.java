@@ -1,5 +1,6 @@
 package view.subscribe_room;
 
+import interface_adapter.ProfileToCreateController;
 import interface_adapter.subscribe_room.SubscribeRoomController;
 import interface_adapter.subscribe_room.SubscribeRoomState;
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
@@ -22,19 +23,23 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
     private final SubscribeRoomViewModel subscribeRoomViewModel;
     private final SubscribeRoomController subscribeRoomController;
+    private final ProfileToCreateController profileToCreateController;
     private final String[] channelNames;
     private final JList<String> channelList;
     private final JScrollPane channelPane;
     private final JButton subscribeButton;
+    private final JButton toCreateButton;
 
     /**
      * Initializes a SubscribeRoomView instance.
      * @param controller controller of subscribe room
      * @param viewModel view model of subscribe room
      */
-    public SubscribeRoomView(SubscribeRoomController controller, SubscribeRoomViewModel viewModel) {
+    public SubscribeRoomView(SubscribeRoomController controller, SubscribeRoomViewModel viewModel,
+                             ProfileToCreateController profileToCreateController) {
         this.subscribeRoomController = controller;
         this.subscribeRoomViewModel = viewModel;
+        this.profileToCreateController = profileToCreateController;
         subscribeRoomViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(subscribeRoomViewModel.TITLE_LABEL);
@@ -70,6 +75,8 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
         subscribeButton = new JButton(subscribeRoomViewModel.SUBSCRIBE_BUTTON_LABEL);
         subscribeButton.addActionListener(this);
+        toCreateButton = new JButton(subscribeRoomViewModel.TO_CREATE_BUTTON_LABEL);
+        toCreateButton.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -100,6 +107,9 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
                         subscribeRoomViewModel.getState().getConfig(),
                         subscribeRoomViewModel.getState().getUser());
             }
+        } else if (e.getSource().equals(toCreateButton)) {
+            SubscribeRoomState state = subscribeRoomViewModel.getState();
+            profileToCreateController.execute(state.getUser(), state.getConfig());
         }
     }
 }

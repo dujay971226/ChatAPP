@@ -1,7 +1,10 @@
 package use_case.subscribe_room;
 
 import entity.Channel;
+import entity.Message;
 import entity.User;
+
+import java.util.ArrayList;
 
 /**
  * Data access interface of subscribe room.

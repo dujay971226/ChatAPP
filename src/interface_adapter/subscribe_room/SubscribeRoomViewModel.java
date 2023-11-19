@@ -19,6 +19,7 @@ public class SubscribeRoomViewModel extends ViewModel {
      * Button label.
      */
     public final String SUBSCRIBE_BUTTON_LABEL = "Join";
+    public final String TO_CREATE_BUTTON_LABEL = "Create";
 
     private SubscribeRoomState state = new SubscribeRoomState();
 

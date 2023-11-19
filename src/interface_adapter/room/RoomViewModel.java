@@ -1,20 +1,42 @@
 package interface_adapter.room;
 
-import view.RoomView;
+import interface_adapter.ViewModel;
 
-public class RoomViewModel {
-    public static final String SEND_BUTTON_LABEL = ;
-    public static final String JOURNAL_BUTTON_LABEL = ;
-    public static final String SETTING_BUTTON_LABEL = ;
-    public static final String TITLE_LABEL = ;
-    public static final String UPLOAD_BUTTON_LABEL = ;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-    public void addPropertyChangeListener(RoomView roomView) {
+public class RoomViewModel extends ViewModel {
+
+    public static final String JOURNAL_BUTTON_LABEL = "Journal";
+    public static final String SETTING_BUTTON_LABEL = "Setting";
+    public static final String EXIT_BUTTON_LABEL = "Exit";
+    public static String TITLE_LABEL = "Chat Room";
+    public static final String UPLOAD_BUTTON_LABEL = "Upload File";
+    public static final String SEND_BUTTON_LABEL = "Send";
+
+    private RoomState state = new RoomState();
+
+    public RoomViewModel() {
+        super("room");
+    }
+
+    public void setState(RoomState state) {
+        this.state = state;
+        TITLE_LABEL = state.getChannel().getChannelName();
+    }
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
     }
 
     public RoomState getState() {
+        return state;
     }
 
-    public void setState(RoomState currentState) {
-    }
 }

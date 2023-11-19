@@ -6,6 +6,8 @@ import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
 
+import java.time.LocalDateTime;
+
 public class RoomInteractor implements RoomInputBoundary{
 
     final RoomOutputBoundary RoomPresenter;
@@ -14,17 +16,24 @@ public class RoomInteractor implements RoomInputBoundary{
         this.RoomPresenter = roomOutputBoundary;
     }
 
-    @Override
-    public void execute(RoomFileInputData roomFileInputData) throws PubNubException {
 
+    @Override
+    public void execute(RoomExitInputData roomExitInputData) {
+        PubNub pubnub = roomExitInputData.getConfig();
+
+        pubnub.unsubscribeAll();
+
+        RoomPresenter.prepareProfileView();
     }
 
+
+    //Send Message Use Case
     @Override
     public void execute(RoomMessageInputData roomMessageInputData) {
 
         PubNub pubnub = roomMessageInputData.getConfig();
 
-        final JsonObject messageJsonObject = new JsonObject();
+        JsonObject messageJsonObject = new JsonObject();
         messageJsonObject.addProperty("msg", roomMessageInputData.getMessage());
 
         pubnub.publish()

@@ -27,36 +27,39 @@ import com.pubnub.api.models.consumer.pubsub.files.PNFileEventResult;
 import com.pubnub.api.models.consumer.pubsub.message_actions.PNMessageActionResult;
 import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
 import com.pubnub.api.PubNubException;
-import interface_adapter.room.RoomFileController;
-import interface_adapter.room.RoomMessageController;
-import interface_adapter.room.RoomState;
-import interface_adapter.room.RoomViewModel;
+import entity.Message;
+import interface_adapter.room.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
 public class RoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    public final String viewName = "Room";
+    public final String viewName = "room";
 
     private final RoomViewModel roomViewModel;
-    private final BoxLayout messaageDisplayLayout = new BoxLayout(this, );
-    private final JScrollPane scrollPane = new JScrollPane(messaageDisplayField);
-    private final JTextArea messageInputField = new JTextArea(20,50);
+    private final JTextField messageInputField;
     private final RoomMessageController roomMessageController;
     private final RoomFileController roomFileController;
+    private final RoomExitController roomExitController;
     private final SettingController settingController;
     private final JournalController journalController;
     private final JButton setting;
     private final JButton journal;
+    private final JButton exit;
     private final JButton send;
-    private final JButton upload;
 
 
 
-    public RoomView (RoomMessageController roomMessageController, RoomFileController roomFileController, RoomViewModel roomViewModel, SettingController settingController, JournalController journalController)   {
+    public RoomView (RoomMessageController roomMessageController,
+                     RoomFileController roomFileController,
+                     RoomExitController roomExitController,
+                     RoomViewModel roomViewModel,
+                     SettingController settingController,
+                     JournalController journalController) throws PubNubException  {
         this.roomMessageController = roomMessageController;
         this.roomFileController = roomFileController;
+        this.roomExitController = roomExitController;
         this.roomViewModel = roomViewModel;
         this.settingController = settingController;
         this.journalController = journalController;
@@ -67,24 +70,24 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
         JPanel buttons_high = new JPanel();
         buttons_high.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
-        buttons_high.add(setting);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
         buttons_high.add(journal);
+        setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
+        buttons_high.add(setting);
+        exit = new JButton(RoomViewModel.EXIT_BUTTON_LABEL);
+        buttons_high.add(exit);
 
-        JTextArea chatInfo = messaageDisplayField;
-        JTextArea messageInputInfo = messageInputField;
+        JScrollPane mid = new JScrollPane();
 
-        JPanel buttons_low = new JPanel();
-        buttons_low.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        upload = new JButton(RoomViewModel.UPLOAD_BUTTON_LABEL);
-        buttons_low.add(upload);
+        JPanel low = new JPanel();
+        low.setAlignmentX(Component.CENTER_ALIGNMENT);
+        messageInputField = new JTextField();
+        low.add(messageInputField);
         send = new JButton(RoomViewModel.SEND_BUTTON_LABEL);
-        buttons_low.add(send);
+        low.add(send);
 
 
         send.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
@@ -101,26 +104,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
-        upload.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(upload)) {
-                            String directory = JOptionPane.showInputDialog(new JFrame("Upload File"),
-                                    "What is the directory of the file you would like to upload", null);
-                            roomFileController.execute(directory);
-                        }
-                    }
-                }
-        );
 
         setting.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(setting)) {
                             RoomState currState = roomViewModel.getState();
-                            settingController.execute(
+                            showSettingController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig()
@@ -132,14 +122,24 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         );
 
         journal.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(journal)) {
                             RoomState currState = roomViewModel.getState();
-                            journalController.execute(
+                            journalController.execute();
+                        }
+                    }
+                }
+        );
+
+        exit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(exit)) {
+                            RoomState currState = roomViewModel.getState();
+                            String text = messageInputField.getText();
+                            roomExitController.execute(
                                     currState.getUser(),
-                                    currState.getChannel(),
                                     currState.getConfig()
                             );
                         }
@@ -191,10 +191,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
         final String channelName = "myChannel";
 
-        // create message payload using Gson
-        final JsonObject messageJsonObject = new JsonObject();
-        messageJsonObject.addProperty("msg", "Connection established");
-
 
         pubnub.addListener(new SubscribeCallback() {
 
@@ -208,18 +204,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     // Connect event. You can do stuff like publish, and know you'll get it.
                     // Or just use the connected event to confirm you are subscribed for
                     // UI / internal notifications, etc
-                    pubnub.publish()
-                            .channel(channelName)
-                            .message(messageJsonObject)
-                            .async((result, publishStatus) -> {
-                                if (!publishStatus.isError()) {
-                                    this.isConnected = true;
-                                }
-                                // Request processing failed.
-                                else {
-                                    System.out.println("Not Connected");
-                                }
-                            });
                 } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
                     // Happens as part of our regular operation. This event happens when
                     // radio / connectivity is lost, then regained.
@@ -240,12 +224,15 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     // message.getSubscription()
                 }
 
+
                 JsonElement receivedMessageObject = message.getMessage();
                 JsonElement receivedUserObject = message.getUserMetadata().getAsJsonObject().get("");
-                System.out.println("Received message: " + receivedMessageObject.toString());
-                // extract desired parts of the payload, using Gson
-                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
-                System.out.println("The content of the message is: " + msg);
+                String user = receivedUserObject.toString();
+                String msg = receivedMessageObject.toString();
+                RoomState currState = roomViewModel.getState();
+                currentState.setNewMessage(currState.getMessageLog().add(Message(user, msg)));
+                roomViewModel.setState(currentState);
+
 
                 /*
                  * Log the following items with your favorite logger - message.getMessage() -
@@ -293,13 +280,19 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 .channels(Collections.singletonList(channelName))
                 .execute();    }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        RoomState currState = (RoomState) evt.getNewValue();
+        if () {
+
+        }
 
     }
+
+
 }

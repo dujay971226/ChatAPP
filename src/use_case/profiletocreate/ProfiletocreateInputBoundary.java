@@ -1,4 +1,4 @@
-package use_case.Profile.profiletocreate;
+package use_case.profiletocreate;
 
 public interface ProfiletocreateInputBoundary {
     void execute(ProfiletocreateInputData inputData);

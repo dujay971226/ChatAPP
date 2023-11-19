@@ -1,4 +1,4 @@
-package use_case.Profile.profiletocreate;
+package use_case.profiletocreate;
 
 import com.pubnub.api.PubNub;
 import entity.User;

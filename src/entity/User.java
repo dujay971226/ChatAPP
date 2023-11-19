@@ -16,11 +16,11 @@ public class User {
 
     }
 
-    public String getname(){
+    public String getName(){
         return this.name;
     }
 
-    public UserId getuserid(){
+    public UserId getUserid(){
         return this.userid;
     }
 

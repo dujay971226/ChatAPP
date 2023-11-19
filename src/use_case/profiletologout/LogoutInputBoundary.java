@@ -1,4 +1,4 @@
-package use_case.Profile.profiletologout;
+package use_case.profiletologout;
 
 public interface LogoutInputBoundary {
 

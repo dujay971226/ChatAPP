@@ -1,10 +1,12 @@
 package view;
 
-import interface_adapter.Profile.profiletocreate.ProfiletocreateController;
+
 import interface_adapter.Profile.ProfileState;
 import interface_adapter.Profile.ProfileViewModel;
-import interface_adapter.Profile.profiletologout.ProfiletologoutController;
-import interface_adapter.Profile.profiletosubscribe.ProfiletosubscribeController;
+import interface_adapter.Profile.profiletocreate.ProfileToCreateController;
+import interface_adapter.Profile.profiletologout.ProfileToLogoutController;
+import interface_adapter.Profile.profiletosubscribe.ProfileToSubscribeController;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,15 +22,16 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     private final JButton subscribechannel;
     private final JButton logout;
 
-    private final ProfiletocreateController profiletocreateController;
-    private final ProfiletosubscribeController profiletosubscribeController;
+    private final ProfileToCreateController profileToCreateController;
+    private final ProfileToSubscribeController profileToSubscribeController;
+    private final ProfileToLogoutController profileToLogoutController;
 
 
-    public ProfileView(ProfileViewModel profileViewModel,ProfiletocreateController profiletocreateController, ProfiletosubscribeController profiletosubscribeController){
+    public ProfileView(ProfileViewModel profileViewModel, ProfileToCreateController profileToCreateController, ProfileToSubscribeController profileToSubscribeController, ProfileToLogoutController profileToLogoutController){
 
         this.profileViewModel = profileViewModel;
-        this.profiletocreateController = profiletocreateController;
-        this.profiletosubscribeController = profiletosubscribeController;
+        this.profileToCreateController = profileToCreateController;
+        this.profileToSubscribeController = profileToSubscribeController;
 
 
         profileViewModel.addPropertyChangeListener(this);
@@ -47,7 +50,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if(evt.getSource().equals(createchannel)){
                             ProfileState currentState = profileViewModel.getState();
-                            profiletocreateController.execute(currentState.getUser(),currentState.getConfig());
+                            profileToCreateController.execute(currentState.getUser(),currentState.getConfig());
                         }
                     }
                 }
@@ -59,7 +62,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
                     public void actionPerformed(ActionEvent evt) {
                         if(evt.getSource().equals(subscribechannel)){
                             ProfileState currentState = profileViewModel.getState();
-                            profiletosubscribeController.execute(currentState.getUser(),currentState.getConfig());
+                            profileToSubscribeController.execute(currentState.getUser(),currentState.getConfig());
                         }
                     }
                 }
@@ -70,7 +73,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if(e.getSource().equals(logout)){
-                            ProfiletologoutController.execute();
+                            ProfileToLogoutController.execute();
                         }
                     }
                 }

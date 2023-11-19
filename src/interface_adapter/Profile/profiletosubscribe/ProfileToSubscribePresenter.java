@@ -2,15 +2,15 @@ package interface_adapter.Profile.profiletosubscribe;
 
 import interface_adapter.Profile.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.Profile.profiletosubscribe.ProfiletosubscribeOutputBoundary;
-import use_case.Profile.profiletosubscribe.ProfiletosubscribeOutputData;
+import use_case.profiletosubscribe.ProfiletosubscribeOutputBoundary;
+import use_case.profiletosubscribe.ProfiletosubscribeOutputData;
 
-public class ProfiletosubscribePresenter implements ProfiletosubscribeOutputBoundary {
+public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final SubscribeRoomViewModel subscribeRoomViewModel;
     private final ProfileViewModel profileViewModel;
 
-    public ProfiletosubscribePresenter(ViewManagerModel viewManagerModel,SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel) {
+    public ProfileToSubscribePresenter(ViewManagerModel viewManagerModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
         this.subscribeRoomViewModel = subscribeRoomViewModel;

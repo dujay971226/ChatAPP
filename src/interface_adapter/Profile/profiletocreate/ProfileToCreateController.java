@@ -2,12 +2,12 @@ package interface_adapter.Profile.profiletocreate;
 
 import com.pubnub.api.PubNub;
 import entity.User;
-import use_case.Profile.profiletocreate.ProfiletocreateInputBoundary;
-import use_case.Profile.profiletocreate.ProfiletocreateInputData;
+import use_case.profiletocreate.ProfiletocreateInputBoundary;
+import use_case.profiletocreate.ProfiletocreateInputData;
 
-public class ProfiletocreateController {
+public class ProfileToCreateController {
     final ProfiletocreateInputBoundary profileInputBoundary;
-    public ProfiletocreateController(ProfiletocreateInputBoundary profileInputBoundary){
+    public ProfileToCreateController(ProfiletocreateInputBoundary profileInputBoundary){
         this.profileInputBoundary = profileInputBoundary;
 
     }

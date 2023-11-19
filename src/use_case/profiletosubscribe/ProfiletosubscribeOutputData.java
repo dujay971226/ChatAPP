@@ -1,4 +1,4 @@
-package use_case.Profile.profiletosubscribe;
+package use_case.profiletosubscribe;
 
 import com.pubnub.api.PubNub;
 import entity.Channel;

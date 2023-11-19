@@ -1,9 +1,7 @@
-package use_case.Profile.profiletosubscribe;
+package use_case.profiletosubscribe;
 
 import data_access.ChannelDataAccessInterface;
 import entity.Channel;
-import use_case.Profile.profiletocreate.ProfiletocreateInputData;
-import use_case.Profile.profiletocreate.ProfiletocreateOutputBoundary;
 
 import java.util.ArrayList;
 import java.util.List;

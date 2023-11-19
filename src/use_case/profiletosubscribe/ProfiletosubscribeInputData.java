@@ -1,13 +1,13 @@
-package use_case.Profile.profiletocreate;
+package use_case.profiletosubscribe;
 
 import com.pubnub.api.PubNub;
 import entity.User;
 
-public class ProfiletocreateOutputData {
+public class ProfiletosubscribeInputData {
     final private User user;
     final private PubNub config;
 
-    public ProfiletocreateOutputData(User user, PubNub config){
+    public ProfiletosubscribeInputData(User user, PubNub config){
         this.user = user;
         this.config = config;
     }

@@ -1,7 +1,4 @@
-package use_case.Profile.profiletocreate;
-
-import data_access.ChannelDataAccessInterface;
-import entity.User;
+package use_case.profiletocreate;
 
 public class ProfiletocreateInteractor implements ProfiletocreateInputBoundary {
     final ProfiletocreateOutputBoundary profilePresenter;

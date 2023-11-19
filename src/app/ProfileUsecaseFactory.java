@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class ProfileUsecaseFactory {
 
-    public ProfileView create(ViewManagerModel viewManagerModel, CreatRoomViewModel creatRoomViewModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel, ChannelDataAccessInterface channelDataAccessInterface){
+    public static ProfileView create(ViewManagerModel viewManagerModel, CreatRoomViewModel creatRoomViewModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel, ChannelDataAccessInterface channelDataAccessInterface){
         try {
             ProfiletocreateController profiletocreateController = createprofilecreateUseCase(viewManagerModel, creatRoomViewModel, profileViewModel);
             ProfiletosubscribeController profiletosubscribeController = createprofilesubscribeUsCase(viewManagerModel, subscribeRoomViewModel, profileViewModel, channelDataAccessInterface);

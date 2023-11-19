@@ -16,7 +16,13 @@ public class ProfiletologoutPresenter implements LogoutOutputBoundary {
         this.profileViewModel = profileViewModel;
     }
     public void preparesuccessview() {
-        LogoutOutputData logoutOutputData = new LogoutOutputData()
+        LogoutOutputData logoutOutputData = new LogoutOutputData();
+        LoginState loginState = new LoginState();
+        loginState.setState(loginState);
+        loginViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
 
     }
 }

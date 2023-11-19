@@ -19,9 +19,6 @@ public class Channel {
         return this.token;
     }
 
-    public void addchannel(Channel channel){
-
-    }
 
 }
 

@@ -21,7 +21,7 @@ public class ProfiletosubscribePresenter implements ProfiletosubscribeOutputBoun
         subscribeRoomState.setUser(outputData.getUser());
         subscribeRoomState.setConfig(outputData.getConfig());
 
-        profileViewModel.firePropertyChanged();
+        subscribeRoomViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(subscribeRoomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 

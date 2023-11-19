@@ -2,6 +2,7 @@ package app;
 
 import entity.User;
 import interface_adapter.Profile.ProfileViewModel;
+import interface_adapter.ViewManagerModel;
 import view.ProfileView;
 
 import javax.swing.*;
@@ -19,8 +20,9 @@ public class Main {
         application.add(views);
 
         ProfileViewModel profileViewModel= new ProfileViewModel();
-        User user1 = new User("user1","112233","00");
-        ProfileView profileView = new ProfileView(profileViewModel,user1);
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        User user1 = new User("user1",null,"00");
+        ProfileView profileView = ProfileUsecaseFactory.create(viewManagerModel,null,null,profileViewModel,null);
         views.add(profileView,profileView.viewName);
 
         application.pack();

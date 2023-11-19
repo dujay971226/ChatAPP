@@ -1,17 +1,27 @@
 package use_case.subscribe_room;
 
+import com.pubnub.api.PubNub;
+
+import java.util.ArrayList;
+
 /**
  * Output data of subscribe room.
  */
 public class SubscribeRoomOutputData {
     private final String channelName;
+    private final User user;
+    private final PubNub config;
+    private final ArrayList<Message> messageLog;
 
     /**
      * Initializes a SubscribeRoomOutputData instance.
      * @param channelName
      */
-    public SubscribeRoomOutputData(String channelName) {
+    public SubscribeRoomOutputData(String channelName, PubNub config, User user, ArrayList<Message> messageLog) {
         this.channelName = channelName;
+        this.config = config;
+        this.user = user;
+        this.messageLog = messageLog;
     }
 
     /**
@@ -21,4 +31,11 @@ public class SubscribeRoomOutputData {
     public String getChannelName() {
         return this.channelName;
     }
+
+    public PubNub getConfig() {return config; }
+
+    public User getUser() {return user; }
+
+    public ArrayList<Message> getMessageLog() {return messageLog; }
+
 }

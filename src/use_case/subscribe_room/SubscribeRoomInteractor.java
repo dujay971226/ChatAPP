@@ -27,7 +27,8 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
      */
     @Override
     public void execute(SubscribeRoomInputData subscribeRoomInputData) {
-
+        subscribeRoomDataAccessObject.getMessageLog(subscribeRoomInputData.getUser(),
+                subscribeRoomInputData.getChannelName());
     }
 
     /**

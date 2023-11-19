@@ -32,12 +32,10 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
      */
     @Override
     public void prepareSuccessView(CreateRoomOutputData outputData) {
-        //RoomState state = roomViewModel.getState();
-        //state.setChannel(new Channel(outputData.getChannelName()));
-        //state.setConfig(outputData.getConfig());
-        //state.setUser(outputData.getUser());
-
-        System.out.println("succ");
+        RoomState state = roomViewModel.getState();
+        state.setChannel(new Channel(outputData.getChannelName()));
+        state.setConfig(outputData.getConfig());
+        state.setUser(outputData.getUser());
     }
 
     /**

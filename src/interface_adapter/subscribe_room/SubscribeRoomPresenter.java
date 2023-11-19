@@ -1,7 +1,9 @@
 package interface_adapter.subscribe_room;
 
 
+import entity.Channel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.room.RoomState;
 import interface_adapter.room.RoomViewModel;
 import use_case.subscribe_room.SubscribeRoomOutputBoundary;
 import use_case.subscribe_room.SubscribeRoomOutputData;
@@ -31,7 +33,11 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
 
     @Override
     public void prepareSuccessView(SubscribeRoomOutputData outputData) {
-
+        RoomState state = roomViewModel.getState();
+        state.setChannel(new Channel(outputData.getChannelName()));
+        state.setConfig(outputData.getConfig());
+        state.setUser(outputData.getUser());
+        state.setMessageLog(outputData.getMessageLog());
     }
 
     @Override

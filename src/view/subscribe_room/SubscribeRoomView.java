@@ -96,7 +96,9 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
                 JOptionPane.showMessageDialog(this,
                         subscribeRoomViewModel.getState().getNoSelectionMsg());
             } else {
-                subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName());
+                subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName(),
+                        subscribeRoomViewModel.getState().getConfig(),
+                        subscribeRoomViewModel.getState().getUser());
             }
         }
     }

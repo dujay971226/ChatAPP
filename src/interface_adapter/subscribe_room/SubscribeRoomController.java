@@ -1,5 +1,7 @@
 package interface_adapter.subscribe_room;
 
+import com.pubnub.api.PubNub;
+import entity.User;
 import use_case.subscribe_room.SubscribeRoomInputBoundary;
 import use_case.subscribe_room.SubscribeRoomInputData;
 
@@ -24,8 +26,8 @@ public class SubscribeRoomController {
      * Creates input data and interactor executes.
      * @param channelName channel name
      */
-    public void execute(String channelName) {
-        SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName);
+    public void execute(String channelName, PubNub config, User user) {
+        SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName, config, user);
         subscribeRoomUseCaseInteractor.execute(inputData);
     }
 

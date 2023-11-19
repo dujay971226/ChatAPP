@@ -19,4 +19,6 @@ public interface SubscribeRoomDataAccessInterface {
      * @return array of channel names
      */
     String[] getChannelNames();
+
+    ArrayList<Message> getMessageLog(String channelName, String userName);
 }

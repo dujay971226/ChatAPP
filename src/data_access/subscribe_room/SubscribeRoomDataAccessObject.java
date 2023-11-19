@@ -56,6 +56,12 @@ public class SubscribeRoomDataAccessObject implements SubscribeRoomDataAccessInt
     }
 
     @Override
+    public ArrayList<Message> getMessageLog(String channelName, String userName) {
+        return null;
+    }
+
+    //TODO
+    @Override
     public String[] getChannelNames() {
         return new String[0];
     }

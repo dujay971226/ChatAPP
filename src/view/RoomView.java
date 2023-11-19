@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import com.google.gson.JsonElement;
@@ -28,6 +30,7 @@ import com.pubnub.api.models.consumer.pubsub.message_actions.PNMessageActionResu
 import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
 import com.pubnub.api.PubNubException;
 import entity.Message;
+import entity.User;
 import interface_adapter.room.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +43,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final RoomViewModel roomViewModel;
     private final JTextField messageInputField;
     private final RoomMessageController roomMessageController;
-    private final RoomFileController roomFileController;
+    private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
     private final SettingController settingController;
     private final JournalController journalController;
@@ -52,13 +55,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     public RoomView (RoomMessageController roomMessageController,
-                     RoomFileController roomFileController,
+                     RoomReceiveController roomReceiveController,
                      RoomExitController roomExitController,
                      RoomViewModel roomViewModel,
                      SettingController settingController,
                      JournalController journalController) throws PubNubException  {
         this.roomMessageController = roomMessageController;
-        this.roomFileController = roomFileController;
+        this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
         this.roomViewModel = roomViewModel;
         this.settingController = settingController;
@@ -93,6 +96,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                         if (evt.getSource().equals(send)) {
                             RoomState currState = roomViewModel.getState();
                             String text = messageInputField.getText();
+                            currState.setMessage("");
                             roomMessageController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
@@ -115,7 +119,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                                     currState.getChannel(),
                                     currState.getConfig()
                             );
-                            // channel, user, config,
+                            // TODO change to interactor
                         }
                     }
                 }
@@ -155,6 +159,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                             RoomState currState = roomViewModel.getState();
                             String text = messageInputField.getText();
+                            currentState.setMessage("");
                             roomMessageController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
@@ -181,15 +186,12 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     }
-    public static void main(String[] args) throws PubNubException {
-        final UserId userId = new UserId("myUniqueUserId");
-        PNConfiguration pnConfiguration = new PNConfiguration(userId);
-        pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");
-        pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd304abc");
-
-        PubNub pubnub = new PubNub(pnConfiguration);
-
-        final String channelName = "myChannel";
+    public void MessageReceiver(String[] args) throws PubNubException {
+        
+        RoomState currState = roomViewModel.getState();
+        
+        PubNub pubnub = currState.getConfig();
+        String channelName = currState.getChannel().getName();
 
 
         pubnub.addListener(new SubscribeCallback() {
@@ -224,20 +226,14 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     // message.getSubscription()
                 }
 
-
                 JsonElement receivedMessageObject = message.getMessage();
                 JsonElement receivedUserObject = message.getUserMetadata().getAsJsonObject().get("");
-                String user = receivedUserObject.toString();
+                User user = currState.getUser();
                 String msg = receivedMessageObject.toString();
-                RoomState currState = roomViewModel.getState();
-                currentState.setNewMessage(currState.getMessageLog().add(Message(user, msg)));
-                roomViewModel.setState(currentState);
+                ArrayList<Message> newMessages = currState.getMessageLog();
+                newMessages.add(new Message(user, msg, LocalDateTime.now()));
+                roomReceiveController.execute(newMessages);
 
-
-                /*
-                 * Log the following items with your favorite logger - message.getMessage() -
-                 * message.getSubscription() - message.getTimetoken()
-                 */
             }
 
             @Override
@@ -288,8 +284,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RoomState currState = (RoomState) evt.getNewValue();
-        if () {
-
+        if (currState.getNotice()) {
+            //translate message log to display panel
         }
 
     }

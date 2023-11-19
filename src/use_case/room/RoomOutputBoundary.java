@@ -3,4 +3,6 @@ public interface RoomOutputBoundary {
     void prepareLostConnectionView();
 
     void prepareProfileView();
+
+    void prepareNewMessageView(RoomOutputData roomOutputData);
 }

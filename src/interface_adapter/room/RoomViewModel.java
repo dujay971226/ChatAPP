@@ -22,7 +22,7 @@ public class RoomViewModel extends ViewModel {
 
     public void setState(RoomState state) {
         this.state = state;
-        TITLE_LABEL = state.getChannel().getChannelName();
+        TITLE_LABEL = state.getChannel().getName();
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

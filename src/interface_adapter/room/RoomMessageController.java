@@ -1,6 +1,8 @@
 package interface_adapter.room;
 
 import com.pubnub.api.PubNub;
+import entity.Channel;
+import entity.User;
 import use_case.room.RoomInputBoundary;
 import use_case.room.RoomMessageInputData;
 

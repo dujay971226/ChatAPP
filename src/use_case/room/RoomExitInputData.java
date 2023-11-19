@@ -1,6 +1,7 @@
 package use_case.room;
 
 import com.pubnub.api.PubNub;
+import entity.User;
 
 public class RoomExitInputData{
 

@@ -1,7 +1,9 @@
 package interface_adapter.room;
 
 import com.pubnub.api.PubNub;
+import entity.Channel;
 import entity.Message;
+import entity.User;
 
 import java.util.ArrayList;
 
@@ -17,11 +19,15 @@ public class RoomState {
 
     private PubNub config = null;
 
+    private boolean AWAIT_UPDATE = false;
+
     public RoomState(RoomState copy) {
         this.channel = copy.getChannel();
         this.currUser = copy.getUser();
         this.messageLog = copy.getMessageLog();
         this.message = copy.getMessage();
+        this.config = copy.getConfig();
+        this.AWAIT_UPDATE = copy.getNotice();
     }
 
     public RoomState () {
@@ -48,6 +54,10 @@ public class RoomState {
         return config;
     }
 
+    public boolean getNotice() {
+        return this.AWAIT_UPDATE;
+    }
+
     public void setChannel(Channel channel) {
         this.channel = channel;
     }
@@ -67,4 +77,10 @@ public class RoomState {
     public void setConfig(PubNub config) {
         this.config = config;
     }
+
+    public void setNotice() {
+        this.AWAIT_UPDATE = true;
+    }
+
+
 }

@@ -11,11 +11,11 @@ public class Channel {
 
     }
 
-    public String getname(){
+    public String getName(){
         return this.channelname;
     }
 
-    public String gettoken(){
+    public String getToken(){
         return this.token;
     }
 

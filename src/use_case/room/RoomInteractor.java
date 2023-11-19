@@ -5,8 +5,10 @@ import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
+import entity.Message;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class RoomInteractor implements RoomInputBoundary{
 
@@ -26,6 +28,15 @@ public class RoomInteractor implements RoomInputBoundary{
         RoomPresenter.prepareProfileView();
     }
 
+    @Override
+    public void execute(RoomReceiveInputData roomReceiveInputData) {
+        ArrayList<Message> newMessageLog = roomReceiveInputData.getMessages();
+
+        RoomOutputData roomOutputData = new RoomOutputData(newMessageLog);
+
+        RoomPresenter.prepareNewMessageView(roomOutputData);
+    }
+
 
     //Send Message Use Case
     @Override
@@ -37,7 +48,7 @@ public class RoomInteractor implements RoomInputBoundary{
         messageJsonObject.addProperty("msg", roomMessageInputData.getMessage());
 
         pubnub.publish()
-                .channel(roomMessageInputData.getChannel().getChannelName())
+                .channel(roomMessageInputData.getChannel().getName())
                 .message(messageJsonObject)
                 .async((result, publishStatus) -> {
                     if (!publishStatus.isError()) {
@@ -45,6 +56,7 @@ public class RoomInteractor implements RoomInputBoundary{
                     else {
                         RoomPresenter.prepareLostConnectionView();
                     }
-                });
+                }
+                );
     }
 }

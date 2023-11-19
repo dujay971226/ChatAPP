@@ -1,16 +1,8 @@
 package app;
 
-import interface_adapter.LoginViewModel;
-import interface_adapter.SignupViewModel;
-import interface_adapter.PorfolioViewModel;
-import interface_adapter.NewChannelViewModel;
-import interface_adapter.ChannelViewModel;
+import interface_adapter.room.RoomViewModel;
 import interface_adapter.ViewManagerModel;
-import view.LoginView;
-import view.SignupView;
-import view.PorfolioView;
-import view.ChannelView;
-import view.NewChannelView;
+import view.RoomView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -22,28 +14,20 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-//        JFrame application = new JFrame("Chat App");
-//        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//        CardLayout cardLayout = new CardLayout();
-//
-//        // The various View objects. Only one view is visible at a time.
-//        JPanel views = new JPanel(cardLayout);
-//        application.add(views);
+        JFrame application = new JFrame("Chat App");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        CardLayout cardLayout = new CardLayout();
+
+       // The various View objects. Only one view is visible at a time.
+        JPanel views = new JPanel(cardLayout);
+        application.add(views);
 //
 //        // This keeps track of and manages which view is currently showing.
-//        ViewManagerModel viewManagerModel = new ViewManagerModel();
-//        new ViewManager(views, cardLayout, viewManagerModel);
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        new ViewManager(views, cardLayout, viewManagerModel);
 
-        // The data for the views, such as username and password, are in the ViewModels.
-        // This information will be changed by a presenter object that is reporting the
-        // results from the use case. The ViewModels are observable, and will
-        // be observed by the Views.
-//        LoginViewModel loginViewModel = new LoginViewModel();
-//        SignupViewModel signupViewModel = new SignupViewModel();;
-//        PorfolioViewModel profolioViewModel = new PorfolioViewModel();
-//        NewChannelViewModel newChannelViewModel = new NewChannelViewModel();
-//        ChannelViewModel channelViewModel = new ChannelViewModel();
+        RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, );
 
 
 //        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
@@ -58,7 +42,7 @@ public class Main {
 //        ChannelView channelView = ChannelUseCaseFactory.create();
 //        views.add(channelView, channelView.viewName);
 //
-//        NewChannelView newChannelView = ChannelUseCaseFactory.create();
+        RoomView roomView = RoomUseCaseFactory.create();
 //        views.add(newChannelView, newChannelView.viewName);
 //
 //        viewManagerModel.setActiveView(loginView.viewName);

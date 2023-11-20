@@ -44,8 +44,6 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     @Override
     public void jumpLogin() {
-        loginViewModel.firePropertyChanged();
-
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -1,5 +1,6 @@
 package view;
 
+import com.pubnub.api.PubNubException;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -55,10 +56,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
+                            try {
+                                loginController.execute(
+                                        currentState.getUsername(),
+                                        currentState.getPassword()
+                                );
+                            } catch (PubNubException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }

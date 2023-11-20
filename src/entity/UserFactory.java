@@ -1,5 +1,10 @@
 package entity;
 
-public interface UserFactory {
-    User create(String name, String password);
+import com.pubnub.api.UserId;
+
+public class UserFactory {
+
+    public User create(String name, String password){
+        return new User(name, password);
+    }
 }

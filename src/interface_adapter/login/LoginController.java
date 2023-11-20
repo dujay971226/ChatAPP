@@ -1,4 +1,5 @@
 package interface_adapter.login;
+import com.pubnub.api.PubNubException;
 import use_case.login.LoginInputData;
 import use_case.login.LoginInputBoundary;
 import use_case.signup.SignupInputBoundary;
@@ -11,7 +12,7 @@ public class LoginController {
     }
 
 
-    public void execute(String username, String password) {
+    public void execute(String username, String password) throws PubNubException {
         LoginInputData loginInputData = new LoginInputData(
                 username, password);
 

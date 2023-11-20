@@ -1,17 +1,18 @@
 package entity;
 
 public class Channel {
-    private final String channelname;
+    private final String channelName;
+
     private final User currUser;
 
-    public Channel(String name, User currUser){
-        this.channelname = name;
+    public Channel(String channelName, User currUser){
+        this.channelName = channelName;
         this.currUser = currUser;
 
     }
 
     public String getName(){
-        return this.channelname;
+        return this.channelName;
     }
 
     public User getUser(){
@@ -20,4 +21,3 @@ public class Channel {
 
 
 }
-

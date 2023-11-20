@@ -20,17 +20,13 @@ import java.util.*;
  */
 public class CreateRoomInteractor implements CreateRoomInputBoundary {
 
-    final CreateRoomDataAccessInterface createRoomDataAccessObject;
     final CreateRoomOutputBoundary createRoomPresenter;
 
     /**
      * Initializes a createRoomInteractor instance given a data access object and presenter.
-     * @param createRoomDataAccessInterface data access object of create room.
      * @param createRoomOutputBoundary presenter of create room.
      */
-    public CreateRoomInteractor(CreateRoomDataAccessInterface createRoomDataAccessInterface,
-                                CreateRoomOutputBoundary createRoomOutputBoundary) {
-        this.createRoomDataAccessObject = createRoomDataAccessInterface;
+    public CreateRoomInteractor(CreateRoomOutputBoundary createRoomOutputBoundary) {
         this.createRoomPresenter = createRoomOutputBoundary;
 
     }
@@ -47,13 +43,13 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
         } else {
             ArrayList<Message> messageLog = getMessageLog(createRoomInputData.getChannelName(),
                     createRoomInputData.getConfig(), createRoomInputData.getUser());
-
             CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName(),
                     createRoomInputData.getConfig(), createRoomInputData.getUser(), messageLog);
             createRoomPresenter.prepareSuccessView(createRoomOutputData);
         }
     }
 
+    // Checks if channel exists in an arraylist of channels.
     private boolean exists(String channel, ArrayList<Channel> channels) {
         for (Channel c : channels) {
             if (channel.equals(c.getName())) {
@@ -63,6 +59,7 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
         return false;
     }
 
+    // Returns message history using pubnub.
     private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
@@ -88,8 +85,6 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
                         }
                     }
                 });
-
-
-        return null;
+        return messageLog;
     }
 }

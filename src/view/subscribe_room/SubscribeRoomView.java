@@ -1,18 +1,19 @@
 package view.subscribe_room;
 
+import entity.Channel;
 import interface_adapter.ProfileToCreateController;
+import interface_adapter.create_room.CreateRoomState;
 import interface_adapter.subscribe_room.SubscribeRoomController;
 import interface_adapter.subscribe_room.SubscribeRoomState;
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -26,8 +27,6 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     private final SubscribeRoomController subscribeRoomController;
     private final ProfileToCreateController profileToCreateController;
     private final String[] channelNames;
-    private final JList<String> channelList;
-    private final JScrollPane channelPane;
     private final JButton subscribeButton;
     private final JButton toCreateButton;
 
@@ -43,12 +42,17 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         this.profileToCreateController = profileToCreateController;
         subscribeRoomViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(subscribeRoomViewModel.TITLE_LABEL);
+        JLabel title1 = new JLabel(subscribeRoomViewModel.LIST_LABEL);
+        title1.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-        ArrayList<String> channelNameArrList = subscribeRoomController.getChannels();
-        channelNames = channelNameArrList.toArray(new String[0]);
-
-        channelList = new JList<String>(channelNames);
+        SubscribeRoomState currentState = subscribeRoomViewModel.getState();
+        ArrayList<Channel> channelLog = currentState.getChannelLog();
+        ArrayList<String> channelStrings = new ArrayList<>();
+        for (Channel channel : channelLog) {
+            channelStrings.add(channel.getName());
+        }
+        channelNames = channelStrings.toArray(new String[0]);
+        JList<String> channelList = new JList<>(channelNames);
         channelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         channelList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -73,25 +77,61 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
                 }
             }
         });
-        channelPane = new JScrollPane(channelList);
+        JScrollPane channelPane = new JScrollPane(channelList);
+        channelPane.setPreferredSize(new Dimension(500, 200));
+        JTextField search = new JTextField(15);
+        search.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                SubscribeRoomState currentState = subscribeRoomViewModel.getState();
+                currentState.setChannelName(search.getText() + e.getKeyChar());
+                subscribeRoomViewModel.setState(currentState);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+        JPanel searchPanel = new JPanel();
+        searchPanel.add(new JLabel(subscribeRoomViewModel.TF_LABEL));
+        searchPanel.add(search);
+        searchPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+
+        JPanel channelPanel = new JPanel();
+        channelPanel.setLayout(new BoxLayout(channelPanel, BoxLayout.PAGE_AXIS));
+        channelPanel.add(title1);
+        channelPanel.add(channelPane);
+        channelPanel.add(searchPanel);
 
         subscribeButton = new JButton(subscribeRoomViewModel.SUBSCRIBE_BUTTON_LABEL);
         subscribeButton.addActionListener(this);
         toCreateButton = new JButton(subscribeRoomViewModel.TO_CREATE_BUTTON_LABEL);
         toCreateButton.addActionListener(this);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
-        this.add(channelPane);
-        this.add(subscribeButton);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(subscribeButton);
+        buttonPanel.add(toCreateButton);
 
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.add(channelPanel);
+        this.add(buttonPanel);
 
     }
 
-
-    // property change not used
+    /**
+     * Shows error message if exists.
+     * @param evt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {}
+    public void propertyChange(PropertyChangeEvent evt) {
+        SubscribeRoomState state = subscribeRoomViewModel.getState();
+        if (state.getChannelNameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getChannelNameError());
+        }
+    }
 
     /**
      * When button is clicked, controller executes according to the selection made. If one selection was recorded,
@@ -107,7 +147,8 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             } else {
                 subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName(),
                         subscribeRoomViewModel.getState().getConfig(),
-                        subscribeRoomViewModel.getState().getUser());
+                        subscribeRoomViewModel.getState().getUser(),
+                        subscribeRoomViewModel.getState().getChannelLog());
             }
         } else if (e.getSource().equals(toCreateButton)) {
             SubscribeRoomState state = subscribeRoomViewModel.getState();

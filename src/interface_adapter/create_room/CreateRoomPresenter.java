@@ -47,6 +47,7 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     public void prepareFailView(String error) {
         CreateRoomState state = createRoomViewModel.getState();
         state.setChannelNameError(error);
+        createRoomViewModel.setState(state);
         createRoomViewModel.firePropertyChanged();
     }
 }

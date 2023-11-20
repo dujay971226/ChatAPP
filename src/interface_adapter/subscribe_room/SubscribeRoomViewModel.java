@@ -14,12 +14,18 @@ public class SubscribeRoomViewModel extends ViewModel {
     /**
      * Title label.
      */
-    public final String TITLE_LABEL = "Join a room";
+    public final String LIST_LABEL = "Join a room by choosing from the list below:";
+    public final String TF_LABEL = "Or enter room name here:";
+
     /**
      * Button label.
      */
     public final String SUBSCRIBE_BUTTON_LABEL = "Join";
-    public final String TO_CREATE_BUTTON_LABEL = "Create";
+
+    /**
+     * To create view button label.
+     */
+    public final String TO_CREATE_BUTTON_LABEL = "Create Instead";
 
     private SubscribeRoomState state = new SubscribeRoomState();
 

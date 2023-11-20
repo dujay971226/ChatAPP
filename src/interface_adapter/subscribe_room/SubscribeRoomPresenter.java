@@ -44,6 +44,9 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-        // TODO
+        SubscribeRoomState state = subscribeViewModel.getState();
+        state.setChannelNameError(error);
+        subscribeViewModel.setState(state);
+        subscribeViewModel.firePropertyChanged();
     }
 }

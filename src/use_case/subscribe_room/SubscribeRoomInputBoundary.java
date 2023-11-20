@@ -15,9 +15,4 @@ public interface SubscribeRoomInputBoundary {
      */
     void execute(SubscribeRoomInputData subscribeRoomInputData);
 
-    /**
-     * Gets the channels as a string array.
-     * @return channel stirng array
-     */
-    ArrayList<String> getChannels();
 }

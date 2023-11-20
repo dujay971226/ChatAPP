@@ -2,6 +2,7 @@ package view;
 
 
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,8 +10,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -46,7 +46,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
     private final RoomToSettingController roomToSettingController;
-    private final JournalController journalController;
+    private final RoomToJournalController roomToJournalController;
     private final JButton setting;
     private final JButton journal;
     private final JButton exit;
@@ -59,13 +59,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                      RoomExitController roomExitController,
                      RoomViewModel roomViewModel,
                      RoomToSettingController roomToSettingController,
-                     JournalController journalController) throws PubNubException  {
+                     RoomToJournalController roomToJournalController) throws PubNubException  {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
         this.roomViewModel = roomViewModel;
         this.roomToSettingController = roomToSettingController;
-        this.journalController = journalController;
+        this.roomToJournalController = roomToJournalController;
         roomViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(RoomViewModel.TITLE_LABEL);
@@ -80,7 +80,14 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         exit = new JButton(RoomViewModel.EXIT_BUTTON_LABEL);
         buttons_high.add(exit);
 
-        JScrollPane mid = new JScrollPane();
+        RoomState currState = roomViewModel.getState();
+        ArrayList<Message> newMessages = currState.getMessageLog();
+        ArrayList<String>sortedMessage = SortByDate(newMessages);
+        String[] sortedMessageStringList = sortedMessage.toArray(new String[0]);
+        JList<String> messageList = new JList<String>(sortedMessageStringList);
+        messageList.setFont(messageList.getFont().deriveFont(14.0f));
+        JScrollPane roomPane = new JScrollPane(messageList);
+        roomPane.setPreferredSize(new Dimension(800,600));
 
         JPanel low = new JPanel();
         low.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -128,8 +135,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(journal)) {
-                            RoomState currState = roomViewModel.getState();
-                            journalController.execute();
+                            roomToJournalController.execute();
                         }
                     }
                 }
@@ -185,6 +191,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     }
+
+
     public void MessageReceiver(String[] args) throws PubNubException {
         
         RoomState currState = roomViewModel.getState();
@@ -282,12 +290,16 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        RoomState currState = (RoomState) evt.getNewValue();
-        if (currState.getNotice()) {
-            //translate message log to display panel
-        }
 
     }
+
+
+    private ArrayList<String> SortByDate(ArrayList<Message> newMessages) {
+        Map<LocalDateTime, String> dateFormatMap = new TreeMap<>();
+        newMessages.forEach(s -> dateFormatMap.put(s.getTime(), s.getUser().getName() + s.getContent()));
+        return new ArrayList<>(dateFormatMap.values());
+    }
+
 
 
 }

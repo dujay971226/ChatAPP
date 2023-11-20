@@ -7,4 +7,6 @@ public interface RoomOutputBoundary {
     void prepareNewMessageView(RoomOutputData roomOutputData);
 
     void prepareSettingView(RoomToSettingOutputData roomToSettingOutputData);
+
+    void prepareJournalView();
 }

@@ -1,23 +1,24 @@
 package entity;
 
 public class Channel {
-    private final String channelname;
+    private final String channelName;
 
-    private final String token;
+    private User currUser;
 
-    public Channel(String name, String token){
-        this.channelname = name;
-        this.token = token;
+    public Channel(String channelName, User currUser){
+        this.channelName = channelName;
+        this.currUser = currUser;
 
     }
 
     public String getName(){
-        return this.channelname;
+        return this.channelName;
     }
 
-    public String getToken(){
-        return this.token;
+    public User getUser(){
+        return this.currUser;
     }
+    public void setCurrUser(User currUser){this.currUser = currUser;}
 
 
 }

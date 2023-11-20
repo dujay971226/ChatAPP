@@ -1,7 +1,10 @@
 package app;
 
+import com.pubnub.api.PubNubException;
 import entity.Message;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.journal.JournalViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.*;
 import use_case.room.RoomInputBoundary;
 import use_case.room.RoomInteractor;
@@ -17,31 +20,34 @@ public class RoomUseCaseFactory {
 
     private RoomUseCaseFactory() {}
     public static RoomView create(
-            ViewManagerModel viewManagerModel, RoomViewModel roomViewModel, ProfileViewModel profileViewModel, SettingViewModel settingViewModel) {
+            ViewManagerModel viewManagerModel, RoomViewModel roomViewModel, ProfileViewModel profileViewModel, JournalViewModel journalViewModel, SettingViewModel settingViewModel) {
 
         try {
             RoomMessageController roomMessageController = createRoomMessageUseCase(viewManagerModel,
-                    profileViewModel, settingViewModel, roomViewModel);
+                    profileViewModel, journalViewModel, settingViewModel, roomViewModel);
             RoomReceiveController roomReceiveController = createRoomReceiveUseCase(viewManagerModel,
-                    profileViewModel, settingViewModel, roomViewModel);
+                    profileViewModel, journalViewModel, settingViewModel, roomViewModel);
             RoomExitController roomExitController = createRoomExitUseCase(viewManagerModel,
-                    profileViewModel, settingViewModel, roomViewModel);
+                    profileViewModel, journalViewModel, settingViewModel, roomViewModel);
             RoomToSettingController roomToSettingController = createRoomToSettingUseCase(viewManagerModel,
-                    profileViewModel, settingViewModel, roomViewModel);
+                    profileViewModel, journalViewModel, settingViewModel, roomViewModel);
+            RoomToJournalController roomToJournalController = createRoomToJournalUseCase(viewManagerModel,
+                    profileViewModel, journalViewModel, settingViewModel, roomViewModel);
             return new RoomView(roomMessageController, roomReceiveController,
-                    roomExitController, roomViewModel, roomToSettingController, journalController);
-        } catch (IOException e) {
+                    roomExitController, roomViewModel, roomToSettingController, roomToJournalController);
+        } catch (IOException | PubNubException e) {
         }
 
         return null;
     }
 
     private static RoomMessageController createRoomMessageUseCase(ViewManagerModel viewManagerModel,
-                                                            ProfileViewModel profileViewModel,
-                                                            SettingViewModel settingViewModel,
-                                                            RoomViewModel roomViewModel) throws IOException {
+                                                                  ProfileViewModel profileViewModel,
+                                                                  JournalViewModel journalViewModel,
+                                                                  SettingViewModel settingViewModel,
+                                                                  RoomViewModel roomViewModel) throws IOException {
 
-        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, settingViewModel, roomViewModel);
+        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, journalViewModel, settingViewModel, roomViewModel);
 
         RoomInputBoundary roomInteractor = new RoomInteractor(
                 roomOutputBoundary);
@@ -50,11 +56,12 @@ public class RoomUseCaseFactory {
     }
 
     private static RoomReceiveController createRoomReceiveUseCase(ViewManagerModel viewManagerModel,
-                                                           ProfileViewModel profileViewModel,
-                                                           SettingViewModel settingViewModel,
-                                                           RoomViewModel roomViewModel) throws IOException {
+                                                                  ProfileViewModel profileViewModel,
+                                                                  JournalViewModel journalViewModel,
+                                                                  SettingViewModel settingViewModel,
+                                                                  RoomViewModel roomViewModel) throws IOException {
 
-        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, settingViewModel, roomViewModel);
+        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, journalViewModel, settingViewModel, roomViewModel);
 
         RoomInputBoundary roomInteractor = new RoomInteractor(
                 roomOutputBoundary);
@@ -63,11 +70,12 @@ public class RoomUseCaseFactory {
     }
 
     private static RoomExitController createRoomExitUseCase(ViewManagerModel viewManagerModel,
-                                                           ProfileViewModel profileViewModel,
-                                                           SettingViewModel settingViewModel,
-                                                           RoomViewModel roomViewModel) throws IOException {
+                                                            ProfileViewModel profileViewModel,
+                                                            JournalViewModel journalViewModel,
+                                                            SettingViewModel settingViewModel,
+                                                            RoomViewModel roomViewModel) throws IOException {
 
-        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, settingViewModel, roomViewModel);
+        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, journalViewModel, settingViewModel, roomViewModel);
 
         RoomInputBoundary roomInteractor = new RoomInteractor(
                 roomOutputBoundary);
@@ -76,15 +84,31 @@ public class RoomUseCaseFactory {
     }
 
     private static RoomToSettingController createRoomToSettingUseCase(ViewManagerModel viewManagerModel,
-                                                                  ProfileViewModel profileViewModel,
-                                                                  SettingViewModel settingViewModel,
-                                                                  RoomViewModel roomViewModel) throws IOException {
+                                                                      ProfileViewModel profileViewModel,
+                                                                      JournalViewModel journalViewModel,
+                                                                      SettingViewModel settingViewModel,
+                                                                      RoomViewModel roomViewModel) throws IOException {
 
-        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, settingViewModel, roomViewModel);
+        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel, journalViewModel, settingViewModel, roomViewModel);
 
         RoomInputBoundary roomInteractor = new RoomInteractor(
                 roomOutputBoundary);
 
         return new RoomToSettingController(roomInteractor);
+    }
+
+    private static RoomToJournalController createRoomToJournalUseCase(ViewManagerModel viewManagerModel,
+                                                                      ProfileViewModel profileViewModel,
+                                                                      JournalViewModel journalViewModel,
+                                                                      SettingViewModel settingViewModel,
+                                                                      RoomViewModel roomViewModel) throws IOException {
+
+        RoomOutputBoundary roomOutputBoundary = new RoomPresenter(viewManagerModel, profileViewModel,
+                journalViewModel, settingViewModel, roomViewModel);
+
+        RoomInputBoundary roomInteractor = new RoomInteractor(
+                roomOutputBoundary);
+
+        return new RoomToJournalController(roomInteractor);
     }
 }

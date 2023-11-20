@@ -39,6 +39,11 @@ public class RoomInteractor implements RoomInputBoundary{
     }
 
     @Override
+    public void execute() {
+        RoomPresenter.prepareJournalView();
+    }
+
+    @Override
     public void execute(RoomReceiveInputData roomReceiveInputData) {
         ArrayList<Message> newMessageLog = roomReceiveInputData.getMessages();
 

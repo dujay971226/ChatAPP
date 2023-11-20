@@ -10,4 +10,6 @@ public interface RoomInputBoundary {
     void execute(RoomExitInputData roomExitInputData);
 
     void execute(RoomToSettingInputData roomToSettingInputData);
+
+    void execute();
 }

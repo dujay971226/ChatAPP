@@ -1,6 +1,8 @@
 package interface_adapter.room;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.journal.JournalViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.room.RoomOutputBoundary;
 import use_case.room.RoomOutputData;
 import use_case.room.RoomToSettingOutputData;
@@ -11,15 +13,18 @@ public class RoomPresenter implements RoomOutputBoundary {
 
     private final RoomViewModel roomViewModel;
     private final ProfileViewModel profileViewModel;
+    private final JournalViewModel journalViewModel;
     private final SettingViewModel settingViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public RoomPresenter (ViewManagerModel viewManagerModel,
                           ProfileViewModel profileViewModel,
+                          JournalViewModel journalViewModel,
                           SettingViewModel settingViewModel,
                           RoomViewModel roomViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
+        this.journalViewModel = journalViewModel;
         this.settingViewModel = settingViewModel;
         this.roomViewModel = roomViewModel;
 
@@ -57,6 +62,12 @@ public class RoomPresenter implements RoomOutputBoundary {
         this.viewManagerModel.setActiveView(settingViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
 
+    }
+
+    @Override
+    public void prepareJournalView() {
+        this.viewManagerModel.setActiveView(journalViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     public void prepareLostConnectionView() {

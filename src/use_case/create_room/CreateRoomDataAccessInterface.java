@@ -5,6 +5,7 @@ import entity.User;
 
 import java.time.LocalDateTime;
 
+// Not used.
 /**
  * Data access interface of create room.
  */

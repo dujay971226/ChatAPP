@@ -7,6 +7,7 @@ import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+// To be merged.
 public class ViewManager implements PropertyChangeListener {
 
     private final CardLayout cardLayout;

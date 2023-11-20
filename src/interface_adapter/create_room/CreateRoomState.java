@@ -90,5 +90,4 @@ public class CreateRoomState {
     public String getChannelNameError() {return channelNameError; }
 
 
-
 }

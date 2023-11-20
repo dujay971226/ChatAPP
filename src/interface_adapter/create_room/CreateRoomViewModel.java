@@ -12,14 +12,9 @@ import java.beans.PropertyChangeSupport;
 public class CreateRoomViewModel extends ViewModel {
 
     /**
-     * Title of create room.
-     */
-    public final String TITLE_LABEL = "Enter room name to create a room";
-
-    /**
      * Label of text field.
      */
-    public final String CREATE_ROOM_LABEL = "Enter room name here:";
+    public final String CREATE_ROOM_LABEL = "Enter room name below to create a room:";
 
     /**
      * Label of button.
@@ -29,7 +24,7 @@ public class CreateRoomViewModel extends ViewModel {
     /**
      * Label of subscribe button
      */
-    public final String TO_SUB_BUTTON_LABEL = "Subscribe Instead";
+    public final String TO_SUB_BUTTON_LABEL = "Join Instead";
 
     private CreateRoomState state = new CreateRoomState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

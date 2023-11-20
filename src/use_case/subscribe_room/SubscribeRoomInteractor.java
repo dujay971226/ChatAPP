@@ -51,14 +51,12 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 
     // Checks if channel exists in an arraylist of channel.
     private boolean exists(String channel, ArrayList<Channel> channels) {
-        return true;
-        /*
         for (Channel c : channels) {
             if (channel.equals(c.getName())) {
                 return true;
             }
         }
-        return false;*/
+        return false;
     }
 
     // Returns message history using pubnub.

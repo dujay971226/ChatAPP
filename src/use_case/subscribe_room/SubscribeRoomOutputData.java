@@ -34,10 +34,22 @@ public class SubscribeRoomOutputData {
         return this.channelName;
     }
 
+    /**
+     * Gets config.
+     * @return config.
+     */
     public PubNub getConfig() {return config; }
 
+    /**
+     * Gets user.
+     * @return user
+     */
     public User getUser() {return user; }
 
+    /**
+     * Gets arraylist of message history.
+     * @return message log
+     */
     public ArrayList<Message> getMessageLog() {return messageLog; }
 
 }

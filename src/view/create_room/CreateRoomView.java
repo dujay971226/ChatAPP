@@ -7,6 +7,7 @@ import interface_adapter.create_room.CreateRoomViewModel;
 import view.LabelTextPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,18 +39,18 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
         this.profileToSubscribeController = profileToSubscribeController;
         createRoomViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(createRoomViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel createRoomInfo = new LabelTextPanel(
                 new JLabel(createRoomViewModel.CREATE_ROOM_LABEL), createRoomTextField);
-
+        createRoomInfo.setBorder(new EmptyBorder(10, 0, 10, 0));
+        createRoomInfo.setPreferredSize(new Dimension(300, 70));
         createButton = new JButton(createRoomViewModel.CREATE_BUTTON_LABEL);
         createButton.addActionListener(this);
         toSubscribeButton = new JButton(createRoomViewModel.TO_SUB_BUTTON_LABEL);
         toSubscribeButton.addActionListener(this);
-
-
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(createButton);
+        buttonPanel.add(toSubscribeButton);
         createRoomTextField.addKeyListener(new KeyListener() {
 
             /**
@@ -69,12 +70,9 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void keyReleased(KeyEvent e) {}
         });
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(createRoomInfo);
-        this.add(createButton);
-        this.add(toSubscribeButton);
+        this.add(buttonPanel);
     }
 
     /**

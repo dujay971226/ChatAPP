@@ -6,6 +6,7 @@ import interface_adapter.create_room.CreateRoomState;
 import interface_adapter.subscribe_room.SubscribeRoomController;
 import interface_adapter.subscribe_room.SubscribeRoomState;
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
+import view.LabelTextPanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -53,6 +54,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         }
         channelNames = channelStrings.toArray(new String[0]);
         JList<String> channelList = new JList<>(channelNames);
+        channelList.setFont(channelList.getFont().deriveFont(13.0f));
         channelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         channelList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -78,7 +80,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             }
         });
         JScrollPane channelPane = new JScrollPane(channelList);
-        channelPane.setPreferredSize(new Dimension(500, 200));
+        channelPane.setPreferredSize(new Dimension(400, 150));
         JTextField search = new JTextField(15);
         search.addKeyListener(new KeyListener() {
             @Override
@@ -94,9 +96,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             @Override
             public void keyReleased(KeyEvent e) {}
         });
-        JPanel searchPanel = new JPanel();
-        searchPanel.add(new JLabel(subscribeRoomViewModel.TF_LABEL));
-        searchPanel.add(search);
+        LabelTextPanel searchPanel = new LabelTextPanel(new JLabel(subscribeRoomViewModel.TF_LABEL), search);
         searchPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
 
         JPanel channelPanel = new JPanel();

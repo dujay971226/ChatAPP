@@ -1,8 +1,6 @@
 package app;
 
 import com.pubnub.api.PubNubException;
-import data_access.create_room.CreateRoomDataAccessObject;
-import data_access.subscribe_room.SubscribeRoomDataAccessObject;
 import entity.Channel;
 import entity.User;
 import interface_adapter.ProfileToCreateController;
@@ -28,21 +26,43 @@ import view.subscribe_room.SubscribeRoomView;
 import javax.swing.*;
 import java.util.ArrayList;
 
+
+/**
+ *********************************
+ *
+ *
+ *
+ *
+ * This class is for testing only.
+ *
+ *
+ * TO BE DELETED
+ *
+ * Not Main class to be used for ChatAPP.
+ *
+ *
+ *
+ *
+ *
+ *
+ * *************************************
+ */
 public class Main {
 
     public static void main(String[] args) throws PubNubException {
-
+/*
         JFrame application = new JFrame("ChatAPP");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-/*
+
         CreateRoomViewModel viewModel = new CreateRoomViewModel();
-        CreateRoomDataAccessInterface dataAccessObject = new CreateRoomDataAccessObject("src/data_access/sampleData.json");
         CreateRoomOutputBoundary presenter = new CreateRoomPresenter(new ViewManagerModel(), viewModel, new RoomViewModel());
         CreateRoomInteractor interactor = new CreateRoomInteractor(presenter);
         CreateRoomController controller = new CreateRoomController(interactor);
         ProfileToSubscribeController c = new ProfileToSubscribeController();
         CreateRoomView view = new CreateRoomView(controller, viewModel, c);
-*/
+
+
+
 
         SubscribeRoomViewModel viewModel = new SubscribeRoomViewModel();
         SubscribeRoomState state = viewModel.getState();
@@ -68,12 +88,11 @@ public class Main {
         SubscribeRoomInteractor interactor = new SubscribeRoomInteractor(presenter);
         SubscribeRoomController controller = new SubscribeRoomController(interactor);
         SubscribeRoomView view = new SubscribeRoomView(controller, viewModel, new ProfileToCreateController());
+
+
         application.add(view);
         application.pack();
         application.setVisible(true);
-
+*/
     }
-
-
-
 }

@@ -5,7 +5,7 @@ import entity.Message;
 import entity.User;
 
 import java.util.ArrayList;
-
+// Not used.
 /**
  * Data access interface of subscribe room.
  */

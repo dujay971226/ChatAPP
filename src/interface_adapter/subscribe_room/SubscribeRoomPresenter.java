@@ -31,7 +31,10 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
         this.viewManagerModel = managerModel;
     }
 
-
+    /**
+     * Transitions to room view.
+     * @param outputData output data.
+     */
     @Override
     public void prepareSuccessView(SubscribeRoomOutputData outputData) {
         RoomState state = roomViewModel.getState();
@@ -42,6 +45,10 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
         state.setNotice();
     }
 
+    /**
+     * Pop up with error message.
+     * @param error error string
+     */
     @Override
     public void prepareFailView(String error) {
         SubscribeRoomState state = subscribeViewModel.getState();

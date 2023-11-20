@@ -2,7 +2,7 @@ package interface_adapter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
+// to be merged
 public class ViewManagerModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private String activeViewName;

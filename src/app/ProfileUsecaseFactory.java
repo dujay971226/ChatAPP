@@ -1,6 +1,6 @@
 package app;
 
-import data_access.ChannelDataAccessInterface;
+import data_access.ChannelDataAccessnObject;
 import interface_adapter.Profile.ProfileViewModel;
 import interface_adapter.Profile.profiletocreate.ProfileToCreateController;
 import interface_adapter.Profile.profiletocreate.ProfileToCreatePresenter;
@@ -20,10 +20,10 @@ import java.io.IOException;
 
 public class ProfileUsecaseFactory {
 
-    public static ProfileView create(ViewManagerModel viewManagerModel, CreatRoomViewModel creatRoomViewModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel, ChannelDataAccessInterface channelDataAccessInterface){
+    public static ProfileView create(ViewManagerModel viewManagerModel, CreatRoomViewModel creatRoomViewModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel, ChannelDataAccessnObject channelDataAccessnObject){
         try {
             ProfileToCreateController profiletocreateController = createprofilecreateUseCase(viewManagerModel, creatRoomViewModel, profileViewModel);
-            ProfileToSubscribeController profiletosubscribeController = createprofilesubscribeUsCase(viewManagerModel, subscribeRoomViewModel, profileViewModel, channelDataAccessInterface);
+            ProfileToSubscribeController profiletosubscribeController = createprofilesubscribeUsCase(viewManagerModel, subscribeRoomViewModel, profileViewModel, channelDataAccessnObject);
             return new ProfileView(profileViewModel, profiletocreateController, profiletosubscribeController);
 
         }catch (IOException e) {
@@ -38,9 +38,9 @@ public class ProfileUsecaseFactory {
         return new ProfileToCreateController(profiletocreateInteractor);
     }
 
-    public ProfileToSubscribeController createprofilesubscribeUsCase(ViewManagerModel viewManagerModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel, ChannelDataAccessInterface channelDataAccessInterface)throws IOException{
+    public ProfileToSubscribeController createprofilesubscribeUsCase(ViewManagerModel viewManagerModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel, ChannelDataAccessnObject channelDataAccessnObject)throws IOException{
         ProfiletosubscribeOutputBoundary profiletosubscribeOutputBoundary = new ProfileToSubscribePresenter(viewManagerModel, subscribeRoomViewModel, profileViewModel);
-        ProfiletosubscribeInputBoundary profiletosubscribeInteractor = new ProfiletosubscribeInteractor(channelDataAccessInterface, profiletosubscribeOutputBoundary);
+        ProfiletosubscribeInputBoundary profiletosubscribeInteractor = new ProfiletosubscribeInteractor(channelDataAccessnObject, profiletosubscribeOutputBoundary);
         return new ProfileToSubscribeController(profiletosubscribeInteractor);
     }
 

@@ -37,7 +37,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         profileViewModel.addPropertyChangeListener(this);
         ProfileState profileState = profileViewModel.getState();
         JLabel title = new JLabel(ProfileViewModel.TITLE);
-        title.setText(profileState.getUser().getname() + ProfileViewModel.TITLE);
+        title.setText(profileState.getUser().getName() + ProfileViewModel.TITLE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JPanel buttons = new JPanel();
 
@@ -84,15 +84,11 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         buttons.add(logout);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JLabel userid = new JLabel("userid");
-        userid.setText("ID:" + profileViewModel.getState().getUser().getuserid().toString());
-        userid.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
 
 
         this.add(title);
-        this.add(userid);
         this.add(buttons);
 
 

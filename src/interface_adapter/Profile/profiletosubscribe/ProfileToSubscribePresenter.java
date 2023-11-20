@@ -5,6 +5,8 @@ import interface_adapter.ViewManagerModel;
 import use_case.profiletosubscribe.ProfiletosubscribeOutputBoundary;
 import use_case.profiletosubscribe.ProfiletosubscribeOutputData;
 
+import java.util.ArrayList;
+
 public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final SubscribeRoomViewModel subscribeRoomViewModel;
@@ -20,6 +22,7 @@ public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoun
         SubscribeRoomState subscribeRoomState = subscribeRoomViewModel.getState();
         subscribeRoomState.setUser(outputData.getUser());
         subscribeRoomState.setConfig(outputData.getConfig());
+        subscribeRoomState.setChannelLog(outputData.getChannels());
 
         subscribeRoomViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(subscribeRoomViewModel.getViewName());

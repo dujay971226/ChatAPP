@@ -5,13 +5,13 @@ import api.CORE;
 import java.io.IOException;
 
 public class JournalDoiInteractor implements JournalDoiInputBoundary {
-    private final JournalDoiOutputBoundary journalContentOutputBoundary;
-    public JournalDoiInteractor(JournalDoiOutputBoundary journalContentOutputBoundary){this.journalContentOutputBoundary = journalContentOutputBoundary;}
+    private final JournalDoiOutputBoundary journalDoiOutputBoundary;
+    public JournalDoiInteractor(JournalDoiOutputBoundary journalDoiOutputBoundary){this.journalDoiOutputBoundary = journalDoiOutputBoundary;}
 
     @Override
-    public void execute(JournalDoiInputData journalContentInputData) throws IOException {
-        String result = CORE.searchByDOI(journalContentInputData.getdoi());
+    public void execute(JournalDoiInputData journalDoiInputData) throws IOException {
+        String result = CORE.searchByDOI(journalDoiInputData.getdoi());
         JournalDoiOutputData journalDoiOutputData = new JournalDoiOutputData(result);
-        journalContentOutputBoundary.prepareSuccessView(journalDoiOutputData);
+        journalDoiOutputBoundary.prepareSuccessView(journalDoiOutputData);
     }
 }

@@ -4,7 +4,7 @@ import interface_adapter.Journal.JournalViewModel;
 import interface_adapter.Journal.searchbycontent.JournalContentController;
 import interface_adapter.Journal.searchbydoi.JournalDoiController;
 import interface_adapter.Journal.searchbyissn.JournalIssnController;
-import interface_adapter.Profile.ProfileViewModel;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,14 +32,7 @@ public class JournalView extends JPanel implements ActionListener {
         this.journalDoiController = journalDoiController;
         this.journalIssnController = journalIssnController;
 
-        JLabel contentTitle = new JLabel("Login Screen");
-        contentTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel doiTitle = new JLabel("Login Screen");
-        contentTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel issnTitle = new JLabel("Login Screen");
-        contentTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel contentinfo = new LabelTextPanel(
                 new JLabel("Content"), contentInputField);
@@ -105,13 +98,13 @@ public class JournalView extends JPanel implements ActionListener {
             }
         });
 
-         this.add(contentTitle);
+
          this.add(contentinfo);
          this.add(contentButton);
-         this.add(doiTitle);
+
          this.add(doiinfo);
          this.add(doiButton);
-         this.add(issnTitle);
+
          this.add(issninfo);
          this.add(issnButton);
 

@@ -1,9 +1,9 @@
 package app;
 
 import entity.User;
-import interface_adapter.Profile.ProfileViewModel;
+import interface_adapter.Journal.JournalViewModel;
 import interface_adapter.ViewManagerModel;
-import view.ProfileView;
+import view.JournalView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,11 +19,10 @@ public class Main {
         JPanel views = new JPanel(cardLayout);
         application.add(views);
 
-        ProfileViewModel profileViewModel= new ProfileViewModel();
+        JournalViewModel journalViewModel = new JournalViewModel();
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-        User user1 = new User("user1",null,"00");
-        ProfileView profileView = ProfileUsecaseFactory.create(viewManagerModel,null,null,profileViewModel,null);
-        views.add(profileView,profileView.viewName);
+        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel,journalViewModel);
+        views.add(journalView,journalView.viewName);
 
         application.pack();
         application.setVisible(true);

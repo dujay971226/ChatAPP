@@ -1,19 +1,20 @@
 package interface_adapter.Journal.searchbydoi;
 
-import use_case.Journal.Content.JournalContentInputBoundary;
 import use_case.Journal.Content.JournalContentInputData;
+import use_case.Journal.Doi.JournalDoiInputBoundary;
+import use_case.Journal.Doi.JournalDoiInputData;
 
 import java.io.IOException;
 
 public class JournalDoiController {
-    final JournalContentInputBoundary journalContentInputBoundary;
-    public JournalDoiController(JournalContentInputBoundary journalContentInputBoundary){
-        this.journalContentInputBoundary = journalContentInputBoundary;
+    final JournalDoiInputBoundary journalDoiInputBoundary;
+    public JournalDoiController(JournalDoiInputBoundary journalDoiInputBoundary){
+        this.journalDoiInputBoundary = journalDoiInputBoundary;
 
     }
     public void execute(String content) throws IOException {
-        JournalContentInputData journalContentInputData = new JournalContentInputData(content);
-        journalContentInputBoundary.execute(journalContentInputData);
+        JournalDoiInputData journaDoiInputData = new JournalDoiInputData(content);
+        journalDoiInputBoundary.execute(journaDoiInputData);
     }
 
 }

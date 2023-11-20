@@ -35,10 +35,11 @@ public class CORE{
         List<String> converter = new ArrayList<>();
         for(int i = 0; i < result.length(); i++){
             if(result.getJSONObject(i).getJSONArray("identifiers").get(2).toString().startsWith("url")) {
-                converter.add(result.getJSONObject(i).getJSONArray("identifiers").get(2).toString());
+                converter.add(result.getJSONObject(i).getString("title") + "-----" + result.getJSONObject(i).getJSONArray("identifiers").get(2).toString());
             }
+
             else{
-                converter.add("no url provided");
+                converter.add(result.getJSONObject(i).getString("title") + "-----" + "no url provided");
             }
         }
         int size = converter.size();
@@ -61,16 +62,20 @@ public class CORE{
         JSONObject responseBody = new JSONObject(responseBodyString);
         List<String> theJournal = new ArrayList<>();
 
-        theJournal.add("The title: " + responseBody.getString("title").toString());
+        if (responseBody.has("title")) {
+            theJournal.add("The title: " + responseBody.getString("title").toString());
 
-        if(responseBody.getJSONArray("identifiers").get(2).toString().startsWith("url")) {
-            theJournal.add(responseBody.getJSONArray("identifiers").get(2).toString());
+            if (responseBody.getJSONArray("identifiers").get(2).toString().startsWith("url")) {
+                theJournal.add(responseBody.getJSONArray("identifiers").get(2).toString());
+            } else {
+                theJournal.add("no url provided");
+            }
+
+            return theJournal.toString();
         }
         else{
-            theJournal.add("no url provided");
+            return responseBody.getString("message");
         }
-
-        return theJournal.toString();
 
     }
 
@@ -93,8 +98,9 @@ public class CORE{
         Response response = client.newCall(request).execute();
         String responseBodyString = response.body().string();
         JSONObject responseBody = new JSONObject(responseBodyString);
-
-        return responseBody.getString("fullTextLink");
+        if(responseBody.has("fullTextLink")){ return responseBody.getString("fullTextLink");}
+        else
+        {return responseBody.getString("message");}
 
     }
 

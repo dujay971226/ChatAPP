@@ -12,17 +12,24 @@ public class ProfileViewModel extends ViewModel {
     public static final String SUBSRIBE_BUTTON_LABEL = "Subscribe";
     public static final String CREATE_BUTTON_LABEL = "Create";
     public static final String LOGOUT_BUTTON_LABEL = "Logout";
-    public ProfileViewModel(){
+
+    public ProfileViewModel() {
         super("profile");
     }
-    public ProfileState getState(){
+
+    public ProfileState getState() {
         return this.state;
     }
-    public void setState(ProfileState state){
+
+    public void setState(ProfileState state) {
         this.state = state;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener){
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
 
     }
-    public void firePropertyChanged(){support.firePropertyChange("state",null,this.state);}
+
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
+    }
+}

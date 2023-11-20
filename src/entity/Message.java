@@ -27,4 +27,6 @@ public class Message {
     public LocalDateTime getTime() {
         return this.msgDate;
     }
+
+    public User getUser() {return this.user; }
 }

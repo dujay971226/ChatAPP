@@ -2,8 +2,8 @@ package interface_adapter.Profile.profiletosubscribe;
 
 import com.pubnub.api.PubNub;
 import entity.User;
-import use_case.profiletosubscribe.ProfiletosubscribeInputBoundary;
-import use_case.profiletosubscribe.ProfiletosubscribeInputData;
+import use_case.Profile.profiletosubscribe.ProfiletosubscribeInputBoundary;
+import use_case.Profile.profiletosubscribe.ProfiletosubscribeInputData;
 
 public class ProfileToSubscribeController {
     final ProfiletosubscribeInputBoundary profileInputBoundary;

@@ -1,6 +1,6 @@
 package interface_adapter.Profile.profiletologout;
 
-import use_case.profiletologout.LogoutInputBoundary;
+import use_case.Profile.profiletologout.LogoutInputBoundary;
 
 public class ProfileToLogoutController {
 

@@ -1,12 +1,10 @@
-package use_case.profiletosubscribe;
+package use_case.Profile.profiletosubscribe;
 
 import com.pubnub.api.PubNub;
 import entity.Channel;
 import entity.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProfiletosubscribeOutputData {
     final private User user;

@@ -2,10 +2,8 @@ package interface_adapter.Profile.profiletosubscribe;
 
 import interface_adapter.Profile.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.profiletosubscribe.ProfiletosubscribeOutputBoundary;
-import use_case.profiletosubscribe.ProfiletosubscribeOutputData;
-
-import java.util.ArrayList;
+import use_case.Profile.profiletosubscribe.ProfiletosubscribeOutputBoundary;
+import use_case.Profile.profiletosubscribe.ProfiletosubscribeOutputData;
 
 public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoundary {
     private final ViewManagerModel viewManagerModel;

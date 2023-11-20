@@ -1,4 +1,4 @@
-package use_case.profiletocreate;
+package use_case.Profile.profiletocreate;
 
 public interface ProfiletocreateOutputBoundary {
     void prepareSuccessView(ProfiletocreateOutputData outputData);

@@ -1,4 +1,4 @@
-package use_case.profiletologout;
+package use_case.Profile.profiletologout;
 
 public class LogoutInteractor implements LogoutInputBoundary{
     final LogoutOutputBoundary logoutOutputBoundary;

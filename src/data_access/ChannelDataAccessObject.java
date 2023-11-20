@@ -13,11 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
-public class ChannelDataAccessnObject implements iChannelDataAccessObject{
+public class ChannelDataAccessObject implements iChannelDataAccessObject{
     private final JSONObject file;
     private final Map<Channel, ArrayList<User>> accounts = new HashMap<>();
 
-    public ChannelDataAccessnObject(String jsonPath) throws IOException {
+    public ChannelDataAccessObject(String jsonPath) throws IOException {
 
         String data = new String(Files.readAllBytes(Paths.get(jsonPath)));
         file = new JSONObject(data);

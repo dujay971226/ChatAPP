@@ -1,10 +1,9 @@
-package use_case.profiletosubscribe;
+package use_case.Profile.profiletosubscribe;
 
 import data_access.iChannelDataAccessObject;
 import entity.Channel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProfiletosubscribeInteractor implements ProfiletosubscribeInputBoundary{
 

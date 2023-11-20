@@ -2,8 +2,10 @@ package interface_adapter.Profile.profiletologout;
 
 import interface_adapter.Profile.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.profiletologout.LogoutOutputBoundary;
-import use_case.profiletologout.LogoutOutputData;
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
+import use_case.Profile.profiletologout.LogoutOutputBoundary;
+import use_case.Profile.profiletologout.LogoutOutputData;
 
 public class ProfileToLogoutPresenter implements LogoutOutputBoundary {
     private final ViewManagerModel viewManagerModel;
@@ -16,10 +18,6 @@ public class ProfileToLogoutPresenter implements LogoutOutputBoundary {
         this.profileViewModel = profileViewModel;
     }
     public void preparesuccessview() {
-        LogoutOutputData logoutOutputData = new LogoutOutputData();
-        LoginState loginState = new LoginState();
-        loginState.setState(loginState);
-        loginViewModel.firePropertyChanged();
 
         viewManagerModel.setActiveView(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

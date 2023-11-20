@@ -2,8 +2,8 @@ package interface_adapter.Profile.profiletocreate;
 
 import interface_adapter.Profile.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
-import use_case.profiletocreate.ProfiletocreateOutputBoundary;
-import use_case.profiletocreate.ProfiletocreateOutputData;
+import use_case.Profile.profiletocreate.ProfiletocreateOutputBoundary;
+import use_case.Profile.profiletocreate.ProfiletocreateOutputData;
 
 public class ProfileToCreatePresenter implements ProfiletocreateOutputBoundary {
     private final ViewManagerModel viewManagerModel;

@@ -1,12 +1,12 @@
 package view;
 
-import interface_adapter.Profile.ProfileState;
-import interface_adapter.Profile.ProfileViewModel;
-import interface_adapter.Profile.profiletocreate.ProfileToCreateController;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.profiletocreate.ProfileToCreateController;
 
-import interface_adapter.Profile.profiletologout.ProfileToLogoutController;
+import interface_adapter.profile.profiletologout.ProfileToLogoutController;
 
-import interface_adapter.Profile.profiletosubscribe.ProfileToSubscribeController;
+import interface_adapter.profile.profiletosubscribe.ProfileToSubscribeController;
 
 import javax.swing.*;
 import java.awt.*;

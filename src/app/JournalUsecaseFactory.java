@@ -1,29 +1,24 @@
 package app;
 
-import interface_adapter.Journal.JournalViewModel;
-import interface_adapter.Journal.searchbycontent.JournalContentController;
-import interface_adapter.Journal.searchbycontent.JournalContentPresenter;
-import interface_adapter.Journal.searchbydoi.JournalDoiController;
-import interface_adapter.Journal.searchbydoi.JournalDoiPresenter;
-import interface_adapter.Journal.searchbyissn.JournalIssnController;
-import interface_adapter.Journal.searchbyissn.JournalIssnPresenter;
+import interface_adapter.journal.JournalViewModel;
+import interface_adapter.journal.searchbycontent.JournalContentController;
+import interface_adapter.journal.searchbycontent.JournalContentPresenter;
+import interface_adapter.journal.searchbydoi.JournalDoiController;
+import interface_adapter.journal.searchbydoi.JournalDoiPresenter;
+import interface_adapter.journal.searchbyissn.JournalIssnController;
+import interface_adapter.journal.searchbyissn.JournalIssnPresenter;
 
 import interface_adapter.ViewManagerModel;
-import use_case.Journal.Content.JournalContentInputBoundary;
-import use_case.Journal.Content.JournalContentInteractor;
-import use_case.Journal.Content.JournalContentOutputBoundary;
-import use_case.Journal.Doi.JournalDoiInputBoundary;
-import use_case.Journal.Doi.JournalDoiInteractor;
-import use_case.Journal.Doi.JournalDoiOutputBoundary;
-import use_case.Journal.Issn.JournalIssnInputBoundary;
-import use_case.Journal.Issn.JournalIssnInteractor;
-import use_case.Journal.Issn.JournalIssnOutputBoundary;
-import use_case.Journal.Issn.JournalIssnOutputData;
+import use_case.journal.Content.JournalContentInputBoundary;
+import use_case.journal.Content.JournalContentInteractor;
+import use_case.journal.Content.JournalContentOutputBoundary;
+import use_case.journal.Doi.JournalDoiInputBoundary;
+import use_case.journal.Doi.JournalDoiInteractor;
+import use_case.journal.Doi.JournalDoiOutputBoundary;
+import use_case.journal.Issn.JournalIssnInputBoundary;
+import use_case.journal.Issn.JournalIssnInteractor;
+import use_case.journal.Issn.JournalIssnOutputBoundary;
 import view.JournalView;
-
-
-import javax.swing.*;
-import java.io.IOException;
 
 public class JournalUsecaseFactory {
     public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){

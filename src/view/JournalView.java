@@ -1,13 +1,12 @@
 package view;
 
-import interface_adapter.Journal.JournalViewModel;
-import interface_adapter.Journal.searchbycontent.JournalContentController;
-import interface_adapter.Journal.searchbydoi.JournalDoiController;
-import interface_adapter.Journal.searchbyissn.JournalIssnController;
+import interface_adapter.journal.JournalViewModel;
+import interface_adapter.journal.searchbycontent.JournalContentController;
+import interface_adapter.journal.searchbydoi.JournalDoiController;
+import interface_adapter.journal.searchbyissn.JournalIssnController;
 
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;

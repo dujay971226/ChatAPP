@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Controller of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomController {
 

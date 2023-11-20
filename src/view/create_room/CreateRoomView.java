@@ -18,6 +18,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * View shown when user is asked to create a room.
+ * @author huangzhihao
  */
 public class CreateRoomView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CreateRoomViewModel createRoomViewModel;

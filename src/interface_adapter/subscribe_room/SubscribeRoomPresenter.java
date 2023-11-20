@@ -11,6 +11,7 @@ import use_case.subscribe_room.SubscribeRoomOutputData;
 
 /**
  * Presenter of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
 

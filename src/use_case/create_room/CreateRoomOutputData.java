@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Output data of create room.
+ * @author huangzhihao
  */
 public class CreateRoomOutputData {
 

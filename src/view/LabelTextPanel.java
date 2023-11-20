@@ -4,6 +4,7 @@ import javax.swing.*;
 
 /**
  * A panel for text field with a label.
+ * @author huangzhihao
  */
 public class LabelTextPanel extends JPanel {
 

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 /**
  * View shown when user is asked to join a room.
+ * @author huangzhihao
  */
 public class SubscribeRoomView extends JPanel implements ActionListener, PropertyChangeListener {
 

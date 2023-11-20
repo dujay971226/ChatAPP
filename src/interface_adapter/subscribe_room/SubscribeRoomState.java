@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * State of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomState {
 

@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
 
 /**
  * View model of create room.
+ * @author huangzhihao
  */
 public class CreateRoomViewModel extends ViewModel {
 

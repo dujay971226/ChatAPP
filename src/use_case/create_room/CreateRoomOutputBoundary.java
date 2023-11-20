@@ -2,6 +2,7 @@ package use_case.create_room;
 
 /**
  * Output boundary of create room.
+ * @author huangzhihao
  */
 public interface CreateRoomOutputBoundary {
 

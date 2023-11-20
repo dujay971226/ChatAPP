@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Input boundary of subscribe room.
+ * @author huangzhihao
  */
 public interface SubscribeRoomInputBoundary {
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Input data of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomInputData {
 

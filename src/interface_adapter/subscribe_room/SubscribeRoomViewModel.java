@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
 
 /**
  * View model of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomViewModel extends ViewModel {
 

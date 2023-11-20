@@ -1,9 +1,9 @@
 package use_case.create_room;
 
-import java.awt.*;
 
 /**
  * The input boundary of create room.
+ * @author huangzhihao
  */
 public interface CreateRoomInputBoundary {
 

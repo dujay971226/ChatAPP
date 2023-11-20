@@ -17,6 +17,7 @@ import java.util.*;
 
 /**
  * Interactor of create room.
+ * @author huangzhihao
  */
 public class CreateRoomInteractor implements CreateRoomInputBoundary {
 

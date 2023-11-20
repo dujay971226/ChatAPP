@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Input data of create room.
+ * @author huangzhihao
  */
 public class CreateRoomInputData {
 

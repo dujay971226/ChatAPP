@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Output data of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomOutputData {
     private final String channelName;

@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Interactor of subscribe room.
+ * @author huangzhihao
  */
 public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Stores the state for the CreateRoomViewModel class.
+ * @author huangzhihao
  */
 public class CreateRoomState {
 

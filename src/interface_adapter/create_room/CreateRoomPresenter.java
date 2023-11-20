@@ -9,6 +9,7 @@ import use_case.create_room.CreateRoomOutputData;
 
 /**
  * Presenter of create room.
+ * @author huangzhihao
  */
 public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     private final CreateRoomViewModel createRoomViewModel;

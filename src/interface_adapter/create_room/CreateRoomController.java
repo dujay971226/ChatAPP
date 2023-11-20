@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Controller of create room.
+ * @author huangzhihao
  */
 public class CreateRoomController {
 

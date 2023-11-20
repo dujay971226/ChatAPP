@@ -2,6 +2,7 @@ package use_case.subscribe_room;
 
 /**
  * Output boundary of subscribe room.
+ * @author huangzhihao
  */
 public interface SubscribeRoomOutputBoundary {
 

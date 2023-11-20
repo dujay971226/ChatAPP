@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CORE {
+public class CORE{
 
-    public static String[] searchJournals(String content, String entityType) throws IOException {
+    public static String[] searchJournals(String content) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         HttpUrl.Builder urlBuilder
@@ -71,8 +71,6 @@ public class CORE {
         }
 
         return theJournal.toString();
-
-
 
     }
 

@@ -3,9 +3,9 @@ package data_access;
 import entity.Channel;
 import entity.User;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface iChannelDataAccessObject {
-    public List<Channel> getChannels(String username);
-    public void add(Channel channel, User curr);
+    public ArrayList<Channel> getChannels(User user);
+    public void save(Channel channel, User curr, String jsonPath);
 }

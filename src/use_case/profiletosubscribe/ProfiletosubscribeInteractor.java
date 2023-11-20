@@ -1,6 +1,6 @@
 package use_case.profiletosubscribe;
 
-import data_access.ChannelDataAccessnObject;
+import data_access.iChannelDataAccessObject;
 import entity.Channel;
 
 import java.util.ArrayList;
@@ -9,16 +9,16 @@ import java.util.List;
 public class ProfiletosubscribeInteractor implements ProfiletosubscribeInputBoundary{
 
     final ProfiletosubscribeOutputBoundary profilePresenter;
-    final ChannelDataAccessnObject channelDataAccessObject;
+    final iChannelDataAccessObject ichannelDataAccessObject;
 
-    public ProfiletosubscribeInteractor(ChannelDataAccessnObject channelDataAccessObject, ProfiletosubscribeOutputBoundary profileOutputBoundary){
-        this.channelDataAccessObject = channelDataAccessObject;
+    public ProfiletosubscribeInteractor(iChannelDataAccessObject ichannelDataAccessObject, ProfiletosubscribeOutputBoundary profileOutputBoundary){
+        this.ichannelDataAccessObject = ichannelDataAccessObject;
         this.profilePresenter = profileOutputBoundary;
     }
 
     public void execute(ProfiletosubscribeInputData inputdata) {
-        List<Channel> channels = new ArrayList<>();
-        channels = channelDataAccessObject.getChannels(inputdata.getUser().getname());
+        ArrayList<Channel> channels = new ArrayList<>();
+        channels = ichannelDataAccessObject.getChannels(inputdata.getUser());
 
         ProfiletosubscribeOutputData profiletosubscribeOutputData= new ProfiletosubscribeOutputData(inputdata.getUser(), inputdata.getConfig(), channels);
         profilePresenter.prepareSuccessView(profiletosubscribeOutputData);

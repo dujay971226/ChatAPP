@@ -9,7 +9,7 @@ public class ProfileToLogoutController {
         this.logoutInputBoundary = logoutInputBoundary;
     }
 
-    public static void execute(){
+    public void execute(){
         logoutInputBoundary.execute();
 
     }

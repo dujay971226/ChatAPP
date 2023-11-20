@@ -26,5 +26,3 @@ public class ProfileViewModel extends ViewModel {
 
     }
     public void firePropertyChanged(){support.firePropertyChange("state",null,this.state);}
-
-}

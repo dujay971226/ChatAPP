@@ -32,6 +32,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.profileViewModel = profileViewModel;
         this.profileToCreateController = profileToCreateController;
         this.profileToSubscribeController = profileToSubscribeController;
+        this.profileToLogoutController = profileToLogoutController;
 
 
         profileViewModel.addPropertyChangeListener(this);
@@ -73,7 +74,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if(e.getSource().equals(logout)){
-                            ProfileToLogoutController.execute();
+                            profileToLogoutController.execute();
                         }
                     }
                 }

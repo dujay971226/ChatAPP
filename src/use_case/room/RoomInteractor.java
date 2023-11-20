@@ -29,6 +29,16 @@ public class RoomInteractor implements RoomInputBoundary{
     }
 
     @Override
+    public void execute(RoomToSettingInputData roomToSettingInputData) {
+
+        RoomToSettingOutputData roomToSettingOutputData = new RoomToSettingOutputData(roomToSettingInputData.getUser(),
+                roomToSettingInputData.getChannel(), roomToSettingInputData.getConfig());
+
+        RoomPresenter.prepareSettingView(roomToSettingOutputData);
+
+    }
+
+    @Override
     public void execute(RoomReceiveInputData roomReceiveInputData) {
         ArrayList<Message> newMessageLog = roomReceiveInputData.getMessages();
 

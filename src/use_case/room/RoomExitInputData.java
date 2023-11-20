@@ -5,8 +5,8 @@ import entity.User;
 
 public class RoomExitInputData{
 
-    private User currUser = null;
-    private PubNub config = null;
+    private final User currUser;
+    private final PubNub config;
 
     public RoomExitInputData (User user, PubNub config) {
         this.currUser = user;

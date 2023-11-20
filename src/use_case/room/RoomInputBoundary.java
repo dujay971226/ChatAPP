@@ -8,4 +8,6 @@ public interface RoomInputBoundary {
     void execute(RoomReceiveInputData roomReceiveInputData);
 
     void execute(RoomExitInputData roomExitInputData);
+
+    void execute(RoomToSettingInputData roomToSettingInputData);
 }

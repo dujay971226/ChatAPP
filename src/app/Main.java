@@ -7,48 +7,48 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        // Build the main program window, the main panel containing the
-        // various cards, and the layout, and stitch them together.
 
-        // The main application window.
         JFrame application = new JFrame("Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
 
-       // The various View objects. Only one view is visible at a time.
+        // The various View objects. Only one view is visible at a time.
         JPanel views = new JPanel(cardLayout);
         application.add(views);
-//
-//        // This keeps track of and manages which view is currently showing.
+
+        // This keeps track of and manages which view is currently showing.
         ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
-        RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, );
+        // The data for the views, such as username and password, are in the ViewModels.
+        // This information will be changed by a presenter object that is reporting the
+        // results from the use case. The ViewModels are observable, and will
+        // be observed by the Views.
+        RoomViewModel roomViewModel = new RoomViewModel();
+        ProfileViewModel profileViewModel = new ProfileViewModel();
+        SettingViewModel settingViewModel = new SettingViewModel();
 
+//        UserDataAccessObject userDataAccessObject;
+//        ChannelDataAccessObject channelDataAccessObject;
+//        try {
+//            userDataAccessObject = new UserDataAccessObject("./users.json", new UserFactory());
+//            channelDataAccessObject = new ChannelDataAccessObject("./channels.json", new ChannelFactory());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-//        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel);
-//        views.add(signupView, signupView.viewName);
-//
-//        LoginView loginView = new LoginView(loginViewModel);
-//        views.add(loginView, loginView.viewName);
-//
-//        PorfolioView porfolioView = PorfolioUseCaseFactory.create();
-//        views.add(porfolioView, porfolioView.viewName);
-//
-//        ChannelView channelView = ChannelUseCaseFactory.create();
-//        views.add(channelView, channelView.viewName);
-//
-        RoomView roomView = RoomUseCaseFactory.create();
-//        views.add(newChannelView, newChannelView.viewName);
-//
-//        viewManagerModel.setActiveView(loginView.viewName);
-//        viewManagerModel.firePropertyChanged();
+        RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel, settingViewModel);
+        views.add(roomView, roomView.viewName);
 
-//        application.pack();
-//        application.setVisible(true);
+        viewManagerModel.setActiveView(roomView.viewName);
+        viewManagerModel.firePropertyChanged();
+
+        application.pack();
+        application.setVisible(true);
     }
 }

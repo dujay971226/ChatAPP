@@ -5,4 +5,6 @@ public interface RoomOutputBoundary {
     void prepareProfileView();
 
     void prepareNewMessageView(RoomOutputData roomOutputData);
+
+    void prepareSettingView(RoomToSettingOutputData roomToSettingOutputData);
 }

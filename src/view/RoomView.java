@@ -45,7 +45,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
-    private final SettingController settingController;
+    private final RoomToSettingController roomToSettingController;
     private final JournalController journalController;
     private final JButton setting;
     private final JButton journal;
@@ -58,13 +58,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                      RoomReceiveController roomReceiveController,
                      RoomExitController roomExitController,
                      RoomViewModel roomViewModel,
-                     SettingController settingController,
+                     RoomToSettingController roomToSettingController,
                      JournalController journalController) throws PubNubException  {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
         this.roomViewModel = roomViewModel;
-        this.settingController = settingController;
+        this.roomToSettingController = roomToSettingController;
         this.journalController = journalController;
         roomViewModel.addPropertyChangeListener(this);
 
@@ -114,12 +114,11 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(setting)) {
                             RoomState currState = roomViewModel.getState();
-                            showSettingController.execute(
+                            roomToSettingController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig()
                             );
-                            // TODO change to interactor
                         }
                     }
                 }

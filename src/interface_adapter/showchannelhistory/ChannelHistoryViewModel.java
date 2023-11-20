@@ -1,11 +1,16 @@
 package interface_adapter.showchannelhistory;
 
 import interface_adapter.ViewModel;
-import interface_adapter.showsetting.SettingState;
 
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class ChannelHistoryViewModel extends ViewModel {
+
+    public static final String TITLE_LABEL = "Channel History View";
+    public static final String CANCEL_BUTTON_LABEL = "Cancel";
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     private ChannelHistoryState state = new ChannelHistoryState();
 
@@ -23,11 +28,10 @@ public class ChannelHistoryViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-
+        support.firePropertyChange("state", null, this.state);
     }
 
-    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-
+        support.addPropertyChangeListener(listener);
     }
 }

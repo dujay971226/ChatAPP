@@ -7,10 +7,8 @@ import java.beans.PropertyChangeSupport;
 
 public class SettingViewModel extends ViewModel {
     public final String TITLE_LABEL = "Channel Setting";
-    public final String USERNAME_LABEL = "Enter username";
-    public final String PASSWORD_LABEL = "Enter password";
-
-    public static final String LOGIN_BUTTON_LABEL = "Channel Setting";
+    public static final String CHANNEL_HISTORY_BUTTON_LABEL = "Channel History";
+    public static final String MESSAGE_FILTER_BUTTON_LABEL = "Message Filter";
     public static final String CANCEL_BUTTON_LABEL = "Back";
 
     private SettingState state = new SettingState();
@@ -19,6 +17,10 @@ public class SettingViewModel extends ViewModel {
 
     public SettingViewModel() {
         super("channel setting");
+    }
+
+    public SettingState getState() {
+        return state;
     }
 
     public void setState(SettingState state) {
@@ -37,7 +39,4 @@ public class SettingViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public SettingState getState() {
-        return state;
-    }
 }

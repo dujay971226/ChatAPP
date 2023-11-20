@@ -1,11 +1,7 @@
 package app;
 
-import interface_adapter.LoginViewModel;
+import interface_adapter.*;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.PorfolioViewModel;
-import interface_adapter.NewChannelViewModel;
-import interface_adapter.ChannelViewModel;
-import interface_adapter.ViewManagerModel;
 import view.ViewManager;
 
 import javax.swing.*;

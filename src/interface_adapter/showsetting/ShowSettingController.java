@@ -4,15 +4,15 @@ import use_case.channelsetting.ShowSettingInputBoundary;
 import use_case.channelsetting.ShowSettingInputData;
 
 public class ShowSettingController{
-    final ShowSettingInputBoundary showSettingInteractor;
+    private final ShowSettingInputBoundary showSettingInteractor;
 
     public ShowSettingController(ShowSettingInputBoundary showSettingInteractor) {
         this.showSettingInteractor = showSettingInteractor;
     }
 
 
-    public void execute(String username, String password) {
-        ShowSettingInputData showSettingInputData = new ShowSettingInputData();
+    public void execute(String currentChannel) {
+        ShowSettingInputData showSettingInputData = new ShowSettingInputData(currentChannel);
 
         showSettingInteractor.execute(showSettingInputData);
     }

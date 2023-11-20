@@ -1,4 +1,0 @@
-package use_case.changebackgroundcolor;
-
-public class ChangeBackgroundColorInteractor implements ChangeBackgroundColorInputBoundary{
-}

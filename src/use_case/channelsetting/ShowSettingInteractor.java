@@ -1,52 +1,41 @@
 package use_case.channelsetting;
 
-import com.pubnub.api.callbacks.PNCallback;
-import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
-import com.pubnub.api.models.consumer.presence.PNHereNowOccupantData;
-import com.pubnub.api.models.consumer.presence.PNHereNowResult;
-import data_access.ChannelUsersDataAccessInterface;
 import com.pubnub.api.PubNub;
+import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
+import com.pubnub.api.models.consumer.presence.PNHereNowResult;
+import data_access.TokenDataAccessInterface;
 
 import java.util.Arrays;
 
 public class ShowSettingInteractor implements ShowSettingInputBoundary {
-    final ChannelUsersDataAccessInterface channelUsersDataAccessObject;
+    final TokenDataAccessInterface pubNubDataAccessObject;
     final ShowSettingOutputBoundary showSettingPresenter;
-    final PubNub pubnub;
 
-    public ShowSettingInteractor(PubNub pubnub, ChannelUsersDataAccessInterface channelUsersDataAccessObject, ShowSettingOutputBoundary showSettingPresenter) {
-        this.pubnub= pubnub;
-        this.channelUsersDataAccessObject = channelUsersDataAccessObject;
+    public ShowSettingInteractor(TokenDataAccessInterface pubNubDataAccessObject, ShowSettingOutputBoundary showSettingPresenter) {
+        this.pubNubDataAccessObject = pubNubDataAccessObject;
         this.showSettingPresenter = showSettingPresenter;
     }
 
     @Override
     public void execute(ShowSettingInputData showSettingInputData){
         String currentChannel = showSettingInputData.getCurrentChannel();
-        this.pubnub.hereNow()
+        PubNub pubnub = this.pubNubDataAccessObject.getPubNubAccess();
+        pubnub.hereNow()
             // tailor the next two lines to example
             .channels(Arrays.asList(currentChannel))
             .includeUUIDs(true)
             .async(new PNCallback<PNHereNowResult>() {
                 @Override
                 public void onResponse(PNHereNowResult result, PNStatus status) {
-                    if (status.isError()) {
+                    if (!status.isError()) {
+                        ShowSettingOutputData showSettingOutputData = new ShowSettingOutputData(result.getChannels().values());
+                        showSettingPresenter.prepareSuccessView(showSettingOutputData);
                         // handle error
-                        return;
-                    }
-
-                    for (PNHereNowChannelData channelData : result.getChannels().values()) {
-                        System.out.println("---");
-                        System.out.println("channel:" + channelData.getChannelName());
-                        System.out.println("occupancy: " + channelData.getOccupancy());
-                        System.out.println("occupants:");
-                        for (PNHereNowOccupantData occupant : channelData.getOccupants()) {
-                            System.out.println("uuid: " + occupant.getUuid() + " state: " + occupant.getState());
-                        }
+                    } else{
+                        showSettingPresenter.prepareFailView(status.getErrorData().toString());
                     }
                 }
             });
-
     }
 }

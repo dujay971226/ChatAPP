@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<ChatApp:project xmlns:ChatApp="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <ChatApp:modelVersion>4.0.0</ChatApp:modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>chatapp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <ChatApp:groupId>com.mycompany.app</ChatApp:groupId>
+    <ChatApp:artifactId>my-app</ChatApp:artifactId>
+    <ChatApp:version>1.0-SNAPSHOT</ChatApp:version>
 
-    <dependencies>
+    <ChatApp:properties>
+        <ChatApp:maven.compiler.source>1.7</ChatApp:maven.compiler.source>
+        <ChatApp:maven.compiler.target>1.7</ChatApp:maven.compiler.target>
+    </ChatApp:properties>
 
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20230618</version>
-        </dependency>
+    <ChatApp:dependencies>
+        <ChatApp:dependency>
+            <ChatApp:groupId>junit</ChatApp:groupId>
+            <ChatApp:artifactId>junit</ChatApp:artifactId>
+            <ChatApp:version>4.13.1</ChatApp:version>
+            <ChatApp:scope>test</ChatApp:scope>
+        </ChatApp:dependency>
 
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-            <version>4.10.0</version>
-        </dependency>
+        <ChatApp:dependency>
+            <ChatApp:groupId>com.pubnub</ChatApp:groupId>
+            <ChatApp:artifactId>pubnub-gson</ChatApp:artifactId>
+            <ChatApp:version>6.4.1</ChatApp:version>
+        </ChatApp:dependency>
 
-        <dependency>
-            <groupId>com.pubnub</groupId>
-            <artifactId>pubnub-gson</artifactId>
-            <version>6.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20231013</version>
-        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+        <ChatApp:dependency>
+            <ChatApp:groupId>org.slf4j</ChatApp:groupId>
+            <ChatApp:artifactId>slf4j-simple</ChatApp:artifactId>
+            <ChatApp:version>2.0.9</ChatApp:version>
+            <ChatApp:scope>test</ChatApp:scope>
+        </ChatApp:dependency>
 
-    </dependencies>
-
-    <properties>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-
-
-</project>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <ChatApp:dependency>
+            <ChatApp:groupId>org.slf4j</ChatApp:groupId>
+            <ChatApp:artifactId>slf4j-api</ChatApp:artifactId>
+            <ChatApp:version>2.0.9</ChatApp:version>
+        </ChatApp:dependency>
+    </ChatApp:dependencies>
+    <ChatApp:build>
+        <ChatApp:plugins>
+            <ChatApp:plugin>
+                <ChatApp:groupId>org.apache.maven.plugins</ChatApp:groupId>
+                <ChatApp:artifactId>maven-compiler-plugin</ChatApp:artifactId>
+                <ChatApp:configuration>
+                    <ChatApp:source>8</ChatApp:source>
+                    <ChatApp:target>8</ChatApp:target>
+                </ChatApp:configuration>
+            </ChatApp:plugin>
+        </ChatApp:plugins>
+    </ChatApp:build>
+</ChatApp:project>

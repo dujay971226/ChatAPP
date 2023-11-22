@@ -194,9 +194,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     public void MessageReceiver(String[] args) throws PubNubException {
-        
+
         RoomState currState = roomViewModel.getState();
-        
+
         PubNub pubnub = currState.getConfig();
         String channelName = currState.getChannel().getName();
 
@@ -241,6 +241,10 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 newMessages.add(new Message(user, msg, LocalDateTime.now()));
                 roomReceiveController.execute(newMessages);
 
+                /*
+                 * Log the following items with your favorite logger - message.getMessage() -
+                 * message.getSubscription() - message.getTimetoken()
+                 */
             }
 
             @Override

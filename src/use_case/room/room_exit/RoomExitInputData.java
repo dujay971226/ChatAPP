@@ -1,23 +1,16 @@
-package use_case.room;
+package use_case.room.room_exit;
 
 import com.pubnub.api.PubNub;
-import entity.Channel;
 import entity.User;
 
-public class RoomToSettingInputData {
+public class RoomExitInputData{
 
-    private final Channel channel;
     private final User currUser;
     private final PubNub config;
 
-    public RoomToSettingInputData(User user, Channel channel, PubNub config) {
-        this.channel = channel;
+    public RoomExitInputData (User user, PubNub config) {
         this.currUser = user;
         this.config = config;
-    }
-
-    public Channel getChannel() {
-        return this.channel;
     }
 
     public User getUser() {
@@ -27,6 +20,5 @@ public class RoomToSettingInputData {
     public PubNub getConfig() {
         return config;
     }
-
 
 }

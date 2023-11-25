@@ -46,6 +46,10 @@ public class UserDataAccessObject implements iUserDataAccessObject {
         }
     }
 
+    /**
+     * @param user the data to save
+     */
+
     @Override
     public void save(User user) {
         accounts.put(user.getName(), user);
@@ -56,6 +60,11 @@ public class UserDataAccessObject implements iUserDataAccessObject {
     public User get(String username) {
         return accounts.get(username);
     }
+
+    /**
+     * @param identifier the username to check.
+     * @return whether a user exists with username identifier
+     */
 
     @Override
     public boolean existsByName(String identifier) {

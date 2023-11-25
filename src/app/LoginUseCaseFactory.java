@@ -16,10 +16,17 @@ import view.LoginView;
 import javax.swing.*;
 import java.io.IOException;
 
+/**
+ * The LoginUseCaseFactory class is responsible for creating and configuring the components
+ * necessary for the login use case in a graphical user interface (GUI) application.
+ */
+
 public class LoginUseCaseFactory {
     /** Prevent instantiation. */
     private LoginUseCaseFactory() {}
 
+    /** takes various parameters to construct and return a LoginView object.
+     */
     public static LoginView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,

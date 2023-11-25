@@ -25,6 +25,10 @@ import use_case.journal.back.JournalToRoomInteractor;
 import use_case.journal.back.JournalToRoomOutputBoundary;
 import view.JournalView;
 
+
+/**
+ * JournalUsecaseFactory is use for create the Journal view
+ */
 public class JournalUsecaseFactory {
     public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
         JournalContentController journalContentController = createContent(viewManagerModel,journalViewModel);

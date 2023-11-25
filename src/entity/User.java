@@ -1,7 +1,5 @@
 package entity;
 
-import com.pubnub.api.UserId;
-
 public class User {
     private final String name;
 

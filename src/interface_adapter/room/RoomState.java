@@ -7,20 +7,26 @@ import entity.User;
 
 import java.util.ArrayList;
 
+//The current state of RoomView
 public class RoomState {
 
+    //THe current Channel info
     private Channel channel = null;
 
+    //The current logged-in user info
     private User currUser = null;
 
+    //Message history to load
     private ArrayList<Message> messageLog = new ArrayList<Message>();
 
     private String message = null;
 
     private PubNub config = null;
 
+    //To warn a message history was loaded
     private boolean LOG_UPDATE = false;
 
+    //To warn a new message was received
     private boolean NEW_MESSAGE_UPDATE = false;
 
     public RoomState(RoomState copy) {
@@ -93,11 +99,11 @@ public class RoomState {
         this.LOG_UPDATE = false;
     }
 
-    public void setRecieveMessageNotice() {
+    public void setReceiveMessageNotice() {
         this.NEW_MESSAGE_UPDATE = true;
     }
 
-    public void setOffRecieveMessageNotice() {
+    public void setOffReceiveMessageNotice() {
         this.NEW_MESSAGE_UPDATE = false;
     }
 }

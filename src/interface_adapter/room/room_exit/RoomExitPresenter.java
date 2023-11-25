@@ -9,12 +9,15 @@ public class RoomExitPresenter implements RoomExitOutputBoundary {
     private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
 
+
+    //initialization
     public RoomExitPresenter (ViewManagerModel viewManagerModel,
                           ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
     }
 
+    //Jump to Profile View.
     public void prepareProfileView() {
 
         this.viewManagerModel.setActiveView(profileViewModel.getViewName());

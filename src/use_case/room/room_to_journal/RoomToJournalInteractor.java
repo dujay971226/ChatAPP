@@ -8,6 +8,7 @@ public class RoomToJournalInteractor implements RoomToJournalInputBoundary{
         this.roomToJournalPresenter = roomToJournalOutputBoundary;
     }
 
+    //Tell the presenter to send the vew to journal view
     @Override
     public void execute() {
         roomToJournalPresenter.prepareJournalView();

@@ -8,8 +8,9 @@ public class RoomToJournalController {
     public RoomToJournalController(RoomToJournalInputBoundary roomToJournalUseCaseInteractor) {
         this.roomToJournalUseCaseInteractor = roomToJournalUseCaseInteractor;
     }
-    public void execute() {
 
+    //Send a signal to jump to profile view
+    public void execute() {
         roomToJournalUseCaseInteractor.execute();
     }
 }

@@ -7,6 +7,8 @@ public class RoomToSettingInteractor implements RoomToSettingInputBoundary{
     public RoomToSettingInteractor(RoomToSettingOutputBoundary roomToSettingOutputBoundary) {
         this.roomToSettingPresenter = roomToSettingOutputBoundary;
     }
+
+    //Set relative information to setting state and change the view to setting view
     @Override
     public void execute(RoomToSettingInputData roomToSettingInputData) {
 

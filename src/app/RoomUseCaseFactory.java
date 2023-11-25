@@ -37,6 +37,7 @@ import java.io.IOException;
 
 public class RoomUseCaseFactory {
 
+    //Create RoomView for main to use
     private RoomUseCaseFactory() {}
     public static RoomView create(
             ViewManagerModel viewManagerModel, RoomViewModel roomViewModel, ProfileViewModel profileViewModel, JournalViewModel journalViewModel, SettingViewModel settingViewModel) {
@@ -55,6 +56,7 @@ public class RoomUseCaseFactory {
         return null;
     }
 
+    //Create necessary Controllers for RoomView
     private static RoomMessageController createRoomMessageUseCase(ViewManagerModel viewManagerModel,
                                                                   RoomViewModel roomViewModel) throws IOException {
 

@@ -10,6 +10,7 @@ public class RoomReceiveInteractor implements RoomReceiveInputBoundary{
         this.roomReceivePresenter = roomReceiveOutputBoundary;
     }
 
+    //Set notice to tell the view that it needs to update a new coming message.
     @Override
     public void execute(RoomReceiveInputData roomReceiveInputData) {
         Message newMessage = roomReceiveInputData.getMessage();

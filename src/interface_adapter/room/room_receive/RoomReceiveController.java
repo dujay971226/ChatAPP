@@ -12,6 +12,7 @@ public class RoomReceiveController {
         this.roomReceiveMessageUseCaseInteractor = roomReceiveMessageUseCaseInteractor;
     }
 
+    //Pass the received message for display
     public void execute(Message newMessage) {
         RoomReceiveInputData roomReceiveInputData = new RoomReceiveInputData(newMessage);
 

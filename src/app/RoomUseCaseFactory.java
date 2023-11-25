@@ -15,7 +15,7 @@ import interface_adapter.room.room_to_journal.RoomToJournalController;
 import interface_adapter.room.room_to_journal.RoomToJournalPresenter;
 import interface_adapter.room.room_to_setting.RoomToSettingController;
 import interface_adapter.room.room_to_setting.RoomToSettingPresenter;
-import interface_adapter.showsetting.SettingViewModel;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.room.room_exit.RoomExitInputBoundary;
 import use_case.room.room_exit.RoomExitInteractor;
 import use_case.room.room_exit.RoomExitOutputBoundary;

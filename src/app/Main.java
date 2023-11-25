@@ -2,7 +2,6 @@ package app;
 
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
-import data_access.iUserDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomViewModel;
@@ -10,8 +9,8 @@ import interface_adapter.journal.JournalViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomViewModel;
-import interface_adapter.showchannelhistory.ChannelHistoryViewModel;
-import interface_adapter.showsetting.SettingViewModel;
+import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.signup.SignupViewModel;
 
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
@@ -76,7 +75,7 @@ public class Main {
 
 
 
-        // Initialize all views and add to views.
+        // Initialize all views.
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, profileViewModel,
                 signupViewModel, userDataAccessObject);
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
@@ -90,8 +89,24 @@ public class Main {
         RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
                 journalViewModel, settingViewModel);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel);
-        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(channelHistoryViewModel,);
-        SettingView settingView = SettingUseCaseFactory.create();
+        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
+                settingViewModel, channelHistoryViewModel);
+        SettingView settingView = ChannelSettingUseCaseFactory.create(viewManagerModel, settingViewModel,
+                channelHistoryViewModel, roomViewModel);
+
+        // Add views to views.
+        views.add(loginView, loginView.viewName);
+        views.add(signupView, signupView.viewName);
+        views.add(profileView, profileView.viewName);
+        views.add(createRoomView, createRoomView.viewName);
+        views.add(subscribeRoomView, subscribeRoomView.viewName);
+        views.add(roomView, roomView.viewName);
+        views.add(journalView, journalView.viewName);
+        views.add(channelHistoryView, channelHistoryView.viewName);
+        views.add(settingView, settingView.viewName);
+
+        viewManagerModel.setActiveView(loginView.viewName);
+        cardLayout.show(views, viewManagerModel.getActiveView());
         application.pack();
         application.setVisible(true);
     }

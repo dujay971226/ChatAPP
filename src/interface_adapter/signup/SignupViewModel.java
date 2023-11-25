@@ -1,10 +1,11 @@
 package interface_adapter.signup;
 
-import view.ViewModel;
+import interface_adapter.ViewModel;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class SignupViewModel extends ViewModel{
+public class SignupViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Sign Up";
     public static final String USERNAME_LABEL = "Enter Username";
     public static final String PASSWORD_LABEL = "Enter Password";

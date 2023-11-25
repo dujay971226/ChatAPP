@@ -27,7 +27,7 @@ public class LoginPresenter implements LoginOutputBoundary {
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the profile view.
         ProfileState profileState = profileViewModel.getState();
-        profileState.setUsername(response.getUsername());
+        profileState.setUser(response.getUser());
         profileState.setConfig(response.getConfig());
         this.profileViewModel.setState(profileState);
         this.profileViewModel.firePropertyChanged();

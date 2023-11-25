@@ -5,6 +5,12 @@ public class User {
 
     private final String password;
 
+    /**
+     * Requires: password is valid.
+     * @param name
+     * @param password
+     */
+
     public User(String name, String password){
         this.name = name;
         this.password = password;

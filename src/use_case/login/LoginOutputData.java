@@ -14,7 +14,7 @@ public class LoginOutputData {
         this.config = config;
     }
 
-    public User getUsername() {
+    public User getUser() {
         return user;
     }
 

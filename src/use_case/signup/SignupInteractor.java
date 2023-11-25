@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import data_access.iUserDataAccessObject;
 import entity.User;
 import entity.UserFactory;
 
@@ -7,11 +8,11 @@ import java.time.LocalDateTime;
 
 public class SignupInteractor implements SignupInputBoundary {
 
-    final SignupUserDataAccessInterface userDataAccessObject;
+    final iUserDataAccessObject userDataAccessObject;
     final SignupOutputBoundary userPresenter;
     final UserFactory userFactory;
 
-    public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
+    public SignupInteractor(iUserDataAccessObject signupDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;

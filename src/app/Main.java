@@ -15,10 +15,14 @@ import view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Main class for running the application.
+ * @author huangzhihao
+ */
 public class Main {
 
     /**
-     * Run Application using SwingUtilities.invokeLater.
+     * Run application using SwingUtilities.invokeLater.
      * @param args not used
      */
     public static void main(String[] args) {

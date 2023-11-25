@@ -1,6 +1,8 @@
 package app;
 
 import data_access.ChannelDataAccessObject;
+import interface_adapter.create_room.CreateRoomViewModel;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.profile.profiletocreate.ProfileToCreateController;
 import interface_adapter.profile.profiletocreate.ProfileToCreatePresenter;
@@ -9,6 +11,7 @@ import interface_adapter.profile.profiletologout.ProfileToLogoutPresenter;
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribeController;
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribePresenter;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import use_case.profile.profiletocreate.ProfiletocreateInputBoundary;
 import use_case.profile.profiletocreate.ProfiletocreateInteractor;
 import use_case.profile.profiletocreate.ProfiletocreateOutputBoundary;
@@ -23,13 +26,13 @@ import view.ProfileView;
 import javax.swing.*;
 import java.io.IOException;
 
-public class ProfileUsecaseFactory {
+public class ProfileUseCaseFactory {
 
     public static ProfileView create(ViewManagerModel viewManagerModel, CreateRoomViewModel createRoomViewModel, SubscribeRoomViewModel subscribeRoomViewModel, LoginViewModel loginViewModel, ProfileViewModel profileViewModel, ChannelDataAccessObject channelDataAccessObject){
         try {
             ProfileToCreateController profileToCreateController = createProfileCreateUseCase(viewManagerModel, createRoomViewModel, profileViewModel);
             ProfileToSubscribeController profileToSubscribeController = createProfileSubscribeUseCase(viewManagerModel, subscribeRoomViewModel, profileViewModel, channelDataAccessObject);
-            ProfileToLogoutController profileToLogoutController = creatProfileLogoutUsecase(viewManagerModel,loginViewModel,profileViewModel);
+            ProfileToLogoutController profileToLogoutController = creatProfileLogoutUseCase(viewManagerModel,loginViewModel,profileViewModel);
             return new ProfileView(profileViewModel, profileToCreateController, profileToSubscribeController ,profileToLogoutController);
 
         }catch (IOException e) {
@@ -50,7 +53,7 @@ public class ProfileUsecaseFactory {
         return new ProfileToSubscribeController(profiletosubscribeInteractor);
     }
 
-    public static ProfileToLogoutController creatProfileLogoutUsecase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, ProfileViewModel profileViewModel){
+    public static ProfileToLogoutController creatProfileLogoutUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, ProfileViewModel profileViewModel){
         LogoutOutputBoundary logoutOutputBoundary = new ProfileToLogoutPresenter(viewManagerModel,loginViewModel,profileViewModel);
         LogoutInputBoundary logoutInputBoundary = new LogoutInteractor(logoutOutputBoundary);
         return new ProfileToLogoutController(logoutInputBoundary);

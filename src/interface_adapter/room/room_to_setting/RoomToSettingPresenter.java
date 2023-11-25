@@ -18,6 +18,7 @@ public class RoomToSettingPresenter implements RoomToSettingOutputBoundary {
 
     }
 
+    //Set appropriate info to setting state and change to setting view
     @Override
     public void prepareSettingView(RoomToSettingOutputData roomToSettingOutputData) {
         SettingState settingState = settingViewModel.getState();

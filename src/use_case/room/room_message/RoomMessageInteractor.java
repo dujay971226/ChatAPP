@@ -11,6 +11,7 @@ public class RoomMessageInteractor implements RoomMessageInputBoundary {
         this.roomMessagePresenter = roomMessageOutputBoundary;
     }
 
+    //Send the message online and clear the input field
     @Override
     public void execute(RoomMessageInputData roomMessageInputData) {
 

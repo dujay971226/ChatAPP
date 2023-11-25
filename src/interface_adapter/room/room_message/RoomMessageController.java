@@ -12,6 +12,8 @@ public class RoomMessageController {
     public RoomMessageController(RoomMessageInputBoundary roomSendMessageUseCaseInteractor) {
         this.roomSendMessageUseCaseInteractor = roomSendMessageUseCaseInteractor;
     }
+
+    //Pass the Message and relative information to interactor.
     public void execute(User user, Channel channel, PubNub config, String message) {
         RoomMessageInputData roomMessageInputData = new RoomMessageInputData(user, channel, config, message);
 

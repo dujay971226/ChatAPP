@@ -15,6 +15,8 @@ public class RoomToJournalPresenter implements RoomToJournalOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.journalViewModel = journalViewModel;
     }
+
+    //Jump to profile view
     @Override
     public void prepareJournalView() {
         this.viewManagerModel.setActiveView(journalViewModel.getViewName());

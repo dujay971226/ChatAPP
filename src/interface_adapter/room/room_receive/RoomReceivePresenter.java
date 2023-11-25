@@ -16,11 +16,12 @@ public class RoomReceivePresenter implements RoomReceiveOutputBoundary {
         this.roomViewModel = roomViewModel;
     }
 
+    //notice RoomView to display new message
     @Override
     public void prepareNewMessageView(RoomReceiveOutputData roomReceiveOutputData) {
         RoomState roomState = roomViewModel.getState();
         roomState.setMessage(roomReceiveOutputData.getNewMessage().getContent());
-        roomState.setRecieveMessageNotice();
+        roomState.setReceiveMessageNotice();
         roomViewModel.setState(roomState);
         roomViewModel.firePropertyChanged();
 

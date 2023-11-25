@@ -70,8 +70,11 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         this.roomToJournalController = roomToJournalController;
         roomViewModel.addPropertyChangeListener(this);
 
+        //Name of the Room
         JLabel title = new JLabel(RoomViewModel.TITLE_LABEL, SwingConstants.CENTER);
+        title.setPreferredSize(new Dimension(800,100));
 
+        //buttons to swap to journal view, setting view and profile view
         JPanel buttons_high = new JPanel();
         buttons_high.setAlignmentX(Component.RIGHT_ALIGNMENT);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
@@ -80,11 +83,14 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         buttons_high.add(setting);
         exit = new JButton(RoomViewModel.EXIT_BUTTON_LABEL);
         buttons_high.add(exit);
+        buttons_high.setPreferredSize(new Dimension(800,100));
 
+        //Panel with scroll bar to display message
         messageList.setFont(messageList.getFont().deriveFont(20.0f));
         JScrollPane roomPane = new JScrollPane(messageList);
         roomPane.setPreferredSize(new Dimension(800,600));
 
+        //Panel to Input Message and send message
         JPanel low = new JPanel();
         low.setAlignmentX(Component.CENTER_ALIGNMENT);
         messageInputField.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -94,6 +100,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
         RoomState currState = roomViewModel.getState();
 
+        //Check whether send button was clicked
         send.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -101,7 +108,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                             RoomState currState = roomViewModel.getState();
                             String text = currState.getUser().getName() + ": " +messageInputField.getText();
                             messageInputField.setText("");
-                            currState.setMessage("");
                             roomMessageController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
@@ -113,7 +119,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
-
+        //Check whether setting button was clicked
         setting.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -129,6 +135,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
+        //Check whether journal button was clicked
         journal.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -139,6 +146,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
+        //Check whether exit button was clicked
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -154,6 +162,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
+        //Update typed in information and check whether enter key was pressed
         messageInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -162,7 +171,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                             RoomState currState = roomViewModel.getState();
                             String text = messageInputField.getText();
-                            currentState.setMessage("");
+                            messageInputField.setText("");
                             roomMessageController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
@@ -190,6 +199,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         PubNub pubnub = currState.getConfig();
         String channelName = currState.getChannel().getName();
 
+        //Check whether someone send a message online
         pubnub.addListener(new SubscribeCallback() {
 
             private boolean isConnected;
@@ -288,6 +298,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RoomState currState = roomViewModel.getState();
+        //Someone updated the message log, need to load the history message
         if (currState.getLOG_UPDATE()) {
             ArrayList<Message> newMessages = currState.getMessageLog();
             ArrayList<String> sortedMessage = SortByDate(newMessages);
@@ -295,10 +306,11 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 listModel.addElement(msg);
             }
             currState.setOffNotice();
+        //Someone sent a message online, need to load
         } else if (currState.getNEW_MESSAGE_UPDATE()) {
             listModel.addElement(currState.getMessage());
             currState.setMessage("");
-            currState.setOffRecieveMessageNotice();
+            currState.setOffReceiveMessageNotice();
         }
 
     }

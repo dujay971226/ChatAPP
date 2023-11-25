@@ -19,6 +19,8 @@ public class RoomMessagePresenter implements RoomMessageOutputBoundary {
         this.roomViewModel = roomViewModel;
     }
 
+
+    //Set the input field to blank
     @Override
     public void prepareSentView() {
         RoomState roomState = roomViewModel.getState();
@@ -31,6 +33,7 @@ public class RoomMessagePresenter implements RoomMessageOutputBoundary {
 
     }
 
+    //If couldn't connect make a pop-up message to warn the error
     @Override
     public void prepareLostConnectionView() {
         JOptionPane.showMessageDialog(

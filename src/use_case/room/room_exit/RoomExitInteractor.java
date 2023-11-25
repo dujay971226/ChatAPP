@@ -10,6 +10,7 @@ public class RoomExitInteractor implements RoomExitInputBoundary{
         this.roomExitPresenter = roomExitOutputBoundary;
     }
 
+    //unsubscribe the user from the channel before exit and set to profile view
     @Override
     public void execute(RoomExitInputData roomExitInputData) {
         PubNub pubnub = roomExitInputData.getConfig();

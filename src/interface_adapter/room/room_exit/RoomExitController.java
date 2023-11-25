@@ -11,6 +11,8 @@ public class RoomExitController {
     public RoomExitController(RoomExitInputBoundary roomExitRoomUseCaseInteractor) {
         this.roomExitRoomUseCaseInteractor = roomExitRoomUseCaseInteractor;
     }
+
+    //Send User Data and Pubnub Configuration to jump to Profile View.
     public void execute(User user, PubNub config) {
         RoomExitInputData roomExitInputData = new RoomExitInputData(user, config);
 

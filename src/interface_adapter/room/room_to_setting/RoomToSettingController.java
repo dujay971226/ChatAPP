@@ -11,6 +11,8 @@ public class RoomToSettingController {
     public RoomToSettingController(RoomToSettingInputBoundary roomToSettingUseCaseInteractor) {
         this.roomToSettingUseCaseInteractor = roomToSettingUseCaseInteractor;
     }
+
+    //Pass relative information to change to setting view
     public void execute(User user, Channel channel, PubNub config) {
         RoomToSettingInputData roomToSettingInputData = new RoomToSettingInputData(user, channel, config);
 

@@ -90,9 +90,8 @@ public class Main {
         RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
                 journalViewModel, settingViewModel);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel);
-        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create();
+        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(channelHistoryViewModel,);
         SettingView settingView = SettingUseCaseFactory.create();
-
         application.pack();
         application.setVisible(true);
     }

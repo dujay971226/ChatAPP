@@ -34,6 +34,11 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         JLabel title = new JLabel("Channel History");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new GridLayout(0, 5));
+        innerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JScrollPane innerScrollPane = new JScrollPane(innerPanel);
 
         JPanel buttons = new JPanel();
         cancel = new JButton(ChannelHistoryViewModel.CANCEL_BUTTON_LABEL);
@@ -50,6 +55,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
+        this.add(innerScrollPane);
         this.add(channelMessageErrorField);
         this.add(buttons);
     }
@@ -69,25 +75,23 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             channelMessageErrorField.setText(state.getChannelMessageError());
             state.setChannelMessageError(null);
         } else {
+            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
+
+            innerPanel.removeAll();
+
             List<PNFetchMessageItem> channelMessages = state.getChannelMessages();
             for (PNFetchMessageItem messageItem : channelMessages) {
-                System.out.println(messageItem.getMessage());
-                System.out.println(messageItem.getMeta());
-                System.out.println(messageItem.getTimetoken());
-                System.out.println(messageItem.getUuid());
-                HashMap<String, HashMap<String, List<PNFetchMessageItem.Action>>> actions =
-                        messageItem.getActions();
-                for (String type : actions.keySet()) {
-                    System.out.println("Action type: " + type);
-                    for (String value : actions.get(type).keySet()) {
-                        System.out.println("Action value: " + value);
-                        for (PNFetchMessageItem.Action action : actions.get(type).get(value)) {
-                            System.out.println("Action timetoken: " + action.getActionTimetoken());
-                            System.out.println("Action publisher: " + action.getUuid());
-                        }
-                    }
-                }
+                String message = messageItem.getUuid().toString() + "\n";
+                message += messageItem.getMeta().toString() + "\n";
+                message += messageItem.getTimetoken().toString() + "\n";
+                message += messageItem.getMessage().toString() + "\n";
+
+                innerPanel.add(new JLabel(message));
             }
+
+            innerPanel.revalidate();
+            innerPanel.repaint();
         }
     }
 }

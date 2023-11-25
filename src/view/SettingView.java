@@ -33,17 +33,14 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         this.returnToChannelController = returnToChannelController;
         this.settingViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Channel Setting");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(0, 5));
         innerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        JScrollPane innerScrollPane = new JScrollPane(innerPanel);
 
-        // 将内部 JPanel 添加到外部 JPanel
-        this.add(innerPanel, BorderLayout.CENTER);
-
+        // add the inner scorllable JPanel to the SettingView JPanel
+        this.add(innerScrollPane, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
         cancel = new JButton(SettingViewModel.CANCEL_BUTTON_LABEL);
@@ -67,7 +64,6 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         buttons.add(channelhistory);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
         this.add(loadingSubcribersErrorField);
         this.add(buttons);
     }
@@ -84,7 +80,9 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             loadingSubcribersErrorField.setText(state.getLoadingSubscribersError());
             state.setLoadingSubscribersError(null);
         } else {
-            JPanel innerPanel = (JPanel) this.getComponent(1);
+            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
+
             innerPanel.removeAll();
 
             Collection<PNHereNowChannelData> channelOccupancy = state.getChannelOccupancy();

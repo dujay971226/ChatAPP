@@ -1,9 +1,9 @@
 package interface_adapter.profile.profiletocreate;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomState;
 import interface_adapter.create_room.CreateRoomViewModel;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.ViewManagerModel;
 import use_case.profile.profiletocreate.ProfiletocreateOutputBoundary;
 import use_case.profile.profiletocreate.ProfiletocreateOutputData;
 

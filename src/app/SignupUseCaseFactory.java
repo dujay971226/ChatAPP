@@ -1,5 +1,6 @@
 package app;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -10,7 +11,6 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.SignupView;
-import view.ViewManagerModel;
 
 
 import javax.swing.*;

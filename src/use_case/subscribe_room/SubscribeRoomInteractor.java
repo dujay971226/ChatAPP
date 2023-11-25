@@ -39,6 +39,9 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
      */
     @Override
     public void execute(SubscribeRoomInputData subscribeRoomInputData) {
+        PubNub pubNub = subscribeRoomInputData.getConfig();
+        String channelName = subscribeRoomInputData.getChannelName();
+        pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
         if (!exists(subscribeRoomInputData.getChannelName(), subscribeRoomInputData.getChannelLog())) {
             ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
                     subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
@@ -62,6 +65,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 
     // Returns message history using pubnub.
     private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
+
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
                 .channels(Arrays.asList(channelName))

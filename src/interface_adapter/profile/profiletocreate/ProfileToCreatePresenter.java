@@ -21,7 +21,7 @@ public class ProfileToCreatePresenter implements ProfiletocreateOutputBoundary {
         createRoomState.setUser(outputData.getUser());
         createRoomState.setConfig(outputData.getConfig());
 
-        profileViewModel.firePropertyChanged();
+        createRoomViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(createRoomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 

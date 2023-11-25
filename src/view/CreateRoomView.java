@@ -1,10 +1,9 @@
-package view.create_room;
+package view;
 
-import interface_adapter.ProfileToSubscribeController;
 import interface_adapter.create_room.CreateRoomController;
 import interface_adapter.create_room.CreateRoomState;
 import interface_adapter.create_room.CreateRoomViewModel;
-import view.LabelTextPanel;
+import interface_adapter.profile.profiletosubscribe.ProfileToSubscribeController;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

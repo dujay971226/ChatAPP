@@ -197,7 +197,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 });
 
         PubNub pubnub = currState.getConfig();
-        String channelName = currState.getChannel().getName();
 
         //Check whether someone send a message online
         pubnub.addListener(new SubscribeCallback() {
@@ -278,9 +277,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             }
         });
 
-        pubnub.subscribe()
-                .channels(Collections.singletonList(channelName))
-                .execute();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

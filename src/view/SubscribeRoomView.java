@@ -47,8 +47,10 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         SubscribeRoomState currentState = subscribeRoomViewModel.getState();
         ArrayList<Channel> channelLog = currentState.getChannelLog();
         ArrayList<String> channelStrings = new ArrayList<>();
-        for (Channel channel : channelLog) {
-            channelStrings.add(channel.getName());
+        if (channelLog != null) {
+            for (Channel channel : channelLog) {
+                channelStrings.add(channel.getName());
+            }
         }
         channelNames = channelStrings.toArray(new String[0]);
         JList<String> channelList = new JList<>(channelNames);

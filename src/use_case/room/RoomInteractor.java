@@ -45,9 +45,9 @@ public class RoomInteractor implements RoomInputBoundary{
 
     @Override
     public void execute(RoomReceiveInputData roomReceiveInputData) {
-        ArrayList<Message> newMessageLog = roomReceiveInputData.getMessages();
+        Message newMessage = roomReceiveInputData.getMessage();
 
-        RoomOutputData roomOutputData = new RoomOutputData(newMessageLog);
+        RoomOutputData roomOutputData = new RoomOutputData(newMessage);
 
         RoomPresenter.prepareNewMessageView(roomOutputData);
     }
@@ -67,6 +67,7 @@ public class RoomInteractor implements RoomInputBoundary{
                 .message(messageJsonObject)
                 .async((result, publishStatus) -> {
                     if (!publishStatus.isError()) {
+                        RoomPresenter.prepareSentView();
                     }
                     else {
                         RoomPresenter.prepareLostConnectionView();

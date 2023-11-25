@@ -41,7 +41,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public final String viewName = "room";
 
     private final RoomViewModel roomViewModel;
-    private final JTextField messageInputField;
+    private final JTextField messageInputField = new JTextField(30);
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    JList<String> messageList = new JList<String>(listModel);
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
@@ -68,8 +70,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         this.roomToJournalController = roomToJournalController;
         roomViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(RoomViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel title = new JLabel(RoomViewModel.TITLE_LABEL, SwingConstants.CENTER);
 
         JPanel buttons_high = new JPanel();
         buttons_high.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -80,29 +81,26 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         exit = new JButton(RoomViewModel.EXIT_BUTTON_LABEL);
         buttons_high.add(exit);
 
-        RoomState currState = roomViewModel.getState();
-        ArrayList<Message> newMessages = currState.getMessageLog();
-        ArrayList<String>sortedMessage = SortByDate(newMessages);
-        String[] sortedMessageStringList = sortedMessage.toArray(new String[0]);
-        JList<String> messageList = new JList<String>(sortedMessageStringList);
-        messageList.setFont(messageList.getFont().deriveFont(14.0f));
+        messageList.setFont(messageList.getFont().deriveFont(20.0f));
         JScrollPane roomPane = new JScrollPane(messageList);
         roomPane.setPreferredSize(new Dimension(800,600));
 
         JPanel low = new JPanel();
         low.setAlignmentX(Component.CENTER_ALIGNMENT);
-        messageInputField = new JTextField();
+        messageInputField.setAlignmentX(Component.LEFT_ALIGNMENT);
         low.add(messageInputField);
         send = new JButton(RoomViewModel.SEND_BUTTON_LABEL);
         low.add(send);
 
+        RoomState currState = roomViewModel.getState();
 
         send.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = messageInputField.getText();
+                            String text = currState.getUser().getName() + ": " +messageInputField.getText();
+                            messageInputField.setText("");
                             currState.setMessage("");
                             roomMessageController.execute(
                                     currState.getUser(),
@@ -189,17 +187,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 });
 
-
-    }
-
-
-    public void MessageReceiver(String[] args) throws PubNubException {
-
-        RoomState currState = roomViewModel.getState();
-
         PubNub pubnub = currState.getConfig();
         String channelName = currState.getChannel().getName();
-
 
         pubnub.addListener(new SubscribeCallback() {
 
@@ -208,17 +197,17 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void status(PubNub pubnub, PNStatus status) {
                 if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
-                    // This event happens when radio / connectivity is lost
+                        // This event happens when radio / connectivity is lost
                 } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
-                    // Connect event. You can do stuff like publish, and know you'll get it.
-                    // Or just use the connected event to confirm you are subscribed for
-                    // UI / internal notifications, etc
+                        // Connect event. You can do stuff like publish, and know you'll get it.
+                        // Or just use the connected event to confirm you are subscribed for
+                        // UI / internal notifications, etc
                 } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
-                    // Happens as part of our regular operation. This event happens when
-                    // radio / connectivity is lost, then regained.
+                        // Happens as part of our regular operation. This event happens when
+                        // radio / connectivity is lost, then regained.
                 } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
-                    // Handle message decryption error. Probably client configured to
-                    // encrypt messages and on live data feed it received plain text.
+                        // Handle message decryption error. Probably client configured to
+                        // encrypt messages and on live data feed it received plain text.
                 }
             }
 
@@ -226,25 +215,21 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             public void message(PubNub pubnub, PNMessageResult message) {
                 // Handle new message stored in message.message
                 if (message.getChannel() != null) {
-                    // Message has been received on channel group stored in
-                    // message.getChannel()
+                        // Message has been received on channel group stored in
+                        // message.getChannel()
                 } else {
-                    // Message has been received on channel stored in
-                    // message.getSubscription()
+                        // Message has been received on channel stored in
+                        // message.getSubscription()
                 }
+                    String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
+                    User user = currState.getUser();
+                    Message newMessages = new Message(user, msg, LocalDateTime.now());
+                    roomReceiveController.execute(newMessages);
 
-                JsonElement receivedMessageObject = message.getMessage();
-                JsonElement receivedUserObject = message.getUserMetadata().getAsJsonObject().get("");
-                User user = currState.getUser();
-                String msg = receivedMessageObject.toString();
-                ArrayList<Message> newMessages = currState.getMessageLog();
-                newMessages.add(new Message(user, msg, LocalDateTime.now()));
-                roomReceiveController.execute(newMessages);
-
-                /*
-                 * Log the following items with your favorite logger - message.getMessage() -
-                 * message.getSubscription() - message.getTimetoken()
-                 */
+                    /*
+                     * Log the following items with your favorite logger - message.getMessage() -
+                     * message.getSubscription() - message.getTimetoken()
+                     */
             }
 
             @Override
@@ -278,14 +263,22 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             }
 
             @Override
-            public void presence(PubNub pubnub, PNPresenceEventResult presence) {
+                public void presence(PubNub pubnub, PNPresenceEventResult presence) {
 
             }
         });
 
         pubnub.subscribe()
                 .channels(Collections.singletonList(channelName))
-                .execute();    }
+                .execute();
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(title);
+        this.add(buttons_high);
+        this.add(roomPane);
+        this.add(low);
+    }
 
 
     @Override
@@ -294,13 +287,26 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        RoomState currState = roomViewModel.getState();
+        if (currState.getLOG_UPDATE()) {
+            ArrayList<Message> newMessages = currState.getMessageLog();
+            ArrayList<String> sortedMessage = SortByDate(newMessages);
+            for (String msg: sortedMessage) {
+                listModel.addElement(msg);
+            }
+            currState.setOffNotice();
+        } else if (currState.getNEW_MESSAGE_UPDATE()) {
+            listModel.addElement(currState.getMessage());
+            currState.setMessage("");
+            currState.setOffRecieveMessageNotice();
+        }
 
     }
 
 
     private ArrayList<String> SortByDate(ArrayList<Message> newMessages) {
         Map<LocalDateTime, String> dateFormatMap = new TreeMap<>();
-        newMessages.forEach(s -> dateFormatMap.put(s.getTime(), s.getUser().getName() + s.getContent()));
+        newMessages.forEach(s -> dateFormatMap.put(s.getTime(), s.getUser().getName() + ": " + s.getContent()));
         return new ArrayList<>(dateFormatMap.values());
     }
 

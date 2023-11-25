@@ -1,20 +1,17 @@
 package app;
 
 import com.pubnub.api.PubNubException;
-import entity.Message;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.*;
+import interface_adapter.showsetting.SettingViewModel;
 import use_case.room.RoomInputBoundary;
 import use_case.room.RoomInteractor;
 import use_case.room.RoomOutputBoundary;
-import use_case.room.RoomReceiveInputData;
 import view.RoomView;
 
-import javax.swing.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class RoomUseCaseFactory {
 

@@ -5,14 +5,14 @@ import entity.Message;
 import java.util.ArrayList;
 
 public class RoomReceiveInputData {
-    private final ArrayList<Message> messages;
+    private final Message message;
 
-    public RoomReceiveInputData (ArrayList<Message> messages) {
-        this.messages = messages;
+    public RoomReceiveInputData (Message message) {
+        this.message = message;
     }
 
-    public ArrayList<Message> getMessages() {
-        return this.messages;
+    public Message getMessage() {
+        return this.message;
     }
 
 }

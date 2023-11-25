@@ -3,6 +3,8 @@ package interface_adapter.room;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.showsetting.SettingState;
+import interface_adapter.showsetting.SettingViewModel;
 import use_case.room.RoomOutputBoundary;
 import use_case.room.RoomOutputData;
 import use_case.room.RoomToSettingOutputData;
@@ -40,8 +42,8 @@ public class RoomPresenter implements RoomOutputBoundary {
     @Override
     public void prepareNewMessageView(RoomOutputData roomOutputData) {
         RoomState roomState = roomViewModel.getState();
-        roomState.setMessageLog(roomOutputData.getNewMessageLog());
-        roomState.setNotice();
+        roomState.setMessage(roomOutputData.getNewMessage().getContent());
+        roomState.setRecieveMessageNotice();
         roomViewModel.setState(roomState);
         roomViewModel.firePropertyChanged();
 
@@ -68,6 +70,18 @@ public class RoomPresenter implements RoomOutputBoundary {
     public void prepareJournalView() {
         this.viewManagerModel.setActiveView(journalViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareSentView() {
+        RoomState roomState = roomViewModel.getState();
+        roomState.setMessage("");
+        roomViewModel.setState(roomState);
+        roomViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setActiveView(roomViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+
     }
 
     public void prepareLostConnectionView() {

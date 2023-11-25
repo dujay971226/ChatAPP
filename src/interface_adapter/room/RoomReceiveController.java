@@ -14,8 +14,8 @@ public class RoomReceiveController {
         this.roomReceiveMessageUseCaseInteractor = roomReceiveMessageUseCaseInteractor;
     }
 
-    public void execute(ArrayList<Message> newMessages) {
-        RoomReceiveInputData roomReceiveInputData = new RoomReceiveInputData(newMessages);
+    public void execute(Message newMessage) {
+        RoomReceiveInputData roomReceiveInputData = new RoomReceiveInputData(newMessage);
 
         roomReceiveMessageUseCaseInteractor.execute(roomReceiveInputData);
     }

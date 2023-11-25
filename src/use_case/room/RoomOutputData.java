@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class RoomOutputData {
 
-    private final ArrayList<Message> newMessageLog;
-    public RoomOutputData(ArrayList<Message> newMessageLog) {
-        this.newMessageLog = newMessageLog;
+    private final Message newMessage;
+    public RoomOutputData(Message newMessage) {
+        this.newMessage = newMessage;
     }
 
-    public ArrayList<Message> getNewMessageLog() {
-        return newMessageLog;
+    public Message getNewMessage() {
+        return newMessage;
     }
 }

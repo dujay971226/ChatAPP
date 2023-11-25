@@ -3,14 +3,15 @@ package use_case.login;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
+import data_access.iUserDataAccessObject;
 import entity.User;
 import com.pubnub.api.PubNub;
 
 public class LoginInteractor implements LoginInputBoundary{
-    final LoginUserDataAccessInterface userDataAccessObject;
+    final iUserDataAccessObject userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
+    public LoginInteractor(iUserDataAccessObject userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;

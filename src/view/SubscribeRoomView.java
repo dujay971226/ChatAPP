@@ -1,15 +1,12 @@
-package view.subscribe_room;
+package view;
 
 import entity.Channel;
-import interface_adapter.ProfileToCreateController;
-import interface_adapter.create_room.CreateRoomState;
+import interface_adapter.profile.profiletocreate.ProfileToCreateController;
 import interface_adapter.subscribe_room.SubscribeRoomController;
 import interface_adapter.subscribe_room.SubscribeRoomState;
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
-import view.LabelTextPanel;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;

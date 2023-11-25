@@ -1,8 +1,9 @@
 package interface_adapter.room.room_to_setting;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.showsetting.SettingState;
-import interface_adapter.showsetting.SettingViewModel;
+
+import interface_adapter.setting.showsetting.SettingState;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.room.room_to_setting.RoomToSettingOutputBoundary;
 import use_case.room.room_to_setting.RoomToSettingOutputData;
 

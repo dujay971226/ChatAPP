@@ -1,5 +1,8 @@
 package app;
 
+import com.pubnub.api.PNConfiguration;
+import com.pubnub.api.PubNub;
+import com.pubnub.api.PubNubException;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
 import data_access.iUserDataAccessObject;
@@ -10,8 +13,8 @@ import interface_adapter.journal.JournalViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomViewModel;
-import interface_adapter.showchannelhistory.ChannelHistoryViewModel;
-import interface_adapter.showsetting.SettingViewModel;
+import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.signup.SignupViewModel;
 
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
@@ -35,12 +38,16 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                createAndShowApplication();
+                try {
+                    createAndShowApplication();
+                } catch (PubNubException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private static void createAndShowApplication() {
+    private static void createAndShowApplication() throws PubNubException {
         JFrame application = new JFrame("Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +79,12 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        PNConfiguration pnConfiguration =  new PNConfiguration("Jay");
+        pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");
+        pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd204abc");
+        pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
+
+        PubNub pubnub = new PubNub(pnConfiguration);
 
 
 
@@ -90,8 +103,10 @@ public class Main {
         RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
                 journalViewModel, settingViewModel);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel);
-        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create();
-        SettingView settingView = SettingUseCaseFactory.create();
+        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
+                settingViewModel, channelHistoryViewModel);
+        SettingView settingView = ChannelSettingUseCaseFactory.create(viewManagerModel, settingViewModel,
+                channelHistoryViewModel, roomViewModel);
 
         application.pack();
         application.setVisible(true);

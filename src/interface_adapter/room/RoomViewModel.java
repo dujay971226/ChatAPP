@@ -1,5 +1,6 @@
 package interface_adapter.room;
 
+import com.pubnub.api.PubNubException;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
@@ -16,7 +17,7 @@ public class RoomViewModel extends ViewModel {
 
     private RoomState state = new RoomState();
 
-    public RoomViewModel() {
+    public RoomViewModel() throws PubNubException {
         super("room");
     }
 

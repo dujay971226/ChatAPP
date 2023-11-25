@@ -1,16 +1,14 @@
-package interface_adapter.room;
+package interface_adapter.room.room_receive;
 
 import entity.Message;
-import use_case.room.RoomInputBoundary;
-import use_case.room.RoomReceiveInputData;
-
-import java.util.ArrayList;
+import use_case.room.room_receive.RoomReceiveInputBoundary;
+import use_case.room.room_receive.RoomReceiveInputData;
 
 public class RoomReceiveController {
 
-    final RoomInputBoundary roomReceiveMessageUseCaseInteractor;
+    final RoomReceiveInputBoundary roomReceiveMessageUseCaseInteractor;
 
-    public RoomReceiveController(RoomInputBoundary roomReceiveMessageUseCaseInteractor) {
+    public RoomReceiveController(RoomReceiveInputBoundary roomReceiveMessageUseCaseInteractor) {
         this.roomReceiveMessageUseCaseInteractor = roomReceiveMessageUseCaseInteractor;
     }
 

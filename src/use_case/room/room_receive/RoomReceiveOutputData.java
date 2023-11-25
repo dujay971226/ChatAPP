@@ -1,13 +1,11 @@
-package use_case.room;
+package use_case.room.room_receive;
 
 import entity.Message;
 
-import java.util.ArrayList;
-
-public class RoomOutputData {
+public class RoomReceiveOutputData {
 
     private final Message newMessage;
-    public RoomOutputData(Message newMessage) {
+    public RoomReceiveOutputData(Message newMessage) {
         this.newMessage = newMessage;
     }
 

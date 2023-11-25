@@ -1,15 +1,14 @@
-package interface_adapter.room;
+package interface_adapter.room.room_to_setting;
 
 import com.pubnub.api.PubNub;
 import entity.Channel;
 import entity.User;
-import use_case.room.RoomExitInputData;
-import use_case.room.RoomInputBoundary;
-import use_case.room.RoomToSettingInputData;
+import use_case.room.room_to_setting.RoomToSettingInputBoundary;
+import use_case.room.room_to_setting.RoomToSettingInputData;
 
 public class RoomToSettingController {
-    final RoomInputBoundary roomToSettingUseCaseInteractor;
-    public RoomToSettingController(RoomInputBoundary roomToSettingUseCaseInteractor) {
+    final RoomToSettingInputBoundary roomToSettingUseCaseInteractor;
+    public RoomToSettingController(RoomToSettingInputBoundary roomToSettingUseCaseInteractor) {
         this.roomToSettingUseCaseInteractor = roomToSettingUseCaseInteractor;
     }
     public void execute(User user, Channel channel, PubNub config) {

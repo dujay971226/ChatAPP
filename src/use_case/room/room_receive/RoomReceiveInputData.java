@@ -1,4 +1,4 @@
-package use_case.room;
+package use_case.room.room_receive;
 
 import entity.Message;
 

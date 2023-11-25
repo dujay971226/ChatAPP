@@ -7,19 +7,27 @@ import entity.User;
 
 import java.util.ArrayList;
 
+//The current state of RoomView
 public class RoomState {
 
+    //THe current Channel info
     private Channel channel = null;
 
+    //The current logged-in user info
     private User currUser = null;
 
+    //Message history to load
     private ArrayList<Message> messageLog = new ArrayList<Message>();
 
     private String message = null;
 
     private PubNub config = null;
 
-    private boolean AWAIT_UPDATE = false;
+    //To warn a message history was loaded
+    private boolean LOG_UPDATE = false;
+
+    //To warn a new message was received
+    private boolean NEW_MESSAGE_UPDATE = false;
 
     public RoomState(RoomState copy) {
         this.channel = copy.getChannel();
@@ -27,7 +35,8 @@ public class RoomState {
         this.messageLog = copy.getMessageLog();
         this.message = copy.getMessage();
         this.config = copy.getConfig();
-        this.AWAIT_UPDATE = copy.getNotice();
+        this.LOG_UPDATE = copy.getLOG_UPDATE();
+        this.NEW_MESSAGE_UPDATE = copy.getNEW_MESSAGE_UPDATE();
     }
 
     public RoomState () {
@@ -54,8 +63,12 @@ public class RoomState {
         return config;
     }
 
-    public boolean getNotice() {
-        return this.AWAIT_UPDATE;
+    public boolean getLOG_UPDATE() {
+        return this.LOG_UPDATE;
+    }
+
+    public boolean getNEW_MESSAGE_UPDATE() {
+        return this.NEW_MESSAGE_UPDATE;
     }
 
     public void setChannel(Channel channel) {
@@ -79,8 +92,18 @@ public class RoomState {
     }
 
     public void setNotice() {
-        this.AWAIT_UPDATE = true;
+        this.LOG_UPDATE = true;
     }
 
+    public void setOffNotice() {
+        this.LOG_UPDATE = false;
+    }
 
+    public void setReceiveMessageNotice() {
+        this.NEW_MESSAGE_UPDATE = true;
+    }
+
+    public void setOffReceiveMessageNotice() {
+        this.NEW_MESSAGE_UPDATE = false;
+    }
 }

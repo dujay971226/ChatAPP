@@ -1,5 +1,6 @@
 package app;
 
+import data_access.iUserDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.profile.ProfileViewModel;
@@ -10,7 +11,6 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginInteractor;
-import use_case.login.LoginUserDataAccessInterface;
 import view.LoginView;
 
 import javax.swing.*;
@@ -32,7 +32,7 @@ public class LoginUseCaseFactory {
             LoginViewModel loginViewModel,
             ProfileViewModel profileViewModel,
             SignupViewModel signupViewModel,
-            LoginUserDataAccessInterface userDataAccessObject) {
+            iUserDataAccessObject userDataAccessObject) {
 
         try {
             LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, profileViewModel, userDataAccessObject, signupViewModel);
@@ -48,7 +48,7 @@ public class LoginUseCaseFactory {
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             ProfileViewModel profileViewModel,
-            LoginUserDataAccessInterface userDataAccessObject,
+            iUserDataAccessObject userDataAccessObject,
             SignupViewModel signupViewModel) throws IOException {
 
 

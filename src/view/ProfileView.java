@@ -3,9 +3,7 @@ package view;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.profile.profiletocreate.ProfileToCreateController;
-
 import interface_adapter.profile.profiletologout.ProfileToLogoutController;
-
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribeController;
 
 import javax.swing.*;

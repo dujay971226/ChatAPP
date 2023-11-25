@@ -2,8 +2,6 @@ package use_case.room.room_receive;
 
 import entity.Message;
 
-import java.util.ArrayList;
-
 public class RoomReceiveInputData {
     private final Message message;
 

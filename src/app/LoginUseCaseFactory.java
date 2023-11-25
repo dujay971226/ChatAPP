@@ -3,14 +3,14 @@ package app;
 import data_access.iUserDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginInputBoundary;
-import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
 import view.LoginView;
 
 import javax.swing.*;

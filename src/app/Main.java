@@ -2,7 +2,6 @@ package app;
 
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
-import data_access.iUserDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomViewModel;
@@ -10,10 +9,9 @@ import interface_adapter.journal.JournalViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomViewModel;
-import interface_adapter.showchannelhistory.ChannelHistoryViewModel;
-import interface_adapter.showsetting.SettingViewModel;
+import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.signup.SignupViewModel;
-
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import view.*;
 

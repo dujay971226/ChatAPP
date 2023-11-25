@@ -1,9 +1,8 @@
 package interface_adapter.login;
+
 import com.pubnub.api.PubNubException;
-import use_case.login.LoginInputData;
 import use_case.login.LoginInputBoundary;
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInputData;
+import use_case.login.LoginInputData;
 
 public class LoginController {
     final LoginInputBoundary loginUseCaseInteractor;

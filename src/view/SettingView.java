@@ -4,7 +4,6 @@ import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import com.pubnub.api.models.consumer.presence.PNHereNowOccupantData;
 import interface_adapter.setting.returntochannel.ReturnToChannelController;
 import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
-import interface_adapter.setting.showchannelhistory.ShowChannelHistoryPresenter;
 import interface_adapter.setting.showsetting.SettingState;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.setting.showsetting.ShowSettingController;
@@ -34,8 +33,16 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         this.returnToChannelController = returnToChannelController;
         this.settingViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Channel History");
+        JLabel title = new JLabel("Channel Setting");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new GridLayout(0, 5));
+        innerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+
+        // 将内部 JPanel 添加到外部 JPanel
+        this.add(innerPanel, BorderLayout.CENTER);
 
 
         JPanel buttons = new JPanel();
@@ -77,16 +84,18 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             loadingSubcribersErrorField.setText(state.getLoadingSubscribersError());
             state.setLoadingSubscribersError(null);
         } else {
+            JPanel innerPanel = (JPanel) this.getComponent(1);
+            innerPanel.removeAll();
+
             Collection<PNHereNowChannelData> channelOccupancy = state.getChannelOccupancy();
             for (PNHereNowChannelData channelData : channelOccupancy) {
-                System.out.println("---");
-                System.out.println("channel:" + channelData.getChannelName());
-                System.out.println("occupancy: " + channelData.getOccupancy());
-                System.out.println("occupants:");
                 for (PNHereNowOccupantData occupant : channelData.getOccupants()) {
-                    System.out.println("uuid: " + occupant.getUuid() + " state: " + occupant.getState());
+                    innerPanel.add(new JLabel(occupant.getUuid()));
                 }
             }
+
+            innerPanel.revalidate();
+            innerPanel.repaint();
         }
     }
 

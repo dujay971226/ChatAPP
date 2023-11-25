@@ -1,5 +1,6 @@
 package app;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.journal.searchbycontent.JournalContentController;
 import interface_adapter.journal.searchbycontent.JournalContentPresenter;
@@ -7,8 +8,6 @@ import interface_adapter.journal.searchbydoi.JournalDoiController;
 import interface_adapter.journal.searchbydoi.JournalDoiPresenter;
 import interface_adapter.journal.searchbyissn.JournalIssnController;
 import interface_adapter.journal.searchbyissn.JournalIssnPresenter;
-
-import interface_adapter.ViewManagerModel;
 import use_case.journal.Content.JournalContentInputBoundary;
 import use_case.journal.Content.JournalContentInteractor;
 import use_case.journal.Content.JournalContentOutputBoundary;

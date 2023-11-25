@@ -6,7 +6,6 @@ import interface_adapter.create_room.CreateRoomController;
 import interface_adapter.create_room.CreateRoomPresenter;
 import interface_adapter.create_room.CreateRoomViewModel;
 import interface_adapter.profile.ProfileViewModel;
-import interface_adapter.profile.profiletocreate.ProfileToCreatePresenter;
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribeController;
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribePresenter;
 import interface_adapter.room.RoomViewModel;
@@ -14,17 +13,10 @@ import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import use_case.create_room.CreateRoomInputBoundary;
 import use_case.create_room.CreateRoomInteractor;
 import use_case.create_room.CreateRoomOutputBoundary;
-import use_case.profile.profiletocreate.ProfiletocreateInputBoundary;
-import use_case.profile.profiletocreate.ProfiletocreateInteractor;
-import use_case.profile.profiletocreate.ProfiletocreateOutputBoundary;
-import use_case.profile.profiletocreate.ProfiletocreateOutputData;
 import use_case.profile.profiletosubscribe.ProfiletosubscribeInputBoundary;
 import use_case.profile.profiletosubscribe.ProfiletosubscribeInteractor;
 import use_case.profile.profiletosubscribe.ProfiletosubscribeOutputBoundary;
 import view.CreateRoomView;
-import view.RoomView;
-import view.SubscribeRoomView;
-import view.ViewManager;
 
 public class CreateRoomUseCaseFactory {
 

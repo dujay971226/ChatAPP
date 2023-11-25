@@ -11,11 +11,9 @@ import entity.User;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.List;
 
 /**
  * Interactor of subscribe room.

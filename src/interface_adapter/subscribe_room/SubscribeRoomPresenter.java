@@ -2,7 +2,6 @@ package interface_adapter.subscribe_room;
 
 
 import entity.Channel;
-import entity.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.room.RoomState;
 import interface_adapter.room.RoomViewModel;

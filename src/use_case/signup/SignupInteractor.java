@@ -4,8 +4,6 @@ import data_access.iUserDataAccessObject;
 import entity.User;
 import entity.UserFactory;
 
-import java.time.LocalDateTime;
-
 public class SignupInteractor implements SignupInputBoundary {
 
     final iUserDataAccessObject userDataAccessObject;

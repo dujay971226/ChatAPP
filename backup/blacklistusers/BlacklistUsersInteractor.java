@@ -21,10 +21,10 @@ import com.pubnub.api.models.consumer.objects_api.membership.PNMembershipResult;
 import com.pubnub.api.PubNubException;
 import data_access.TokenDataAccessInterface;
 import org.jetbrains.annotations.NotNull;
-import use_case.channelsetting.ShowSettingOutputData;
-import use_case.showchannelhistory.ShowChannelHistoryInputData;
-import use_case.showchannelhistory.ShowChannelHistoryOutputBoundary;
-import use_case.showchannelhistory.ShowChannelHistoryOutputData;
+import use_case.setting.showchannelhistory.channelsetting.ShowSettingOutputData;
+import use_case.setting.showchannelhistory.ShowChannelHistoryInputData;
+import use_case.setting.showchannelhistory.ShowChannelHistoryOutputBoundary;
+import use_case.setting.showchannelhistory.ShowChannelHistoryOutputData;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

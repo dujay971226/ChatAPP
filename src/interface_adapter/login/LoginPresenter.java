@@ -1,10 +1,11 @@
 package interface_adapter.login;
 
+import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupViewModel;
-import view.ViewManagerModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
+import view.ViewManagerModel;
 
 public class LoginPresenter implements LoginOutputBoundary {
 

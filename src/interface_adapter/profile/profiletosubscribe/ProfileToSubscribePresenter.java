@@ -1,7 +1,9 @@
 package interface_adapter.profile.profiletosubscribe;
 
-import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.subscribe_room.SubscribeRoomState;
+import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import use_case.profile.profiletosubscribe.ProfiletosubscribeOutputBoundary;
 import use_case.profile.profiletosubscribe.ProfiletosubscribeOutputData;
 

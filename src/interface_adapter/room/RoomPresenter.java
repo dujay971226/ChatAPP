@@ -3,6 +3,8 @@ package interface_adapter.room;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.setting.showsetting.SettingState;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.room.RoomOutputBoundary;
 import use_case.room.RoomOutputData;
 import use_case.room.RoomToSettingOutputData;

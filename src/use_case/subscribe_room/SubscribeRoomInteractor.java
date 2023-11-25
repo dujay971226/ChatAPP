@@ -43,9 +43,10 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         String channelName = subscribeRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
         if (!exists(subscribeRoomInputData.getChannelName(), subscribeRoomInputData.getChannelLog())) {
-            ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-                    subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-            SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
+            //ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
+                   // subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
+            ArrayList<Message> messageLog = new ArrayList<>();
+                    SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
                     subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
             subscribeRoomPresenter.prepareSuccessView(outputData);
         } else {

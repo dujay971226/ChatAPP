@@ -79,7 +79,7 @@ public class UserDataAccessObject implements iUserDataAccessObject {
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format(user.getName(), user.getPassword());
+                String line = String.format("%s, %s", user.getName(), user.getPassword());
                 writer.write(line);
                 writer.newLine();
             }

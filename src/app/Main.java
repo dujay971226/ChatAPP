@@ -1,5 +1,6 @@
 package app;
 
+import com.pubnub.api.PubNubException;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
 import entity.UserFactory;
@@ -34,12 +35,16 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                createAndShowApplication();
+                try {
+                    createAndShowApplication();
+                } catch (PubNubException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private static void createAndShowApplication() {
+    private static void createAndShowApplication() throws PubNubException {
         JFrame application = new JFrame("Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

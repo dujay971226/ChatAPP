@@ -22,6 +22,10 @@ import java.util.ArrayList;
  */
 public class SubscribeRoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
+    /**
+     * View name.
+     */
+    public final String viewName = "subscribe";
     private final SubscribeRoomViewModel subscribeRoomViewModel;
     private final SubscribeRoomController subscribeRoomController;
     private final ProfileToCreateController profileToCreateController;

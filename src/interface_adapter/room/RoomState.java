@@ -32,7 +32,7 @@ public class RoomState {
     //To warn a new message was received
     private boolean NEW_MESSAGE_UPDATE = false;
 
-    public RoomState(RoomState copy) throws PubNubException {
+    public RoomState(RoomState copy) {
         this.channel = copy.getChannel();
         this.currUser = copy.getUser();
         this.messageLog = copy.getMessageLog();
@@ -42,7 +42,7 @@ public class RoomState {
         this.NEW_MESSAGE_UPDATE = copy.getNEW_MESSAGE_UPDATE();
     }
 
-    public RoomState () throws PubNubException {
+    public RoomState() throws PubNubException {
         UserId userId = new UserId("Jay");
         PNConfiguration pnConfiguration =  new PNConfiguration(userId);
         pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");
@@ -50,7 +50,6 @@ public class RoomState {
         pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
         PubNub pubnub = new PubNub(pnConfiguration);
         this.config = pubnub;
-
     }
 
     public Channel getChannel() {

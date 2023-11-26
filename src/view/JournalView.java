@@ -4,6 +4,7 @@ import interface_adapter.journal.JournalViewModel;
 import interface_adapter.journal.searchbycontent.JournalContentController;
 import interface_adapter.journal.searchbydoi.JournalDoiController;
 import interface_adapter.journal.searchbyissn.JournalIssnController;
+import interface_adapter.journal.journaltoroom.JournalToRoomController;
 
 
 import javax.swing.*;
@@ -25,11 +26,14 @@ public class JournalView extends JPanel implements ActionListener {
     private final JournalContentController journalContentController;
     private final JournalDoiController journalDoiController;
     private final JournalIssnController journalIssnController;
-    public JournalView(JournalViewModel journalViewModel, JournalContentController journalContentController, JournalDoiController journalDoiController, JournalIssnController journalIssnController){
+    private final JournalToRoomController journalToRoomController;
+    public JournalView(JournalViewModel journalViewModel, JournalContentController journalContentController, JournalDoiController journalDoiController, JournalIssnController journalIssnController, JournalToRoomController journalToRoomController){
         this.journalViewModel = journalViewModel;
         this.journalContentController = journalContentController;
         this.journalDoiController = journalDoiController;
         this.journalIssnController = journalIssnController;
+        this.journalToRoomController = journalToRoomController;
+
 
 
 
@@ -92,7 +96,7 @@ public class JournalView extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource().equals(back)){
-
+                    journalToRoomController.execute();
                 }
             }
         });

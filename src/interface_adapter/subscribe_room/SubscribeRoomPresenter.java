@@ -44,6 +44,11 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
         state.setUser(outputData.getUser());
         state.setMessageLog(outputData.getMessageLog());
         state.setNotice();
+        roomViewModel.setState(state);
+        roomViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(roomViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     /**

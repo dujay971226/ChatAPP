@@ -1,6 +1,8 @@
 package app;
 
 import data_access.ChannelDataAccessObject;
+import interface_adapter.create_room.CreateRoomViewModel;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.profile.profiletocreate.ProfileToCreateController;
 import interface_adapter.profile.profiletocreate.ProfileToCreatePresenter;
@@ -9,6 +11,7 @@ import interface_adapter.profile.profiletologout.ProfileToLogoutPresenter;
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribeController;
 import interface_adapter.profile.profiletosubscribe.ProfileToSubscribePresenter;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import use_case.profile.profiletocreate.ProfiletocreateInputBoundary;
 import use_case.profile.profiletocreate.ProfiletocreateInteractor;
 import use_case.profile.profiletocreate.ProfiletocreateOutputBoundary;

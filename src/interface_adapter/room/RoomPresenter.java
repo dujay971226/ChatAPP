@@ -55,9 +55,6 @@ public class RoomPresenter implements RoomOutputBoundary {
     @Override
     public void prepareSettingView(RoomToSettingOutputData roomToSettingOutputData) {
         SettingState settingState = settingViewModel.getState();
-        settingState.setUser(roomToSettingOutputData.getUser());
-        settingState.setChannel(roomToSettingOutputData.getChannel());
-        settingState.setConfig(roomToSettingOutputData.getConfig());
         settingViewModel.setState(settingState);
         settingViewModel.firePropertyChanged();
 

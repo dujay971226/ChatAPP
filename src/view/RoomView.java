@@ -201,8 +201,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         //Check whether someone send a message online
         pubnub.addListener(new SubscribeCallback() {
 
-            private boolean isConnected;
-
             @Override
             public void status(PubNub pubnub, PNStatus status) {
                 if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
@@ -230,10 +228,11 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                         // Message has been received on channel stored in
                         // message.getSubscription()
                 }
-                    String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
-                    User user = currState.getUser();
-                    Message newMessages = new Message(user, msg, LocalDateTime.now());
-                    roomReceiveController.execute(newMessages);
+
+                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
+                User user = currState.getUser();
+                Message newMessages = new Message(user, msg, LocalDateTime.now());
+                roomReceiveController.execute(newMessages);
 
                     /*
                      * Log the following items with your favorite logger - message.getMessage() -

@@ -74,7 +74,7 @@ public class CORE{
             return theJournal.toString();
         }
         else{
-            return responseBody.getString("message");
+            return "no ournal founded";
         }
 
     }

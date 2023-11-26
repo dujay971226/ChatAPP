@@ -6,6 +6,7 @@ import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
+import entity.Channel;
 import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -82,6 +83,14 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        //test add channel
+
+        //User tuser = new User("test","testp");
+        //Channel tchannel = new Channel("testchannel",tuser);
+        //channelDataAccessObject.save(tchannel,tuser,"./data/channels.json");
+
+        //
+
 
 
 
@@ -98,8 +107,6 @@ public class Main {
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
                 settingViewModel);
-        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel);
-                subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel);
         RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
                 journalViewModel, settingViewModel);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);
@@ -116,6 +123,7 @@ public class Main {
         views.add(profileView, profileView.viewName);
         views.add(createRoomView, createRoomView.viewName);
         views.add(subscribeRoomView, subscribeRoomView.viewName);
+        views.add(roomView,roomView.viewName);
         views.add(journalView, journalView.viewName);
         views.add(channelHistoryView, channelHistoryView.viewName);
         views.add(settingView, settingView.viewName);

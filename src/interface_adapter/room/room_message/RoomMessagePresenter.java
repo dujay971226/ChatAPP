@@ -20,7 +20,7 @@ public class RoomMessagePresenter implements RoomMessageOutputBoundary {
     }
 
 
-    //Set the input field to blank
+    //Set the Message to blank
     @Override
     public void prepareSentView() {
         RoomState roomState = roomViewModel.getState();

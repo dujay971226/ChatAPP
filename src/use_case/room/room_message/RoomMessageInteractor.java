@@ -3,6 +3,8 @@ package use_case.room.room_message;
 import com.google.gson.JsonObject;
 import com.pubnub.api.PubNub;
 
+import javax.swing.*;
+
 public class RoomMessageInteractor implements RoomMessageInputBoundary {
 
     final RoomMessageOutputBoundary roomMessagePresenter;

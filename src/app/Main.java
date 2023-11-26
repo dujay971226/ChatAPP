@@ -1,18 +1,15 @@
 package app;
 
-import com.pubnub.api.PNConfiguration;
-import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
-import com.pubnub.api.UserId;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
+import entity.Channel;
 import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomViewModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomViewModel;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
@@ -81,6 +78,9 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        User testu = new User("rrr","123");
+        Channel test = new Channel("123",testu);
+        channelDataAccessObject.save(test,testu,"./data/channels.json");
 
 
 
@@ -98,7 +98,7 @@ public class Main {
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel);
         RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
                 journalViewModel, settingViewModel);
-        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel);
+        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);
         ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
                 settingViewModel, channelHistoryViewModel);
         SettingView settingView = ChannelSettingUseCaseFactory.create(viewManagerModel, settingViewModel,

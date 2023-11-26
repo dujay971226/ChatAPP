@@ -4,7 +4,7 @@ import com.pubnub.api.PubNub;
 import entity.User;
 
 public class ProfileState {
-    private User user = new User("","");
+    private User user = new User("123","");
     private PubNub config;
     public ProfileState(User user, PubNub config){
         this.user = user;

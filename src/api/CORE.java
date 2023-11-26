@@ -98,9 +98,11 @@ public class CORE{
         Response response = client.newCall(request).execute();
         String responseBodyString = response.body().string();
         JSONObject responseBody = new JSONObject(responseBodyString);
-        if(responseBody.has("fullTextLink")){ return responseBody.getString("fullTextLink");}
+        if(responseBody.has("fullTextLink") && !responseBody.isNull("fullTextLink")) {
+            return responseBody.getJSONObject("fullTextLink").toString();
+        }
         else
-        {return responseBody.getString("message");}
+        {return "no text founded";}
 
     }
 

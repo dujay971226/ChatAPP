@@ -25,6 +25,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     private final ProfileToCreateController profileToCreateController;
     private final ProfileToSubscribeController profileToSubscribeController;
     private final ProfileToLogoutController profileToLogoutController;
+    private JLabel title;
 
 
     public ProfileView(ProfileViewModel profileViewModel, ProfileToCreateController profileToCreateController, ProfileToSubscribeController profileToSubscribeController, ProfileToLogoutController profileToLogoutController){
@@ -33,11 +34,12 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.profileToCreateController = profileToCreateController;
         this.profileToSubscribeController = profileToSubscribeController;
         this.profileToLogoutController = profileToLogoutController;
+        this.profileViewModel.addPropertyChangeListener(this);
 
 
         profileViewModel.addPropertyChangeListener(this);
         ProfileState profileState = profileViewModel.getState();
-        JLabel title = new JLabel(ProfileViewModel.TITLE);
+        title = new JLabel(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);
         title.setText(profileState.getUser().getName() + ProfileViewModel.TITLE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JPanel buttons = new JPanel();
@@ -103,6 +105,9 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+        title.setText(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);
+
 
     }
 }

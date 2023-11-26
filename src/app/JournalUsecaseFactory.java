@@ -11,6 +11,7 @@ import interface_adapter.journal.searchbyissn.JournalIssnController;
 import interface_adapter.journal.searchbyissn.JournalIssnPresenter;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.room.RoomViewModel;
 import use_case.journal.Content.JournalContentInputBoundary;
 import use_case.journal.Content.JournalContentInteractor;
 import use_case.journal.Content.JournalContentOutputBoundary;
@@ -30,11 +31,11 @@ import view.JournalView;
  * JournalUsecaseFactory is use for create the Journal view
  */
 public class JournalUsecaseFactory {
-    public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
+    public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel,RoomViewModel roomViewModel){
         JournalContentController journalContentController = createContent(viewManagerModel,journalViewModel);
         JournalDoiController journalDoiController = createDio(viewManagerModel, journalViewModel);
         JournalIssnController journalIssnController = createIssn(viewManagerModel,journalViewModel);
-        JournalToRoomController journalToRoomController = creatBack(viewManagerModel,journalViewModel);
+        JournalToRoomController journalToRoomController = creatBack(viewManagerModel,journalViewModel,roomViewModel);
         return new JournalView(journalViewModel,journalContentController,journalDoiController,journalIssnController,journalToRoomController);
 
     }
@@ -55,8 +56,8 @@ public class JournalUsecaseFactory {
         JournalIssnInputBoundary journalIssnInputBoundary = new JournalIssnInteractor(journalIssnOutputBoundary);
         return new JournalIssnController(journalIssnInputBoundary);
     }
-    public static JournalToRoomController creatBack(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
-        JournalToRoomOutputBoundary journalToRoomOutputBoundary = new JournalToRoomPresenter(viewManagerModel,journalViewModel);
+    public static JournalToRoomController creatBack(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel){
+        JournalToRoomOutputBoundary journalToRoomOutputBoundary = new JournalToRoomPresenter(viewManagerModel,journalViewModel,roomViewModel);
         JournalToRoomInputBoundary journalToRoomInputBoundary = new JournalToRoomInteractor(journalToRoomOutputBoundary);
         return new JournalToRoomController(journalToRoomInputBoundary);
 

@@ -66,12 +66,14 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject{
         Boolean exist = false;
         for (int j=0; j<users.length();j++){
             JSONObject user = users.getJSONObject(j);
-            if(user.keys().next() == curr.getName()) {
+            if(user.keys().next().equals(curr.getName())) {
                 exist = true;
             }
         }
         if (!exist){
-            JSONObject addUser = new JSONObject(curr.getName(),curr.getPassword());
+            JSONObject addUser = new JSONObject();
+            addUser.put(curr.getName(), curr.getPassword());
+
             users.put(addUser);
         }
 

@@ -71,24 +71,26 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         roomViewModel.addPropertyChangeListener(this);
 
         //Name of the Room
-        JLabel title = new JLabel(RoomViewModel.TITLE_LABEL, SwingConstants.CENTER);
-        title.setPreferredSize(new Dimension(800,100));
+        JPanel top = new JPanel();
+        top.setAlignmentX(CENTER_ALIGNMENT);
+        JLabel title = new JLabel(RoomViewModel.TITLE_LABEL);
+        title.setFont(messageList.getFont().deriveFont(20.0f));
+        top.add(title);
 
         //buttons to swap to journal view, setting view and profile view
         JPanel buttons_high = new JPanel();
-        buttons_high.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        buttons_high.setAlignmentX(CENTER_ALIGNMENT);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
         buttons_high.add(journal);
         setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
         buttons_high.add(setting);
         exit = new JButton(RoomViewModel.EXIT_BUTTON_LABEL);
         buttons_high.add(exit);
-        buttons_high.setPreferredSize(new Dimension(800,100));
 
         //Panel with scroll bar to display message
-        messageList.setFont(messageList.getFont().deriveFont(20.0f));
+        messageList.setFont(messageList.getFont().deriveFont(18.0f));
         JScrollPane roomPane = new JScrollPane(messageList);
-        roomPane.setPreferredSize(new Dimension(800,600));
+        roomPane.setPreferredSize(new Dimension(800, 600));
 
         //Panel to Input Message and send message
         JPanel low = new JPanel();
@@ -278,7 +280,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
+        this.add(top);
         this.add(buttons_high);
         this.add(roomPane);
         this.add(low);

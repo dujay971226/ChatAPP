@@ -50,9 +50,10 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
         state.setUser(outputData.getUser());
         state.setNotice();
         roomViewModel.setState(state);
-        RoomView newRoomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,journalViewModel,settingViewModel);
+        roomViewModel.firePropertyChanged();
+        RoomView newRoomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
+                journalViewModel, settingViewModel);
         viewManagerModel.firePropertyChanged(newRoomView);
-
 
         viewManagerModel.setActiveView(roomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

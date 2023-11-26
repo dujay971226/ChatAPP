@@ -1,8 +1,8 @@
 package interface_adapter.profile.profiletologout;
 
-import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.profile.profiletologout.LogoutOutputBoundary;
 
 /**

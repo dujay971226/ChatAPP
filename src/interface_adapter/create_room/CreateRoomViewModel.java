@@ -2,7 +2,6 @@ package interface_adapter.create_room;
 
 import interface_adapter.ViewModel;
 
-import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 

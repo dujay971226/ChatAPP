@@ -15,6 +15,13 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * The ProfileView class represents the user interface for the profile-related functionality.
+ * It allows users to create channels, subscribe to channels, and logout from their profile.
+ * This view includes buttons and a title label to display the user's profile information.
+ *
+ * @author Xiaofeng Li
+ */
 public class ProfileView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "profile";
     private final ProfileViewModel profileViewModel;
@@ -27,7 +34,14 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     private final ProfileToLogoutController profileToLogoutController;
     private JLabel title;
 
-
+    /**
+     * Constructs a new ProfileView instance.
+     *
+     * @param profileViewModel       The view model associated with this view.
+     * @param profileToCreateController The controller for creating channels.
+     * @param profileToSubscribeController The controller for subscribing to channels.
+     * @param profileToLogoutController The controller for logging out.
+     */
     public ProfileView(ProfileViewModel profileViewModel, ProfileToCreateController profileToCreateController, ProfileToSubscribeController profileToSubscribeController, ProfileToLogoutController profileToLogoutController){
 
         this.profileViewModel = profileViewModel;
@@ -36,14 +50,12 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         this.profileToLogoutController = profileToLogoutController;
         this.profileViewModel.addPropertyChangeListener(this);
 
-
         profileViewModel.addPropertyChangeListener(this);
         ProfileState profileState = profileViewModel.getState();
         title = new JLabel(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);
         title.setText(profileState.getUser().getName() + ProfileViewModel.TITLE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JPanel buttons = new JPanel();
-
 
         createchannel = new JButton((ProfileViewModel.CREATE_BUTTON_LABEL));
         //listener
@@ -87,27 +99,22 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         buttons.add(logout);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
-
-
-
         this.add(title);
         this.add(buttons);
-
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
 
+    /**
+     * Responds to property change events and updates the title label with the user's profile information.
+     *
+     * @param evt The property change event.
+     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
         title.setText(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);
-
-
     }
 }

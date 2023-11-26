@@ -1,11 +1,16 @@
 package interface_adapter.create_room;
 
+import app.RoomUseCaseFactory;
 import entity.Channel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.journal.JournalViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomState;
 import interface_adapter.room.RoomViewModel;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.create_room.CreateRoomOutputBoundary;
 import use_case.create_room.CreateRoomOutputData;
+import view.RoomView;
 
 /**
  * Presenter of create room.
@@ -15,16 +20,22 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     private final CreateRoomViewModel createRoomViewModel;
     private ViewManagerModel viewManagerModel;
     private RoomViewModel roomViewModel;
+    private ProfileViewModel profileViewModel;
+    private JournalViewModel journalViewModel;
+    private SettingViewModel settingViewModel;
 
     /**
      * Initializes a CreateRoomPresenter instance.
      * @param createRoomViewModel create room view model
      * @param roomViewModel room view model
      */
-    public CreateRoomPresenter(ViewManagerModel managerModel, CreateRoomViewModel createRoomViewModel, RoomViewModel roomViewModel) {
+    public CreateRoomPresenter(ViewManagerModel managerModel, CreateRoomViewModel createRoomViewModel, RoomViewModel roomViewModel, ProfileViewModel profileViewModel, JournalViewModel journalViewModel, SettingViewModel settingViewModel) {
         this.viewManagerModel = managerModel;
         this.createRoomViewModel = createRoomViewModel;
         this.roomViewModel = roomViewModel;
+        this.journalViewModel = journalViewModel;
+        this.profileViewModel = profileViewModel;
+        this.settingViewModel = settingViewModel;
     }
 
     /**
@@ -39,7 +50,9 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
         state.setUser(outputData.getUser());
         state.setNotice();
         roomViewModel.setState(state);
-        roomViewModel.firePropertyChanged();
+        RoomView newRoomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,journalViewModel,settingViewModel);
+        viewManagerModel.firePropertyChanged(newRoomView);
+
 
         viewManagerModel.setActiveView(roomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

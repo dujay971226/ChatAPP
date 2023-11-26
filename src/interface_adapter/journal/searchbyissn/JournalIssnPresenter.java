@@ -1,8 +1,8 @@
 package interface_adapter.journal.searchbyissn;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalState;
 import interface_adapter.journal.JournalViewModel;
-import interface_adapter.ViewManagerModel;
 import use_case.journal.Issn.JournalIssnOutputBoundary;
 import use_case.journal.Issn.JournalIssnOutputData;
 

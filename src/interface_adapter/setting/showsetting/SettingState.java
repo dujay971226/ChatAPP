@@ -4,8 +4,6 @@ import com.pubnub.api.PubNub;
 import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import entity.Channel;
 import entity.User;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.room.RoomViewModel;
 
 import java.util.Collection;
 

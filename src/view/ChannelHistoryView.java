@@ -4,7 +4,6 @@ import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import interface_adapter.setting.returntosetting.ReturnToSettingController;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryState;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
-import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
 
 import javax.swing.*;
 import java.awt.*;

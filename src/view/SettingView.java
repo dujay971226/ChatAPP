@@ -4,7 +4,6 @@ import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import com.pubnub.api.models.consumer.presence.PNHereNowOccupantData;
 import interface_adapter.setting.returntochannel.ReturnToChannelController;
 import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
-import interface_adapter.setting.showchannelhistory.ShowChannelHistoryPresenter;
 import interface_adapter.setting.showsetting.SettingState;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.setting.showsetting.ShowSettingController;

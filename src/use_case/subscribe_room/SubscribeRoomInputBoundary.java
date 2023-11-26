@@ -1,9 +1,5 @@
 package use_case.subscribe_room;
 
-import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 /**
  * Input boundary of subscribe room.
  * @author huangzhihao

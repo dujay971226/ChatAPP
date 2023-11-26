@@ -54,11 +54,14 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
     public ArrayList<Channel> getChannels(User user) {
         ArrayList<Channel> result = new ArrayList<>();
         for (Channel channel : accounts.keySet()){
-            if(accounts.get(channel).contains(user)){
-                channel.setCurrUser(user);
-                result.add(channel);
+            for (User muser: accounts.get(channel)) {
+                if (muser.getName().equals(user.getName())) {
+                    channel.setCurrUser(user);
+                    result.add(channel);
+                }
             }
         }
+
         return result;
     }
 

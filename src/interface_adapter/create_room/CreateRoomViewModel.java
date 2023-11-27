@@ -2,7 +2,6 @@ package interface_adapter.create_room;
 
 import interface_adapter.ViewModel;
 
-import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -27,6 +26,8 @@ public class CreateRoomViewModel extends ViewModel {
      */
     public final String TO_SUB_BUTTON_LABEL = "Join Instead";
 
+    public static final String TITLE_LABEL = "create";
+
     private CreateRoomState state = new CreateRoomState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
@@ -35,7 +36,7 @@ public class CreateRoomViewModel extends ViewModel {
      * Creates an instance of CreateRoomViewModel and calls super class instructor.
      */
     public CreateRoomViewModel() {
-        super("create room");
+        super("create");
     }
 
     /**

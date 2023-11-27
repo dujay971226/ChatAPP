@@ -1,8 +1,8 @@
 package interface_adapter.journal.searchbycontent;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalState;
 import interface_adapter.journal.JournalViewModel;
-import interface_adapter.ViewManagerModel;
 import use_case.journal.Content.JournalContentOutputBoundary;
 import use_case.journal.Content.JournalContentOutputData;
 

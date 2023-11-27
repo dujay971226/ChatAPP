@@ -4,15 +4,15 @@ import com.pubnub.api.PubNub;
 import entity.User;
 
 public class ProfileState {
-    private User user = null;
-    private PubNub config = null;
+    private User user = new User("","");
+    private PubNub config;
     public ProfileState(User user, PubNub config){
         this.user = user;
         this.config = config;
     }
 
-    public ProfileState () {
-    }
+    public ProfileState() {}
+
     public void setUser(User user){
         this.user = user;
     }
@@ -21,10 +21,10 @@ public class ProfileState {
     }
 
     public PubNub getConfig() {
-        return this.config;
+        return config;
     }
 
     public User getUser() {
-        return this.user;
+        return user;
     }
 }

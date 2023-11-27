@@ -1,12 +1,8 @@
 package use_case.room.room_message;
+
 import com.pubnub.api.PubNub;
 import entity.Channel;
-import entity.Message;
 import entity.User;
-
-import java.io.File;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class RoomMessageInputData {
     private final Channel channel;

@@ -1,7 +1,7 @@
 package use_case.login;
 
-import entity.User;
 import com.pubnub.api.PubNub;
+import entity.User;
 
 /**
  * Represents the output data produced by a login use case.

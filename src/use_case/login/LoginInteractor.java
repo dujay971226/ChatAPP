@@ -1,11 +1,11 @@
 package use_case.login;
 
 import com.pubnub.api.PNConfiguration;
+import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
 import data_access.iUserDataAccessObject;
 import entity.User;
-import com.pubnub.api.PubNub;
 
 public class LoginInteractor implements LoginInputBoundary{
     final iUserDataAccessObject userDataAccessObject;
@@ -34,7 +34,7 @@ public class LoginInteractor implements LoginInputBoundary{
 
                 PNConfiguration pnConfiguration =  new PNConfiguration(userId);
                 pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");
-                pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd204abc");
+                pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd304abc");
                 pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
 
                 PubNub pubnub = new PubNub(pnConfiguration);

@@ -5,7 +5,6 @@ import interface_adapter.journal.searchbycontent.JournalContentController;
 import interface_adapter.journal.searchbydoi.JournalDoiController;
 import interface_adapter.journal.searchbyissn.JournalIssnController;
 
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

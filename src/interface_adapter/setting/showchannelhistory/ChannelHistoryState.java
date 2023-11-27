@@ -1,9 +1,6 @@
 package interface_adapter.setting.showchannelhistory;
 
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.setting.showsetting.SettingViewModel;
-import view.ChannelHistoryView;
 
 import java.util.List;
 

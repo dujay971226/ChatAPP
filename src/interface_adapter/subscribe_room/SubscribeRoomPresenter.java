@@ -1,13 +1,17 @@
 package interface_adapter.subscribe_room;
 
 
+import app.RoomUseCaseFactory;
 import entity.Channel;
-import entity.User;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.journal.JournalViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomState;
 import interface_adapter.room.RoomViewModel;
+import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.subscribe_room.SubscribeRoomOutputBoundary;
 import use_case.subscribe_room.SubscribeRoomOutputData;
+import view.RoomView;
 
 /**
  * Presenter of subscribe room.
@@ -18,6 +22,9 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
     private final SubscribeRoomViewModel subscribeViewModel;
     private final RoomViewModel roomViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final ProfileViewModel profileViewModel;
+    private final JournalViewModel journalViewModel;
+    private final SettingViewModel settingViewModel;
 
     /**
      * Initializes a subscribeRoomPresenter instance.
@@ -26,10 +33,14 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
      * @param roomViewModel room view model
      */
     public SubscribeRoomPresenter(ViewManagerModel managerModel, SubscribeRoomViewModel subscribeRoomViewModel,
-                                  RoomViewModel roomViewModel) {
+                                  RoomViewModel roomViewModel, ProfileViewModel profileViewModel,
+                                  JournalViewModel journalViewModel, SettingViewModel settingViewModel) {
         this.subscribeViewModel = subscribeRoomViewModel;
         this.roomViewModel = roomViewModel;
         this.viewManagerModel = managerModel;
+        this.journalViewModel = journalViewModel;
+        this.profileViewModel = profileViewModel;
+        this.settingViewModel = settingViewModel;
     }
 
     /**
@@ -46,6 +57,9 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
         state.setNotice();
         roomViewModel.setState(state);
         roomViewModel.firePropertyChanged();
+        RoomView newRoomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
+                journalViewModel, settingViewModel);
+        viewManagerModel.firePropertyChanged(newRoomView);
 
         viewManagerModel.setActiveView(roomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

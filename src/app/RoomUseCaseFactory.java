@@ -4,7 +4,7 @@ import com.pubnub.api.PubNubException;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.profile.ProfileViewModel;
-import interface_adapter.room.*;
+import interface_adapter.room.RoomViewModel;
 import interface_adapter.room.room_exit.RoomExitController;
 import interface_adapter.room.room_exit.RoomExitPresenter;
 import interface_adapter.room.room_message.RoomMessageController;

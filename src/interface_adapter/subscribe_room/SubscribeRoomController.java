@@ -6,7 +6,6 @@ import entity.User;
 import use_case.subscribe_room.SubscribeRoomInputBoundary;
 import use_case.subscribe_room.SubscribeRoomInputData;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**

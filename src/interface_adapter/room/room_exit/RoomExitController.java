@@ -2,8 +2,8 @@ package interface_adapter.room.room_exit;
 
 import com.pubnub.api.PubNub;
 import entity.User;
-import use_case.room.room_exit.RoomExitInputData;
 import use_case.room.room_exit.RoomExitInputBoundary;
+import use_case.room.room_exit.RoomExitInputData;
 
 public class RoomExitController {
 

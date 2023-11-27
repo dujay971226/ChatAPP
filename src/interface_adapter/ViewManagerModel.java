@@ -1,4 +1,6 @@
 package interface_adapter;
+import view.RoomView;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -20,6 +22,10 @@ public class ViewManagerModel {
     // to alert the View
     public void firePropertyChanged() {
         support.firePropertyChange("view", null, this.activeViewName);
+    }
+
+    public void firePropertyChanged(RoomView roomView) {
+        support.firePropertyChange("view", null, roomView);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

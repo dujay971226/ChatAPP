@@ -27,10 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
@@ -43,7 +40,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public final String viewName = "room";
 
     private final RoomViewModel roomViewModel;
-    private final JTextField messageInputField = new JTextField(30);
+    private final JTextArea messageInputField = new JTextArea(3, 30);
     DefaultListModel<String> listModel = new DefaultListModel<>();
     JList<String> messageList = new JList<String>(listModel);
     private final RoomMessageController roomMessageController;
@@ -159,6 +156,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                             String text = messageInputField.getText();
                             roomExitController.execute(
                                     currState.getUser(),
+                                    currState.getChannel(),
                                     currState.getConfig()
                             );
                         }
@@ -171,10 +169,16 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        RoomState currentState = roomViewModel.getState();
-                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode()==KeyEvent.VK_ENTER && !e.isShiftDown()){
                             RoomState currState = roomViewModel.getState();
-                            String text = messageInputField.getText();
+                            String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
                                     currState.getUser(),
@@ -183,22 +187,26 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                                     text
                             );
                         }
-                        else {
-                            String text = messageInputField.getText() + e.getKeyChar();
-                            currentState.setMessage(text);
-                            roomViewModel.setState(currentState);
-                        }
-
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
                     }
 
                     @Override
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+
+        messageInputField.addKeyListener(
+                new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int keyCode = e.getKeyCode();
+
+                        if (e.isShiftDown() && keyCode == KeyEvent.VK_ENTER) {
+                            String text = messageInputField.getText();
+                            messageInputField.setText(text + "\n ");
+                        }
+                    }
+                }
+        );
 
         PubNub pubnub = currState.getConfig();
 

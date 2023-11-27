@@ -14,6 +14,7 @@ public class SubscribeRoomViewModel extends ViewModel {
     /**
      * Title label.
      */
+    public static final String TITLE_LABEL = "subscribe";
     public final String LIST_LABEL = "Join a room by choosing from the list below:";
     public final String TF_LABEL = "Or enter room name here:";
 
@@ -35,7 +36,7 @@ public class SubscribeRoomViewModel extends ViewModel {
      * Initializes a SubscribeRoomViewModel instance and calls super class instructor.
      */
     public SubscribeRoomViewModel() {
-        super("subscribe room");
+        super("subscribe");
     }
 
     /**

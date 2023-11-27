@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class ProfileViewModel extends ViewModel {
     final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    private ProfileState state;
+    private ProfileState state = new ProfileState();
     public static final String TITLE = "'s Profile";
     public static final String SUBSRIBE_BUTTON_LABEL = "Subscribe";
     public static final String CREATE_BUTTON_LABEL = "Create";

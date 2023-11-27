@@ -1,5 +1,6 @@
 package app;
 
+import com.pubnub.api.PubNubException;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
 import entity.UserFactory;
@@ -33,12 +34,16 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                createAndShowApplication();
+                try {
+                    createAndShowApplication();
+                } catch (PubNubException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private static void createAndShowApplication() {
+    private static void createAndShowApplication() throws PubNubException {
         JFrame application = new JFrame("Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,7 +79,7 @@ public class Main {
 
 
 
-        // Initialize all views and add to views.
+        // Initialize all views.
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, profileViewModel,
                 signupViewModel, userDataAccessObject);
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel,
@@ -82,15 +87,31 @@ public class Main {
         ProfileView profileView = ProfileUseCaseFactory.create(viewManagerModel, createRoomViewModel,
                 subscribeRoomViewModel, loginViewModel, profileViewModel, channelDataAccessObject);
         CreateRoomView createRoomView = CreateRoomUseCaseFactory.create(viewManagerModel, createRoomViewModel,
-                roomViewModel,subscribeRoomViewModel, profileViewModel, channelDataAccessObject);
+                roomViewModel,subscribeRoomViewModel, profileViewModel, journalViewModel, settingViewModel,
+                channelDataAccessObject);
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
-                subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel);
-        RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
-                journalViewModel, settingViewModel);
+                subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
+                settingViewModel);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel);
-        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create();
-        SettingView settingView = SettingUseCaseFactory.create();
+        ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
+                settingViewModel, channelHistoryViewModel);
+        SettingView settingView = ChannelSettingUseCaseFactory.create(viewManagerModel, settingViewModel,
+                channelHistoryViewModel, roomViewModel);
 
+
+
+        // Add views to views.
+        views.add(loginView, loginView.viewName);
+        views.add(signupView, signupView.viewName);
+        views.add(profileView, profileView.viewName);
+        views.add(createRoomView, createRoomView.viewName);
+        views.add(subscribeRoomView, subscribeRoomView.viewName);
+        views.add(journalView, journalView.viewName);
+        views.add(channelHistoryView, channelHistoryView.viewName);
+        views.add(settingView, settingView.viewName);
+
+        viewManagerModel.setActiveView(loginView.viewName);
+        cardLayout.show(views, viewManagerModel.getActiveView());
         application.pack();
         application.setVisible(true);
     }

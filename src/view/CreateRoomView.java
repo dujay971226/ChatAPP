@@ -20,12 +20,18 @@ import java.beans.PropertyChangeListener;
  * @author huangzhihao
  */
 public class CreateRoomView extends JPanel implements ActionListener, PropertyChangeListener {
+
+    /**
+     * View name.
+     */
+    public final String viewName = "create";
     private final CreateRoomViewModel createRoomViewModel;
     private final JTextField createRoomTextField = new JTextField(15);
     private final CreateRoomController createRoomController;
     private final ProfileToSubscribeController profileToSubscribeController;
     private final JButton createButton;
     private final JButton toSubscribeButton;
+
 
     /**
      * Creates a CreateRoomView instance.

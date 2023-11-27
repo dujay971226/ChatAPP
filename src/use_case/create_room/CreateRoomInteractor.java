@@ -38,6 +38,9 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
      */
     @Override
     public void execute(CreateRoomInputData createRoomInputData) {
+        PubNub pubNub = createRoomInputData.getConfig();
+        String channelName = createRoomInputData.getChannelName();
+        pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
 
         if (exists(createRoomInputData.getChannelName(), createRoomInputData.getChannelLog())) {
             createRoomPresenter.prepareFailView("Channel name already exists, try again.");

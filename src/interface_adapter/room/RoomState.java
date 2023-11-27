@@ -1,6 +1,9 @@
 package interface_adapter.room;
 
+import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
+import com.pubnub.api.PubNubException;
+import com.pubnub.api.UserId;
 import entity.Channel;
 import entity.Message;
 import entity.User;
@@ -39,8 +42,11 @@ public class RoomState {
         this.NEW_MESSAGE_UPDATE = copy.getNEW_MESSAGE_UPDATE();
     }
 
-    public RoomState () {
-
+    public RoomState() throws PubNubException {
+        UserId userId = new UserId("Jay");
+        PNConfiguration pnConfiguration =  new PNConfiguration(userId);
+        PubNub pubnub = new PubNub(pnConfiguration);
+        this.config = pubnub;
     }
 
     public Channel getChannel() {

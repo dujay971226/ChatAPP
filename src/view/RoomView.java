@@ -27,15 +27,11 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -44,7 +40,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public final String viewName = "room";
 
     private final RoomViewModel roomViewModel;
-    private final JTextField messageInputField = new JTextField(30);
+    private final JTextArea messageInputField = new JTextArea(3, 30);
     DefaultListModel<String> listModel = new DefaultListModel<>();
     JList<String> messageList = new JList<String>(listModel);
     private final RoomMessageController roomMessageController;
@@ -74,24 +70,26 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         roomViewModel.addPropertyChangeListener(this);
 
         //Name of the Room
-        JLabel title = new JLabel(RoomViewModel.TITLE_LABEL, SwingConstants.CENTER);
-        title.setPreferredSize(new Dimension(800,100));
+        JPanel top = new JPanel();
+        top.setAlignmentX(CENTER_ALIGNMENT);
+        JLabel title = new JLabel(RoomViewModel.TITLE_LABEL);
+        title.setFont(messageList.getFont().deriveFont(20.0f));
+        top.add(title);
 
         //buttons to swap to journal view, setting view and profile view
         JPanel buttons_high = new JPanel();
-        buttons_high.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        buttons_high.setAlignmentX(CENTER_ALIGNMENT);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
         buttons_high.add(journal);
         setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
         buttons_high.add(setting);
         exit = new JButton(RoomViewModel.EXIT_BUTTON_LABEL);
         buttons_high.add(exit);
-        buttons_high.setPreferredSize(new Dimension(800,100));
 
         //Panel with scroll bar to display message
-        messageList.setFont(messageList.getFont().deriveFont(20.0f));
+        messageList.setFont(messageList.getFont().deriveFont(18.0f));
         JScrollPane roomPane = new JScrollPane(messageList);
-        roomPane.setPreferredSize(new Dimension(800,600));
+        roomPane.setPreferredSize(new Dimension(800, 600));
 
         //Panel to Input Message and send message
         JPanel low = new JPanel();
@@ -158,6 +156,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                             String text = messageInputField.getText();
                             roomExitController.execute(
                                     currState.getUser(),
+                                    currState.getChannel(),
                                     currState.getConfig()
                             );
                         }
@@ -170,10 +169,16 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        RoomState currentState = roomViewModel.getState();
-                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode()==KeyEvent.VK_ENTER && !e.isShiftDown()){
                             RoomState currState = roomViewModel.getState();
-                            String text = messageInputField.getText();
+                            String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
                                     currState.getUser(),
@@ -182,16 +187,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                                     text
                             );
                         }
-                        else {
-                            String text = messageInputField.getText() + e.getKeyChar();
-                            currentState.setMessage(text);
-                            roomViewModel.setState(currentState);
-                        }
-
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
                     }
 
                     @Override
@@ -199,13 +194,24 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 });
 
+        messageInputField.addKeyListener(
+                new KeyAdapter() {
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int keyCode = e.getKeyCode();
+
+                        if (e.isShiftDown() && keyCode == KeyEvent.VK_ENTER) {
+                            String text = messageInputField.getText();
+                            messageInputField.setText(text + "\n ");
+                        }
+                    }
+                }
+        );
+
         PubNub pubnub = currState.getConfig();
-        String channelName = currState.getChannel().getName();
 
         //Check whether someone send a message online
         pubnub.addListener(new SubscribeCallback() {
-
-            private boolean isConnected;
 
             @Override
             public void status(PubNub pubnub, PNStatus status) {
@@ -234,10 +240,11 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                         // Message has been received on channel stored in
                         // message.getSubscription()
                 }
-                    String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
-                    User user = currState.getUser();
-                    Message newMessages = new Message(user, msg, LocalDateTime.now());
-                    roomReceiveController.execute(newMessages);
+
+                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
+                User user = currState.getUser();
+                Message newMessages = new Message(user, msg, LocalDateTime.now());
+                roomReceiveController.execute(newMessages);
 
                     /*
                      * Log the following items with your favorite logger - message.getMessage() -
@@ -281,13 +288,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             }
         });
 
-        pubnub.subscribe()
-                .channels(Collections.singletonList(channelName))
-                .execute();
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
+        this.add(top);
         this.add(buttons_high);
         this.add(roomPane);
         this.add(low);

@@ -66,6 +66,10 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
 
         this.add(loadingSubcribersErrorField);
         this.add(buttons);
+        JLabel loading = new JLabel("loading user...");
+        innerPanel.add(loading);
+        innerPanel.revalidate();
+        innerPanel.repaint();
     }
     public void actionPerformed(ActionEvent evt) {
     }

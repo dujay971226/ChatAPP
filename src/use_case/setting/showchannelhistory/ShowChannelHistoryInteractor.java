@@ -32,14 +32,10 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
         ArrayList<String> channels = new ArrayList<String>();
 
         channels.add(channelName);
-        pubnub.fetchMessages()
-                .channels(channels)
-                .maximumPerChannel(100)
-                .end(endTime);
 
         pubnub.fetchMessages()
                 .channels(Arrays.asList(channelName))
-                .maximumPerChannel(25)
+                .maximumPerChannel(100)
                 .includeMessageActions(true)
                 .includeMeta(true)
                 .includeMessageType(true)

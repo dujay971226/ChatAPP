@@ -8,6 +8,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * The UserDataAccessObject class implements the iUserDataAccessObject interface
+ * and provides functionality for saving, retrieving, and checking the existence of
+ * user data. It uses a CSV file as the data repository.
+ */
 public class UserDataAccessObject implements iUserDataAccessObject {
 
     private final File csvFile;
@@ -18,6 +23,13 @@ public class UserDataAccessObject implements iUserDataAccessObject {
 
     private UserFactory userFactory;
 
+    /**
+     * Constructor for UserDataAccessObject.
+     *
+     * @param csvPath     The path to the CSV file.
+     * @param userFactory The factory for creating User objects.
+     * @throws IOException If an I/O error occurs.
+     */
     public UserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
 
@@ -26,9 +38,9 @@ public class UserDataAccessObject implements iUserDataAccessObject {
         headers.put("password", 1);
 
         if (csvFile.length() == 0) {
-            save();
+            save(); // Create an empty CSV file with headers if it doesn't exist
         } else {
-
+            // Load existing data from the CSV file
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
@@ -47,25 +59,33 @@ public class UserDataAccessObject implements iUserDataAccessObject {
     }
 
     /**
-     * @param user the data to save
+     * Saves the provided user data by updating the accounts map and writing to the CSV file.
+     *
+     * @param user The User object to be saved.
      */
-
     @Override
     public void save(User user) {
         accounts.put(user.getName(), user);
         this.save();
     }
 
+    /**
+     * Retrieves a User object associated with the given username.
+     *
+     * @param username The unique identifier of the user to be retrieved.
+     * @return The User object if found; otherwise, null.
+     */
     @Override
     public User get(String username) {
         return accounts.get(username);
     }
 
     /**
+     * * Checks if a user with the specified username exists in the data repository.
+     *
      * @param identifier the username to check.
      * @return whether a user exists with username identifier
      */
-
     @Override
     public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
@@ -79,7 +99,7 @@ public class UserDataAccessObject implements iUserDataAccessObject {
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s, %s", user.getName(), user.getPassword());
+                String line = String.format("%s,%s", user.getName(), user.getPassword());
                 writer.write(line);
                 writer.newLine();
             }

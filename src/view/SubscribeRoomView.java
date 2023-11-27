@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 
 /**
@@ -32,7 +33,9 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     private final SubscribeRoomViewModel subscribeRoomViewModel;
     private final SubscribeRoomController subscribeRoomController;
     private final ProfileToCreateController profileToCreateController;
-    private final String[] channelNames;
+    private String[] channelNames;
+    private DefaultListModel channelListModel;
+    private final JList<String> channelList;
     private final JButton subscribeButton;
     private final JButton toCreateButton;
 
@@ -60,7 +63,10 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             }
         }
         channelNames = channelStrings.toArray(new String[0]);
-        JList<String> channelList = new JList<>(channelNames);
+        channelListModel = new DefaultListModel();
+        channelListModel.addAll(channelStrings);
+        channelList = new JList<>();
+        channelList.setModel(channelListModel);
         channelList.setFont(channelList.getFont().deriveFont(13.0f));
         channelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         channelList.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -135,6 +141,21 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SubscribeRoomState state = subscribeRoomViewModel.getState();
+        ArrayList<Channel> channelLog = state.getChannelLog();
+
+        ArrayList<String> channelStrings = new ArrayList<>();
+        if (channelLog != null) {
+            for (Channel channel : channelLog) {
+                channelStrings.add(channel.getName());
+            }
+        } else {
+            System.out.println("null");
+        }
+        channelNames = channelStrings.toArray(new String[0]);
+        channelListModel = (DefaultListModel) channelList.getModel();
+        channelListModel.removeAllElements();
+        channelListModel.addAll(channelStrings);
+
         if (state.getChannelNameError() != null) {
             JOptionPane.showMessageDialog(this, state.getChannelNameError());
         }

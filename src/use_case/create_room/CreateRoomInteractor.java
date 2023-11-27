@@ -42,11 +42,13 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
         String channelName = createRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
 
+
         if (exists(createRoomInputData.getChannelName(), createRoomInputData.getChannelLog())) {
             createRoomPresenter.prepareFailView("Channel name already exists, try again.");
         } else {
-            ArrayList<Message> messageLog = getMessageLog(createRoomInputData.getChannelName(),
-                    createRoomInputData.getConfig(), createRoomInputData.getUser());
+            ArrayList<Message> messageLog = new ArrayList<>();
+            //ArrayList<Message> messageLog = getMessageLog(createRoomInputData.getChannelName(),
+                    //createRoomInputData.getConfig(), createRoomInputData.getUser());
             CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName(),
                     createRoomInputData.getConfig(), createRoomInputData.getUser(), messageLog);
             createRoomPresenter.prepareSuccessView(createRoomOutputData);
@@ -55,6 +57,9 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
 
     // Checks if channel exists in an arraylist of channels.
     private boolean exists(String channel, ArrayList<Channel> channels) {
+        if (channels == null) {
+            return false;
+        }
         for (Channel c : channels) {
             if (channel.equals(c.getName())) {
                 return true;

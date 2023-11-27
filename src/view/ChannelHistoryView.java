@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ChannelHistoryView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -35,7 +38,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel innerPanel = new JPanel();
-        innerPanel.setLayout(new GridLayout(0, 5));
+        innerPanel.setLayout(new GridLayout(0, 1));
         innerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane innerScrollPane = new JScrollPane(innerPanel);
@@ -75,19 +78,23 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             channelMessageErrorField.setText(state.getChannelMessageError());
             state.setChannelMessageError(null);
         } else {
-            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(1);
             JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
 
             innerPanel.removeAll();
 
             List<PNFetchMessageItem> channelMessages = state.getChannelMessages();
-            for (PNFetchMessageItem messageItem : channelMessages) {
-                String message = messageItem.getUuid().toString() + "\n";
-                message += messageItem.getMeta().toString() + "\n";
-                message += messageItem.getTimetoken().toString() + "\n";
-                message += messageItem.getMessage().toString() + "\n";
-
-                innerPanel.add(new JLabel(message));
+            if (channelMessages != null){
+                for (PNFetchMessageItem messageItem : channelMessages) {
+                    long time = messageItem.getTimetoken() / 10000000L;
+                    LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
+                            TimeZone.getDefault().toZoneId());
+                    String message = localDateTime + "     ";
+                    message += messageItem.getMessage().getAsJsonObject().get("msg");
+                    innerPanel.add(new JLabel(message));
+                }
+            } else{
+                innerPanel.add(new JLabel("There's no channel history till now!"));
             }
 
             innerPanel.revalidate();

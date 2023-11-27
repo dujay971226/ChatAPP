@@ -6,8 +6,6 @@ import interface_adapter.journal.JournalViewModel;
 import use_case.journal.Content.JournalContentOutputBoundary;
 import use_case.journal.Content.JournalContentOutputData;
 
-import javax.swing.*;
-
 /**
  * Presenter for handling the presentation logic of journal content.
  * This class implements the JournalContentOutputBoundary and is responsible for

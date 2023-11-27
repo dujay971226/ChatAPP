@@ -53,7 +53,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
-
+                            usernameInputField.setText("");
+                            passwordInputField.setText("");
+                            repeatPasswordInputField.setText("");
                             signupController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword(),
@@ -67,8 +69,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                signupController.jump();
-            }
+                        usernameInputField.setText("");
+                        passwordInputField.setText("");
+                        repeatPasswordInputField.setText("");
+                        signupController.jump();
+                    }
                 });
 
         usernameInputField.addKeyListener(

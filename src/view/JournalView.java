@@ -33,7 +33,11 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
     private final JournalDoiController journalDoiController;
     private final JournalIssnController journalIssnController;
     private final JournalToRoomController journalToRoomController;
-    private final JTextArea textArea;
+    private final JTextArea textArea = new JTextArea(30,100);
+
+
+    JScrollPane jScrollPane = new JScrollPane(textArea);
+
 
     /**
      * Constructs a new JournalView instance.
@@ -71,10 +75,10 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         back = new JButton(JournalViewModel.BACK_BUTTON_LABEL);
         issnButton.add(back);
 
-        textArea = new JTextArea("");
         textArea.setEditable(false);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
+        jScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         searchcontent.addActionListener(new ActionListener() {
             @Override
@@ -130,7 +134,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         this.add(doiButton);
         this.add(issninfo);
         this.add(issnButton);
-        this.add(textArea);
+        this.add(jScrollPane);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 

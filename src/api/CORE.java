@@ -6,18 +6,29 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CORE{
 
     public static String[] searchJournals(String content) throws IOException {
+        String[] spl = content.split(";");
+        String format = spl[0];
+        int j=0;
+        for (String i: spl){
+            if (j!=0) {
+                format = format + " AND " + i;
+            }
+            j=1;
+        }
+        System.out.println(format);
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         HttpUrl.Builder urlBuilder
                 = HttpUrl.parse("https://api.core.ac.uk/v3/search/journals/")
                 .newBuilder();
         urlBuilder.addQueryParameter("api_key", "VvHk7Ywj3rcgPLx1SNlmCMiBG2odIyDZ");
-        urlBuilder.addQueryParameter("q", content);
+        urlBuilder.addQueryParameter("q", format);
 
         String url = urlBuilder.build().toString();
 

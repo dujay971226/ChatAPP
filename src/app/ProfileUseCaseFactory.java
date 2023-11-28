@@ -1,6 +1,7 @@
 package app;
 
 import data_access.ChannelDataAccessObject;
+import data_access.iChannelDataAccessObject;
 import interface_adapter.create_room.CreateRoomViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileViewModel;
@@ -49,7 +50,7 @@ public class ProfileUseCaseFactory {
                                      SubscribeRoomViewModel subscribeRoomViewModel, LoginViewModel loginViewModel,
                                      ProfileViewModel profileViewModel, ChannelDataAccessObject channelDataAccessObject){
         try {
-            ProfileToCreateController profileToCreateController = createProfileCreateUseCase(viewManagerModel, createRoomViewModel, profileViewModel);
+            ProfileToCreateController profileToCreateController = createProfileCreateUseCase(viewManagerModel, createRoomViewModel, profileViewModel, channelDataAccessObject);
             ProfileToSubscribeController profileToSubscribeController = createProfileSubscribeUseCase(viewManagerModel, subscribeRoomViewModel, profileViewModel, channelDataAccessObject);
             ProfileToLogoutController profileToLogoutController = creatProfileLogoutUsecase(viewManagerModel,loginViewModel,profileViewModel);
             return new ProfileView(profileViewModel, profileToCreateController, profileToSubscribeController ,profileToLogoutController);
@@ -67,9 +68,12 @@ public class ProfileUseCaseFactory {
      * @param profileViewModel The profile view model.
      * @return A ProfileToCreateController for handling profile creation.
      */
-    public static ProfileToCreateController createProfileCreateUseCase(ViewManagerModel viewManagerModel, CreateRoomViewModel createRoomViewModel, ProfileViewModel profileViewModel){
+    public static ProfileToCreateController createProfileCreateUseCase(ViewManagerModel viewManagerModel,
+                                                                       CreateRoomViewModel createRoomViewModel,
+                                                                       ProfileViewModel profileViewModel,
+                                                                       iChannelDataAccessObject channelDataAccessObject){
         ProfiletocreateOutputBoundary profiletocreateOutputBoundary = new ProfileToCreatePresenter(viewManagerModel, createRoomViewModel, profileViewModel);
-        ProfiletocreateInputBoundary profiletocreateInteractor = new ProfiletocreateInteractor(profiletocreateOutputBoundary);
+        ProfiletocreateInputBoundary profiletocreateInteractor = new ProfiletocreateInteractor(profiletocreateOutputBoundary, channelDataAccessObject);
         return new ProfileToCreateController(profiletocreateInteractor);
     }
 

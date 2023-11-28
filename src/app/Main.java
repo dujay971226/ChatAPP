@@ -106,7 +106,7 @@ public class Main {
                 channelDataAccessObject);
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
-                settingViewModel);
+                settingViewModel, channelDataAccessObject);
         RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
                 journalViewModel, settingViewModel);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);

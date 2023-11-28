@@ -41,29 +41,14 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
-        if (!exists(subscribeRoomInputData.getChannelName(), subscribeRoomInputData.getChannelLog())) {
-            //ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-                   // subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-            ArrayList<Message> messageLog = new ArrayList<>();
-                    SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
-                    subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
-            subscribeRoomPresenter.prepareSuccessView(outputData);
-        } else {
-            subscribeRoomPresenter.prepareFailView("Channel name does not exist, try again.");
-        }
-    }
 
-    // Checks if channel exists in an arraylist of channel.
-    private boolean exists(String channel, ArrayList<Channel> channels) {
-        if (channels == null) {
-            return false;
-        }
-        for (Channel c : channels) {
-            if (channel.equals(c.getName())) {
-                return true;
-            }
-        }
-        return false;
+        //ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
+               // subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
+        ArrayList<Message> messageLog = new ArrayList<>();
+                SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
+                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
+        subscribeRoomPresenter.prepareSuccessView(outputData);
+
     }
 
     // Returns message history using pubnub.

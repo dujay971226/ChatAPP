@@ -6,8 +6,6 @@ import interface_adapter.journal.JournalViewModel;
 import use_case.journal.Doi.JournalDoiOutputBoundary;
 import use_case.journal.Doi.JournalDoiOutputData;
 
-import javax.swing.*;
-
 /**
  * Presenter for handling the presentation logic of DOI (Digital Object Identifier) operations in a journal.
  * This class implements the JournalDoiOutputBoundary and is responsible for

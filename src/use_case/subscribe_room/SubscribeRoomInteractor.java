@@ -69,7 +69,11 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                                     long time = messageItem.getTimetoken() / 10000000L;
                                     LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
                                             TimeZone.getDefault().toZoneId());
-                                    Message mes = new Message(user, messageItem.getMessage().toString(),
+                                    String mesString = messageItem.getMessage().getAsJsonObject().
+                                            getAsJsonPrimitive("msg").toString();
+                                    mesString = mesString.substring(1, mesString.length() - 1); // remove quotation marks
+                                    mesString = mesString.replace(user.getName() + ": ", ""); // remove user and colon
+                                    Message mes = new Message(user, mesString,
                                             localDateTime);
                                     messageLog.add(mes);
                                 }

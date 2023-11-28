@@ -30,9 +30,6 @@ public class CreateRoomState {
      */
     public void setChannelLog(ArrayList<Channel> channelLog) {
         this.channelLog = channelLog;
-        for (Channel c: channelLog) {
-            System.out.println(c.getName());
-        }
     }
 
     /**

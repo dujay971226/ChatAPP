@@ -18,7 +18,6 @@ public class SubscribeRoomState {
     private String channelNameError = null;
     private PubNub config;
     private User user;
-    private String enteredChannelName = "";
 
     /**
      * Initializes a SubscribeRoomState instance.
@@ -31,11 +30,6 @@ public class SubscribeRoomState {
      */
     public String getChannelName() {return channelName; }
 
-    /**
-     * Gets entered channel name.
-     * @return
-     */
-    public String getEnteredChannelName() {return enteredChannelName; }
 
     /**
      * Gets all past channels.
@@ -73,12 +67,6 @@ public class SubscribeRoomState {
     public void setChannelName(String channelName) {
         this.channelName = channelName;
     }
-
-    /**
-     * Sets entered channel name.
-     * @param enteredChannelName entered channel name.
-     */
-    public void setEnteredChannelName(String enteredChannelName) {this.enteredChannelName = enteredChannelName; }
 
     /**
      * Sets config.

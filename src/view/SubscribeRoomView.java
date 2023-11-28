@@ -34,7 +34,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     private final SubscribeRoomController subscribeRoomController;
     private final ProfileToCreateController profileToCreateController;
     private String[] channelNames;
-    private DefaultListModel channelListModel;
+    private DefaultListModel<String> channelListModel;
     private final JList<String> channelList;
     private final JButton subscribeButton;
     private final JButton toCreateButton;
@@ -63,7 +63,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             }
         }
         channelNames = channelStrings.toArray(new String[0]);
-        channelListModel = new DefaultListModel();
+        channelListModel = new DefaultListModel<>();
         channelListModel.addAll(channelStrings);
         channelList = new JList<>();
         channelList.setModel(channelListModel);
@@ -99,7 +99,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             @Override
             public void keyTyped(KeyEvent e) {
                 SubscribeRoomState currentState = subscribeRoomViewModel.getState();
-                currentState.setEnteredChannelName(search.getText() + e.getKeyChar());
+                currentState.setChannelName(search.getText() + e.getKeyChar());
                 subscribeRoomViewModel.setState(currentState);
             }
 
@@ -171,7 +171,6 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
                         subscribeRoomViewModel.getState().getNoSelectionMsg());
             } else {
                 subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName(),
-                        subscribeRoomViewModel.getState().getEnteredChannelName(),
                         subscribeRoomViewModel.getState().getConfig(),
                         subscribeRoomViewModel.getState().getUser(),
                         subscribeRoomViewModel.getState().getChannelLog());

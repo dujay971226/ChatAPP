@@ -52,11 +52,8 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
             createRoomPresenter.prepareFailView("Channel name already exists, try again.");
         } else {
             channelDataAccessObject.save(createRoomInputData.getChannelName(), createRoomInputData.getUser());
-            ArrayList<Message> messageLog = new ArrayList<>();
-            //ArrayList<Message> messageLog = getMessageLog(createRoomInputData.getChannelName(),
-                    //createRoomInputData.getConfig(), createRoomInputData.getUser());
             CreateRoomOutputData createRoomOutputData = new CreateRoomOutputData(createRoomInputData.getChannelName(),
-                    createRoomInputData.getConfig(), createRoomInputData.getUser(), messageLog);
+                    createRoomInputData.getConfig(), createRoomInputData.getUser());
             createRoomPresenter.prepareSuccessView(createRoomOutputData);
         }
     }
@@ -72,37 +69,5 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
             }
         }
         return false;
-    }
-
-    // Returns message history using pubnub.
-    private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
-        ArrayList<Message> messageLog = new ArrayList<>();
-        pubNub.fetchMessages()
-                .channels(Arrays.asList(channelName))
-                .maximumPerChannel(25)
-                .includeMessageActions(true)
-                .includeMeta(true)
-                .includeMessageType(true)
-                .includeUUID(true)
-                .async(new PNCallback<PNFetchMessagesResult>() {
-                    @Override
-                    public void onResponse(@Nullable PNFetchMessagesResult pnFetchMessagesResult, @NotNull PNStatus pnStatus) {
-                        if (!pnStatus.isError()) {
-                            if (pnFetchMessagesResult == null) {
-
-                            }
-                            Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
-                            for (PNFetchMessageItem messageItem : channels.get(channelName)) {
-                                long time = messageItem.getTimetoken() / 10000000L;
-                                LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
-                                        TimeZone.getDefault().toZoneId());
-                                Message mes = new Message(user, messageItem.getMessage().getAsString(),
-                                        localDateTime);
-                                messageLog.add(mes);
-                            }
-                        }
-                    }
-                });
-        return messageLog;
     }
 }

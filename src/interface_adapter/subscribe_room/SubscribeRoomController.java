@@ -28,9 +28,9 @@ public class SubscribeRoomController {
      * Creates input data and interactor executes.
      * @param channelName channel name
      */
-    public void execute(String channelName, String enteredChannelName, PubNub config, User user,
+    public void execute(String channelName, PubNub config, User user,
                         ArrayList<Channel> channelList) {
-        SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName, enteredChannelName,
+        SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName,
                 config, user, channelList);
         subscribeRoomUseCaseInteractor.execute(inputData);
     }

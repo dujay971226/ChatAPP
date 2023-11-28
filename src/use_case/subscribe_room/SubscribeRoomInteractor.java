@@ -41,10 +41,8 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
-
-        //ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-               // subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-        ArrayList<Message> messageLog = new ArrayList<>();
+        ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
+               subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
                 SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
                 subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
         subscribeRoomPresenter.prepareSuccessView(outputData);
@@ -53,7 +51,6 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 
     // Returns message history using pubnub.
     private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
-
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
                 .channels(Arrays.asList(channelName))
@@ -67,14 +64,16 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                     public void onResponse(@Nullable PNFetchMessagesResult pnFetchMessagesResult, @NotNull PNStatus pnStatus) {
                         if (!pnStatus.isError()) {
                             Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
-                            for (PNFetchMessageItem messageItem : channels.get(channelName)) {
-                                long time = messageItem.getTimetoken() / 10000000L;
-                                LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
-                                        TimeZone.getDefault().toZoneId());
-                                Message mes = new Message(user, messageItem.getMessage().getAsString(),
-                                        localDateTime);
-                                messageLog.add(mes);
-                            }
+                            if (channels.get(channelName) != null) {
+                                for (PNFetchMessageItem messageItem : channels.get(channelName)) {
+                                    long time = messageItem.getTimetoken() / 10000000L;
+                                    LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
+                                            TimeZone.getDefault().toZoneId());
+                                    Message mes = new Message(user, messageItem.getMessage().toString(),
+                                            localDateTime);
+                                    messageLog.add(mes);
+                                }
+                            } // return empty arraylist if channels is null
                         }
                     }
                 });

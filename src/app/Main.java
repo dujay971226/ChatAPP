@@ -83,17 +83,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        //test add channel
-
-        //User tuser = new User("test","testp");
-        //Channel tchannel = new Channel("testchannel",tuser);
-        //channelDataAccessObject.save(tchannel,tuser,"./data/channels.json");
-
-        //
-
-
-
-
         // Initialize all views.
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, profileViewModel,
                 signupViewModel, userDataAccessObject);

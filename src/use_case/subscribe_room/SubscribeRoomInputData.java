@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class SubscribeRoomInputData {
 
     private final String channelName;
+    private final String enteredChannelName;
     private final PubNub config;
     private final User user;
     private final ArrayList<Channel> channelLog;
@@ -21,12 +22,20 @@ public class SubscribeRoomInputData {
      * Initializes a SubscribeRoomInputData instance.
      * @param channelName channel name
      */
-    public SubscribeRoomInputData(String channelName, PubNub config, User user, ArrayList<Channel> channelLog) {
+    public SubscribeRoomInputData(String channelName, String enteredChannelName, PubNub config, User user,
+                                  ArrayList<Channel> channelLog) {
         this.channelName = channelName;
+        this.enteredChannelName = enteredChannelName;
         this.config = config;
         this.user = user;
         this.channelLog = channelLog;
     }
+
+    /**
+     * Gets entered channel name.
+     * @return entered channel name.
+     */
+    public String getEnteredChannelName() {return enteredChannelName; }
 
     /**
      * Gets channel name.

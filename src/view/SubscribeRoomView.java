@@ -99,7 +99,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             @Override
             public void keyTyped(KeyEvent e) {
                 SubscribeRoomState currentState = subscribeRoomViewModel.getState();
-                currentState.setChannelName(search.getText() + e.getKeyChar());
+                currentState.setEnteredChannelName(search.getText() + e.getKeyChar());
                 subscribeRoomViewModel.setState(currentState);
             }
 
@@ -142,19 +142,16 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     public void propertyChange(PropertyChangeEvent evt) {
         SubscribeRoomState state = subscribeRoomViewModel.getState();
         ArrayList<Channel> channelLog = state.getChannelLog();
-
-        ArrayList<String> channelStrings = new ArrayList<>();
         if (channelLog != null) {
+            ArrayList<String> channelStrings = new ArrayList<>();
             for (Channel channel : channelLog) {
                 channelStrings.add(channel.getName());
             }
-        } else {
-            System.out.println("null");
+            channelNames = channelStrings.toArray(new String[0]);
+            channelListModel = (DefaultListModel) channelList.getModel();
+            channelListModel.removeAllElements();
+            channelListModel.addAll(channelStrings);
         }
-        channelNames = channelStrings.toArray(new String[0]);
-        channelListModel = (DefaultListModel) channelList.getModel();
-        channelListModel.removeAllElements();
-        channelListModel.addAll(channelStrings);
 
         if (state.getChannelNameError() != null) {
             JOptionPane.showMessageDialog(this, state.getChannelNameError());
@@ -174,6 +171,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
                         subscribeRoomViewModel.getState().getNoSelectionMsg());
             } else {
                 subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName(),
+                        subscribeRoomViewModel.getState().getEnteredChannelName(),
                         subscribeRoomViewModel.getState().getConfig(),
                         subscribeRoomViewModel.getState().getUser(),
                         subscribeRoomViewModel.getState().getChannelLog());

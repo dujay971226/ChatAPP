@@ -5,6 +5,8 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
+import data_access.ChannelDataAccessObject;
+import data_access.iChannelDataAccessObject;
 import entity.Channel;
 import entity.Message;
 import entity.User;
@@ -22,13 +24,16 @@ import java.util.*;
 public class CreateRoomInteractor implements CreateRoomInputBoundary {
 
     final CreateRoomOutputBoundary createRoomPresenter;
+    final iChannelDataAccessObject channelDataAccessObject;
 
     /**
      * Initializes a createRoomInteractor instance given a data access object and presenter.
      * @param createRoomOutputBoundary presenter of create room.
      */
-    public CreateRoomInteractor(CreateRoomOutputBoundary createRoomOutputBoundary) {
+    public CreateRoomInteractor(CreateRoomOutputBoundary createRoomOutputBoundary,
+                                iChannelDataAccessObject channelDataAccessObject) {
         this.createRoomPresenter = createRoomOutputBoundary;
+        this.channelDataAccessObject = channelDataAccessObject;
 
     }
 
@@ -46,6 +51,7 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
         if (exists(createRoomInputData.getChannelName(), createRoomInputData.getChannelLog())) {
             createRoomPresenter.prepareFailView("Channel name already exists, try again.");
         } else {
+            channelDataAccessObject.save(createRoomInputData.getChannelName(), createRoomInputData.getUser());
             ArrayList<Message> messageLog = new ArrayList<>();
             //ArrayList<Message> messageLog = getMessageLog(createRoomInputData.getChannelName(),
                     //createRoomInputData.getConfig(), createRoomInputData.getUser());
@@ -82,6 +88,9 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
                     @Override
                     public void onResponse(@Nullable PNFetchMessagesResult pnFetchMessagesResult, @NotNull PNStatus pnStatus) {
                         if (!pnStatus.isError()) {
+                            if (pnFetchMessagesResult == null) {
+
+                            }
                             Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
                             for (PNFetchMessageItem messageItem : channels.get(channelName)) {
                                 long time = messageItem.getTimetoken() / 10000000L;

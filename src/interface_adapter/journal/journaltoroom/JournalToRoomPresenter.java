@@ -1,13 +1,9 @@
 package interface_adapter.journal.journaltoroom;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.journal.JournalState;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.room.RoomViewModel;
-import use_case.journal.Content.JournalContentOutputData;
 import use_case.journal.back.JournalToRoomOutputBoundary;
-
-import javax.swing.*;
 
 /**
  * Presenter for handling the transition from the journal view to the room view.

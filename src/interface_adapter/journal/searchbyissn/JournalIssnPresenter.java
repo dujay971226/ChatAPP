@@ -6,8 +6,6 @@ import interface_adapter.journal.JournalViewModel;
 import use_case.journal.Issn.JournalIssnOutputBoundary;
 import use_case.journal.Issn.JournalIssnOutputData;
 
-import javax.swing.*;
-
 /**
  * Presenter for handling the presentation logic of ISSN (International Standard Serial Number) operations in a journal.
  * This class implements the JournalIssnOutputBoundary and is responsible for

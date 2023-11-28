@@ -33,9 +33,14 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         this.returnToChannelController = returnToChannelController;
         this.settingViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel("Channel History");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new GridLayout(0, 5));
+        innerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        JScrollPane innerScrollPane = new JScrollPane(innerPanel);
+
+        // add the inner scorllable JPanel to the SettingView JPanel
+        this.add(innerScrollPane, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
         cancel = new JButton(SettingViewModel.CANCEL_BUTTON_LABEL);
@@ -59,9 +64,12 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         buttons.add(channelhistory);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
         this.add(loadingSubcribersErrorField);
         this.add(buttons);
+        JLabel loading = new JLabel("loading user...");
+        innerPanel.add(loading);
+        innerPanel.revalidate();
+        innerPanel.repaint();
     }
     public void actionPerformed(ActionEvent evt) {
     }
@@ -76,16 +84,20 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             loadingSubcribersErrorField.setText(state.getLoadingSubscribersError());
             state.setLoadingSubscribersError(null);
         } else {
+            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
+
+            innerPanel.removeAll();
+
             Collection<PNHereNowChannelData> channelOccupancy = state.getChannelOccupancy();
             for (PNHereNowChannelData channelData : channelOccupancy) {
-                System.out.println("---");
-                System.out.println("channel:" + channelData.getChannelName());
-                System.out.println("occupancy: " + channelData.getOccupancy());
-                System.out.println("occupants:");
                 for (PNHereNowOccupantData occupant : channelData.getOccupants()) {
-                    System.out.println("uuid: " + occupant.getUuid() + " state: " + occupant.getState());
+                    innerPanel.add(new JLabel(occupant.getUuid()));
                 }
             }
+
+            innerPanel.revalidate();
+            innerPanel.repaint();
         }
     }
 

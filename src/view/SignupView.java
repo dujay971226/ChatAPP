@@ -53,7 +53,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signUp)) {
                             SignupState currentState = signupViewModel.getState();
-
+                            usernameInputField.setText("");
+                            passwordInputField.setText("");
+                            repeatPasswordInputField.setText("");
                             signupController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword(),
@@ -67,14 +69,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                signupController.jump();
-            }
+                        usernameInputField.setText("");
+                        passwordInputField.setText("");
+                        repeatPasswordInputField.setText("");
+                        signupController.jump();
+                    }
                 });
 
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -121,7 +122,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
                         currentState.setRepeatPassword(repeatPasswordInputField.getText() + e.getKeyChar());
-                        signupViewModel.setState(currentState); // Hmm, is this necessary?
+                        signupViewModel.setState(currentState);
                     }
 
                     @Override

@@ -7,6 +7,11 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
+/**
+ * The LoginPresenter class implements the LoginOutputBoundary interface and handles the presentation
+ * logic for the login use case. It prepares the views and communicates with the ViewManagerModel to
+ * switch between different views based on the login outcomes.
+ */
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
@@ -14,6 +19,14 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final SignupViewModel signupViewModel;
     private ViewManagerModel viewManagerModel;
 
+    /**
+     * Constructs a LoginPresenter with the necessary view models and the ViewManagerModel.
+     *
+     * @param viewManagerModel The ViewManagerModel responsible for managing views in the application.
+     * @param profileViewModel The ViewModel for the user profile.
+     * @param loginViewModel   The ViewModel for the login interface.
+     * @param signupViewModel  The ViewModel for the signup interface.
+     */
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           ProfileViewModel profileViewModel,
                           LoginViewModel loginViewModel, SignupViewModel signupViewModel) {
@@ -23,6 +36,11 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.signupViewModel = signupViewModel;
     }
 
+    /**
+     * Prepares the success view by updating the profile state and activating the profile view.
+     *
+     * @param response The output data from a successful login attempt.
+     */
     @Override
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the profile view.
@@ -36,6 +54,11 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares the fail view by updating the login state with an error message.
+     *
+     * @param error The error message to be displayed in the login view.
+     */
     @Override
     public void prepareFailView(String error) {
         LoginState loginState = loginViewModel.getState();
@@ -43,6 +66,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginViewModel.firePropertyChanged();
     }
 
+    /**
+     * Jumps to the signup view by activating it in the ViewManagerModel.
+     */
     @Override
     public void jumpSignup() {
         this.viewManagerModel.setActiveView(this.signupViewModel.getViewName());

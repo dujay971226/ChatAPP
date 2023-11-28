@@ -170,7 +170,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     @Override
                     public void keyTyped(KeyEvent e) {
                         if (e.getKeyCode()==KeyEvent.VK_ENTER){
-                            return;
+                            messageInputField.setText("");
                         }
                     }
 
@@ -216,11 +216,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void status(PubNub pubnub, PNStatus status) {
                 if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
-                        // This event happens when radio / connectivity is lost
+
                 } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
-                        // Connect event. You can do stuff like publish, and know you'll get it.
-                        // Or just use the connected event to confirm you are subscribed for
-                        // UI / internal notifications, etc
+
                 } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
                         // Happens as part of our regular operation. This event happens when
                         // radio / connectivity is lost, then regained.
@@ -312,11 +310,14 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 listModel.addElement(msg);
             }
             currState.setOffNotice();
+            scrollToBottom();
         //Someone sent a message online, need to load
         } else if (currState.getNEW_MESSAGE_UPDATE()) {
             listModel.addElement(currState.getMessage());
             currState.setMessage("");
             currState.setOffReceiveMessageNotice();
+            messageInputField.setText("");
+            scrollToBottom();
         }
 
     }
@@ -328,6 +329,12 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         return new ArrayList<>(dateFormatMap.values());
     }
 
+    private void scrollToBottom(){
+        int lastIndex = messageList.getModel().getSize()-1;
+        if(lastIndex >= 0){
+            messageList.ensureIndexIsVisible(lastIndex);
+        }
+    }
 
 
 }

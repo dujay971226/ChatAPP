@@ -1,6 +1,7 @@
 package use_case.journal.Issn;
 
 import api.CORE;
+import api.Journal;
 
 import java.io.IOException;
 
@@ -31,7 +32,7 @@ public class JournalIssnInteractor implements JournalIssnInputBoundary {
      */
     @Override
     public void execute(JournalIssnInputData journalIssnInputData) throws IOException {
-        String result = CORE.searchJournalsByISSN(journalIssnInputData.getIssn());
+        String result = Journal.searchJournalsByISSN(journalIssnInputData.getIssn());
         JournalIssnOutputData journalIssnOutputData = new JournalIssnOutputData(result);
         journalIssnOutputBoundary.prepareSuccessView(journalIssnOutputData);
     }

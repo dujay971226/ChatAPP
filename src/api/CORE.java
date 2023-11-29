@@ -110,7 +110,7 @@ public class CORE{
         String responseBodyString = response.body().string();
         JSONObject responseBody = new JSONObject(responseBodyString);
         if(responseBody.has("fullTextLink") && !responseBody.isNull("fullTextLink")) {
-            return responseBody.getJSONObject("fullTextLink").toString();
+            return responseBody.getString("fullTextLink").toString();
         }
         else
         {return "no text founded";}

@@ -15,17 +15,15 @@ public class CreateRoomOutputData {
     private final String channelName;
     private final PubNub config;
     private final User user;
-    private final ArrayList<Message> messageLog;
 
     /**
      * Initializes a CreateRoomOutputData instance.
      * @param channelName channel name
      */
-    public CreateRoomOutputData(String channelName, PubNub config, User user, ArrayList<Message> messageLog) {
+    public CreateRoomOutputData(String channelName, PubNub config, User user) {
         this.channelName = channelName;
         this.config = config;
         this.user = user;
-        this.messageLog = messageLog;
     }
 
     /**
@@ -51,11 +49,5 @@ public class CreateRoomOutputData {
     public User getUser() {
         return this.user;
     }
-
-    /**
-     * Gets message history.
-     * @return message log
-     */
-    public ArrayList<Message> getMessageLog() {return this.messageLog; }
 
 }

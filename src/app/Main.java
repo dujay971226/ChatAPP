@@ -1,5 +1,6 @@
 package app;
 
+
 import com.pubnub.api.PubNubException;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
@@ -13,6 +14,7 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.signup.SignupViewModel;
+
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import view.*;
 
@@ -88,7 +90,7 @@ public class Main {
                 channelDataAccessObject);
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
-                settingViewModel);
+                settingViewModel, channelDataAccessObject);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);
         ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
                 settingViewModel, channelHistoryViewModel);

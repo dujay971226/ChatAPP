@@ -44,7 +44,8 @@ public class CreateRoomUseCaseFactory {
                                         SettingViewModel settingViewModel,
                                         iChannelDataAccessObject iChannelDataAccessObject) {
         CreateRoomController createRoomController = CreateRoomUseCaseFactory.createCreateRoomUseCase(viewManagerModel,
-                createRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel);
+                createRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel,
+                iChannelDataAccessObject);
         ProfileToSubscribeController profileToSubscribeController = CreateRoomUseCaseFactory.createProfileToSubscribeController(
                 viewManagerModel, subscribeRoomViewModel, profileViewModel, iChannelDataAccessObject);
         CreateRoomView createRoomView = new CreateRoomView(createRoomController, createRoomViewModel,
@@ -57,10 +58,12 @@ public class CreateRoomUseCaseFactory {
                                                                 RoomViewModel roomViewModel,
                                                                 ProfileViewModel profileViewModel,
                                                                 JournalViewModel journalViewModel,
-                                                                SettingViewModel settingViewModel) {
+                                                                SettingViewModel settingViewModel,
+                                                                iChannelDataAccessObject channelDataAccessObject) {
         CreateRoomOutputBoundary createRoomOutputBoundary = new CreateRoomPresenter(viewManagerModel,
                 createRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel);
-        CreateRoomInputBoundary createRoomInputBoundary = new CreateRoomInteractor(createRoomOutputBoundary);
+        CreateRoomInputBoundary createRoomInputBoundary = new CreateRoomInteractor(createRoomOutputBoundary,
+                channelDataAccessObject);
         CreateRoomController createRoomController = new CreateRoomController(createRoomInputBoundary);
         return createRoomController;
     }

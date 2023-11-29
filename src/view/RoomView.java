@@ -1,6 +1,7 @@
 package view;
 
 
+import com.google.gson.JsonObject;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.callbacks.SubscribeCallback;
@@ -24,6 +25,7 @@ import interface_adapter.room.room_receive.RoomReceiveController;
 import interface_adapter.room.room_to_journal.RoomToJournalController;
 import interface_adapter.room.room_to_setting.RoomToSettingController;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -325,7 +327,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
     private ArrayList<String> SortByDate(ArrayList<Message> newMessages) {
         Map<LocalDateTime, String> dateFormatMap = new TreeMap<>();
-        newMessages.forEach(s -> dateFormatMap.put(s.getTime(), s.getUser().getName() + ": " + s.getContent()));
+        newMessages.forEach(s -> dateFormatMap.put(s.getTime(), s.getContent()));
         return new ArrayList<>(dateFormatMap.values());
     }
 

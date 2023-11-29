@@ -72,7 +72,6 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                                     String mesString = messageItem.getMessage().getAsJsonObject().
                                             getAsJsonPrimitive("msg").toString();
                                     mesString = mesString.substring(1, mesString.length() - 1); // remove quotation marks
-                                    mesString = mesString.replace(user.getName() + ": ", ""); // remove user and colon
                                     Message mes = new Message(user, mesString,
                                             localDateTime);
                                     messageLog.add(mes);

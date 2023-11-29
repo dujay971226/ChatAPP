@@ -39,7 +39,6 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
                 ArrayList<User> arrayList = new ArrayList<>();
                 accounts.put(channel, arrayList);
                 JSONArray users = file.getJSONArray(channelName);
-                System.out.println(users);
                 for (int i = 0; i < users.length(); i++){
                     JSONObject user = users.getJSONObject(i);
                     String username = user.keys().next();
@@ -48,7 +47,6 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
                 }
             }
         }
-        System.out.println(accounts);
     }
 
     /**

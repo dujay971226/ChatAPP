@@ -63,7 +63,7 @@ public class CORE{
         HttpUrl.Builder urlBuilder
                 = HttpUrl.parse(url)
                 .newBuilder();
-        urlBuilder.addQueryParameter("api_key", "VvHk7Ywj3rcgPLx1SNlmCMiBG2odIyDZ");
+        urlBuilder.addQueryParameter("api_key", "JBQ5yakudjOGeESYbDK1zcsT4o0WPrmF");
 
         Request request = new Request.Builder()
                 .url(url)
@@ -85,7 +85,7 @@ public class CORE{
             return theJournal.toString();
         }
         else{
-            return "no ournal founded";
+            return "no journal founded";
         }
 
     }
@@ -103,7 +103,7 @@ public class CORE{
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .addHeader("api_key", "VvHk7Ywj3rcgPLx1SNlmCMiBG2odIyDZ")
+                .addHeader("api_key", "JBQ5yakudjOGeESYbDK1zcsT4o0WPrmF")
                 .build();
 
         Response response = client.newCall(request).execute();

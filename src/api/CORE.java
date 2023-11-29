@@ -2,6 +2,7 @@ package api;
 
 import okhttp3.*;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class CORE{
         HttpUrl.Builder urlBuilder
                 = HttpUrl.parse("https://api.core.ac.uk/v3/search/journals/")
                 .newBuilder();
-        urlBuilder.addQueryParameter("api_key", "VvHk7Ywj3rcgPLx1SNlmCMiBG2odIyDZ");
+        urlBuilder.addQueryParameter("api_key", "JBQ5yakudjOGeESYbDK1zcsT4o0WPrmF");
         urlBuilder.addQueryParameter("q", format);
 
         String url = urlBuilder.build().toString();
@@ -35,26 +36,35 @@ public class CORE{
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
-
-        Response response = client.newCall(request).execute();
-        System.out.println(response);
-        JSONObject responseBody = new JSONObject(response.body().string());
-
-
-        JSONArray result = responseBody.getJSONArray("results");
         List<String> converter = new ArrayList<>();
-        for(int i = 0; i < result.length(); i++){
-            if(result.getJSONObject(i).getJSONArray("identifiers").get(2).toString().startsWith("url")) {
-                converter.add(result.getJSONObject(i).getString("title") + "-----" + result.getJSONObject(i).getJSONArray("identifiers").get(2).toString());
-            }
+        converter.add("");
 
-            else{
-                converter.add(result.getJSONObject(i).getString("title") + "-----" + "no url provided");
+        try {
+            Response response = client.newCall(request).execute();
+
+            if (response.code() == 200) {
+                JSONObject responseBody = new JSONObject(response.body().string());
+
+
+                JSONArray result = responseBody.getJSONArray("results");
+
+                for (int i = 0; i < result.length(); i++) {
+                    if (result.getJSONObject(i).getJSONArray("identifiers").get(2).toString().startsWith("url")) {
+                        converter.add(result.getJSONObject(i).getString("title") + "-----" + result.getJSONObject(i).getJSONArray("identifiers").get(2).toString());
+                    } else {
+                        converter.add(result.getJSONObject(i).getString("title") + "-----" + "no url provided");
+                    }
+                }
+                int size = converter.size();
+                return converter.toArray(new String[size]);
+            } else {
+                converter.add("beyond the searching limit, try again later");
+                return converter.toArray(new String[converter.size()]);
             }
+        }catch (IOException | JSONException e) {
+            converter.add("something wrong in database, searching request fail");
+            return converter.toArray(new String[converter.size()]);
         }
-        int size = converter.size();
-        return converter.toArray(new String[size]);
     }
 
     public static String searchJournalsByISSN(String issn) throws IOException{
@@ -68,24 +78,32 @@ public class CORE{
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Response response = client.newCall(request).execute();
-        String responseBodyString = response.body().string();
-        JSONObject responseBody = new JSONObject(responseBodyString);
-        List<String> theJournal = new ArrayList<>();
+        try {
+            Response response = client.newCall(request).execute();
+            String responseBodyString = response.body().string();
+            JSONObject responseBody = new JSONObject(responseBodyString);
+            List<String> theJournal = new ArrayList<>();
+            if(response.code()==200){
+                if (responseBody.has("title")) {
+                    theJournal.add("The title: " + responseBody.getString("title").toString());
 
-        if (responseBody.has("title")) {
-            theJournal.add("The title: " + responseBody.getString("title").toString());
+                    if (responseBody.getJSONArray("identifiers").get(2).toString().startsWith("url")) {
+                        theJournal.add(responseBody.getJSONArray("identifiers").get(2).toString());
+                    } else {
+                        theJournal.add("no url provided");
+                    }
 
-            if (responseBody.getJSONArray("identifiers").get(2).toString().startsWith("url")) {
-                theJournal.add(responseBody.getJSONArray("identifiers").get(2).toString());
-            } else {
-                theJournal.add("no url provided");
+                    return theJournal.toString();
+                } else {
+                    return "no journal founded";
+                }
+            }
+            else{
+                return "beyond the searching limit, try again later";
             }
 
-            return theJournal.toString();
-        }
-        else{
-            return "no journal founded";
+        }catch (IOException | JSONException e) {
+            return "something wrong in database, searching request fail";
         }
 
     }
@@ -105,15 +123,23 @@ public class CORE{
                 .post(body)
                 .addHeader("api_key", "JBQ5yakudjOGeESYbDK1zcsT4o0WPrmF")
                 .build();
-
-        Response response = client.newCall(request).execute();
-        String responseBodyString = response.body().string();
-        JSONObject responseBody = new JSONObject(responseBodyString);
-        if(responseBody.has("fullTextLink") && !responseBody.isNull("fullTextLink")) {
-            return responseBody.getString("fullTextLink").toString();
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code()==200) {
+                String responseBodyString = response.body().string();
+                JSONObject responseBody = new JSONObject(responseBodyString);
+                if (responseBody.has("fullTextLink") && !responseBody.isNull("fullTextLink")) {
+                    return responseBody.getString("fullTextLink").toString();
+                } else {
+                    return "no text founded";
+                }
+            }
+            else{
+                return "beyond the searching limit, try again later";
+            }
+        }catch (IOException | JSONException e) {
+            return "something wrong in database, searching request fail";
         }
-        else
-        {return "no text founded";}
 
     }
 

@@ -15,7 +15,7 @@ public class SubscribeRoomViewModel extends ViewModel {
      * Title label.
      */
     public static final String TITLE_LABEL = "subscribe";
-    public final String LIST_LABEL = "Join a room by choosing from the list below:";
+    public final String LIST_LABEL = "Join a room by choosing from the list below and click \"join\":";
     public final String TF_LABEL = "Or enter room name here:";
 
     /**

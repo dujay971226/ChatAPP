@@ -17,6 +17,7 @@ public class RoomExitInteractor implements RoomExitInputBoundary{
     public void execute(RoomExitInputData roomExitInputData) {
         PubNub pubnub = roomExitInputData.getConfig();
 
+        pubnub.removeListener(roomExitInputData.getListener());
         pubnub.unsubscribe()
                 .channels(Arrays.asList(roomExitInputData.getChannel().getName()))
                 .execute();

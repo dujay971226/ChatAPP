@@ -102,6 +102,74 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         low.add(send);
 
         RoomState currState = roomViewModel.getState();
+        PubNub pubnub = currState.getConfig();
+        SubscribeCallback listener = new SubscribeCallback() {
+
+            @Override
+            public void status(PubNub pubnub, PNStatus status) {
+                if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
+
+                } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
+
+                } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
+                    // Happens as part of our regular operation. This event happens when
+                    // radio / connectivity is lost, then regained.
+                } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
+                    // Handle message decryption error. Probably client configured to
+                    // encrypt messages and on live data feed it received plain text.
+                }
+            }
+
+            @Override
+            public void message(PubNub pubnub, PNMessageResult message) {
+                // Handle new message stored in message.message
+
+                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
+                User user = currState.getUser();
+                Message newMessages = new Message(user, msg, LocalDateTime.now());
+                roomReceiveController.execute(newMessages);
+
+                /*
+                 * Log the following items with your favorite logger - message.getMessage() -
+                 * message.getSubscription() - message.getTimetoken()
+                 */
+            }
+
+            @Override
+            public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {
+
+            }
+
+            @Override
+            public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {
+
+            }
+
+            @Override
+            public void channel(@NotNull PubNub pubNub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
+
+            }
+
+            @Override
+            public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {
+
+            }
+
+            @Override
+            public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {
+
+            }
+
+            @Override
+            public void file(@NotNull PubNub pubNub, @NotNull PNFileEventResult pnFileEventResult) {
+
+            }
+
+            @Override
+            public void presence(PubNub pubnub, PNPresenceEventResult presence) {
+
+            }
+        };
 
         //Check whether send button was clicked
         send.addActionListener(
@@ -159,7 +227,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                             roomExitController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
-                                    currState.getConfig()
+                                    currState.getConfig(),
+                                    listener
                             );
                         }
                     }
@@ -210,83 +279,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
-        PubNub pubnub = currState.getConfig();
 
         //Check whether someone send a message online
-        pubnub.addListener(new SubscribeCallback() {
-
-            @Override
-            public void status(PubNub pubnub, PNStatus status) {
-                if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
-
-                } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
-
-                } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
-                        // Happens as part of our regular operation. This event happens when
-                        // radio / connectivity is lost, then regained.
-                } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
-                        // Handle message decryption error. Probably client configured to
-                        // encrypt messages and on live data feed it received plain text.
-                }
-            }
-
-            @Override
-            public void message(PubNub pubnub, PNMessageResult message) {
-                // Handle new message stored in message.message
-                if (message.getChannel() != null) {
-                        // Message has been received on channel group stored in
-                        // message.getChannel()
-                } else {
-                        // Message has been received on channel stored in
-                        // message.getSubscription()
-                }
-
-                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
-                User user = currState.getUser();
-                Message newMessages = new Message(user, msg, LocalDateTime.now());
-                roomReceiveController.execute(newMessages);
-
-                    /*
-                     * Log the following items with your favorite logger - message.getMessage() -
-                     * message.getSubscription() - message.getTimetoken()
-                     */
-            }
-
-            @Override
-            public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {
-
-            }
-
-            @Override
-            public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {
-
-            }
-
-            @Override
-            public void channel(@NotNull PubNub pubNub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
-
-            }
-
-            @Override
-            public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {
-
-            }
-
-            @Override
-            public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {
-
-            }
-
-            @Override
-            public void file(@NotNull PubNub pubNub, @NotNull PNFileEventResult pnFileEventResult) {
-
-            }
-
-            @Override
-                public void presence(PubNub pubnub, PNPresenceEventResult presence) {
-
-            }
-        });
+        pubnub.addListener(listener);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

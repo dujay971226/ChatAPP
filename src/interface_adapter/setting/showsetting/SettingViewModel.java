@@ -6,10 +6,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class SettingViewModel extends ViewModel {
-    public final String TITLE_LABEL = "Channel Setting";
     public static final String CHANNEL_HISTORY_BUTTON_LABEL = "Channel History";
     public static final String CANCEL_BUTTON_LABEL = "Back";
-
+    public final String TITLE_LABEL = "Channel Setting";
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private SettingState state = new SettingState();
 
     public SettingViewModel() {
@@ -23,8 +23,6 @@ public class SettingViewModel extends ViewModel {
     public void setState(SettingState state) {
         this.state = state;
     }
-
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     // This is what the Signup Presenter will call to let the ViewModel know
     // to alert the View

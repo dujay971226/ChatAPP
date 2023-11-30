@@ -7,14 +7,14 @@ package use_case.journal.author;
  * @author Xiaofeng Li
  */
 public class AuthorOutputData {
-    private String result;
+    private final String result;
 
     /**
      * Constructs a JournalIssnOutputData object with the provided result.
      *
      * @param result The result of the ISSN-based journal operation.
      */
-    public AuthorOutputData(String result){
+    public AuthorOutputData(String result) {
         this.result = result;
     }
 

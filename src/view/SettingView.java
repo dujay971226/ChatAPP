@@ -20,15 +20,15 @@ import static java.lang.Thread.sleep;
 
 public class SettingView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "channel setting";
+    final JButton cancel;
+    final JButton channelhistory;
     private final SettingViewModel settingViewModel;
     private final ShowSettingController showSettingController;
     private final SettingToChannelHistoryController settingToChannelHistoryController;
     private final ReturnToChannelController returnToChannelController;
     private final JLabel loadingSubcribersErrorField = new JLabel();
-    final JButton cancel;
-    final JButton channelhistory;
 
-    public SettingView(SettingViewModel settingViewModel, ShowSettingController showSettingController, SettingToChannelHistoryController settingToChannelHistoryController, ReturnToChannelController returnToChannelController){
+    public SettingView(SettingViewModel settingViewModel, ShowSettingController showSettingController, SettingToChannelHistoryController settingToChannelHistoryController, ReturnToChannelController returnToChannelController) {
         this.settingViewModel = settingViewModel;
         this.showSettingController = showSettingController;
         this.settingToChannelHistoryController = settingToChannelHistoryController;
@@ -79,13 +79,14 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         innerPanel.revalidate();
         innerPanel.repaint();
     }
+
     public void actionPerformed(ActionEvent evt) {
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         SettingState state = (SettingState) evt.getNewValue();
-        if(state.isActive()){
+        if (state.isActive()) {
             state.setActiveState(false);
             showSettingController.execute(state.getChannel().getName(), state.getConfig());
         } else if (state.getLoadingSubscribersError() != null) {

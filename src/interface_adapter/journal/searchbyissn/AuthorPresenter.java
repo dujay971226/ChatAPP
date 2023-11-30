@@ -19,6 +19,7 @@ public class AuthorPresenter implements AuthorOutputBoundary {
 
     /**
      * Constructs a JournalIssnPresenter with the necessary view models.
+     *
      * @param viewManagerModel The model managing different views in the application.
      * @param journalViewModel The view model for the journal view.
      */
@@ -29,6 +30,7 @@ public class AuthorPresenter implements AuthorOutputBoundary {
 
     /**
      * Prepares and updates the view to display the results of ISSN processing.
+     *
      * @param authorOutputData The output data from the ISSN processing logic.
      */
     public void prepareSuccessView(AuthorOutputData authorOutputData) {

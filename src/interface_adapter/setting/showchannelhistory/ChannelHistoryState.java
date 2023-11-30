@@ -20,7 +20,7 @@ public class ChannelHistoryState {
     public ChannelHistoryState() {
     }
 
-    public ChannelHistoryState(ChannelHistoryState copy){
+    public ChannelHistoryState(ChannelHistoryState copy) {
         this.channelMessages = copy.channelMessages;
         this.channelMessageError = copy.channelMessageError;
         this.config = copy.config;
@@ -44,16 +44,20 @@ public class ChannelHistoryState {
         this.channelMessages = channelMessages;
     }
 
-    public void setChannelMessageError(String error){
-        this.channelMessageError = error;
-    }
-
     public String getChannelMessageError() {
         return channelMessageError;
     }
 
+    public void setChannelMessageError(String error) {
+        this.channelMessageError = error;
+    }
+
     public PubNub getConfig() {
         return config;
+    }
+
+    public void setConfig(PubNub config) {
+        this.config = config;
     }
 
     public boolean isUpdateDelete() {
@@ -70,10 +74,6 @@ public class ChannelHistoryState {
 
     public void setActive(boolean active) {
         Active = active;
-    }
-
-    public void setConfig(PubNub config) {
-        this.config = config;
     }
 
     public String getChannel() {

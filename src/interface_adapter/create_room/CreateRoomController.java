@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Controller of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomController {
@@ -18,6 +19,7 @@ public class CreateRoomController {
 
     /**
      * Initializes an instance of createRoomController with a given use case interactor.
+     *
      * @param createRoomUseCaseInteractor use case interactor of create room
      */
     public CreateRoomController(CreateRoomInputBoundary createRoomUseCaseInteractor) {
@@ -26,10 +28,11 @@ public class CreateRoomController {
 
     /**
      * Executes by creating input data and calling interactor.
+     *
      * @param channelName channel name
-     * @param config instance of PubNub class
-     * @param user user
-     * @param channelLog past channel history
+     * @param config      instance of PubNub class
+     * @param user        user
+     * @param channelLog  past channel history
      */
     public void execute(String channelName, PubNub config, User user, ArrayList<Channel> channelLog) {
         CreateRoomInputData createRoomInputData = new CreateRoomInputData(channelName, config, user, channelLog);

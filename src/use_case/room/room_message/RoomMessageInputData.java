@@ -13,7 +13,7 @@ public class RoomMessageInputData {
 
     private final PubNub config;
 
-    public RoomMessageInputData (User user, Channel channel, PubNub config, String msg) {
+    public RoomMessageInputData(User user, Channel channel, PubNub config, String msg) {
         this.channel = channel;
         this.currUser = user;
         this.config = config;

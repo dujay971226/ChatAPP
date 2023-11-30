@@ -8,10 +8,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 // To be merged.
-public class ViewManager implements PropertyChangeListener{
+public class ViewManager implements PropertyChangeListener {
     private final CardLayout cardLayout;
     private final JPanel views;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     public ViewManager(JPanel views, CardLayout cardLayout, ViewManagerModel viewManagerModel) {
         this.views = views;
@@ -30,15 +30,14 @@ public class ViewManager implements PropertyChangeListener{
                 }
                 AddRoomView((RoomView) evt.getNewValue());
 
-            }
-            else {
+            } else {
                 String viewModelName = (String) evt.getNewValue();
                 cardLayout.show(views, viewModelName);
             }
         }
     }
 
-    private boolean ContainsRoomView (JPanel views) {
+    private boolean ContainsRoomView(JPanel views) {
         Component[] components = views.getComponents();
         for (Component component : components) {
             if (component instanceof RoomView) {
@@ -57,7 +56,7 @@ public class ViewManager implements PropertyChangeListener{
         }
     }
 
-    public void AddRoomView (RoomView roomView) {
+    public void AddRoomView(RoomView roomView) {
         this.views.add(roomView, roomView.viewName);
     }
 }

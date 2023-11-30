@@ -16,8 +16,11 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class SignupUseCaseFactory {
-    /** Prevent instantiation. */
-    private SignupUseCaseFactory() {}
+    /**
+     * Prevent instantiation.
+     */
+    private SignupUseCaseFactory() {
+    }
 
     public static SignupView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel,

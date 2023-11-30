@@ -4,23 +4,23 @@ import com.pubnub.api.PubNub;
 
 public class ShowSettingInputData {
     private String currentChannel;
-    private PubNub config;
-
-    public void setCurrentChannel(String currentChannel) {
-        this.currentChannel = currentChannel;
-
-    }
-
-    public PubNub getConfig() {
-        return config;
-    }
+    private final PubNub config;
 
     public ShowSettingInputData(String currentChannel, PubNub config) {
         this.currentChannel = currentChannel;
         this.config = config;
     }
 
-    public String getCurrentChannel(){
+    public PubNub getConfig() {
+        return config;
+    }
+
+    public String getCurrentChannel() {
         return this.currentChannel;
+    }
+
+    public void setCurrentChannel(String currentChannel) {
+        this.currentChannel = currentChannel;
+
     }
 }

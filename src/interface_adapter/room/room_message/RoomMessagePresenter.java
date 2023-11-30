@@ -13,8 +13,8 @@ public class RoomMessagePresenter implements RoomMessageOutputBoundary {
     private final RoomViewModel roomViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public RoomMessagePresenter (ViewManagerModel viewManagerModel,
-                                   RoomViewModel roomViewModel) {
+    public RoomMessagePresenter(ViewManagerModel viewManagerModel,
+                                RoomViewModel roomViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.roomViewModel = roomViewModel;
     }

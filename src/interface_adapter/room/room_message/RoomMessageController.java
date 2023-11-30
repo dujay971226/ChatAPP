@@ -9,6 +9,7 @@ import use_case.room.room_message.RoomMessageInputData;
 public class RoomMessageController {
 
     final RoomMessageInputBoundary roomSendMessageUseCaseInteractor;
+
     public RoomMessageController(RoomMessageInputBoundary roomSendMessageUseCaseInteractor) {
         this.roomSendMessageUseCaseInteractor = roomSendMessageUseCaseInteractor;
     }

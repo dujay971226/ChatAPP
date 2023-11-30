@@ -7,7 +7,7 @@ package use_case.journal.Doi;
  * @author Xiaofeng Li
  */
 public class JournalDoiOutputData {
-    private String result;
+    private final String result;
 
     /**
      * Constructs a JournalDoiOutputData object with the specified result.

@@ -21,7 +21,7 @@ public class UserDataAccessObject implements iUserDataAccessObject {
 
     private final Map<String, User> accounts = new HashMap<>();
 
-    private UserFactory userFactory;
+    private final UserFactory userFactory;
 
     /**
      * Constructor for UserDataAccessObject.

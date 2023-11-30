@@ -41,8 +41,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final RoomViewModel roomViewModel;
     private final JTextArea messageInputField = new JTextArea(3, 30);
-    DefaultListModel<String> listModel = new DefaultListModel<>();
-    JList<String> messageList = new JList<String>(listModel);
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
@@ -52,15 +50,16 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton journal;
     private final JButton exit;
     private final JButton send;
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    JList<String> messageList = new JList<String>(listModel);
 
 
-
-    public RoomView (RoomMessageController roomMessageController,
-                     RoomReceiveController roomReceiveController,
-                     RoomExitController roomExitController,
-                     RoomViewModel roomViewModel,
-                     RoomToSettingController roomToSettingController,
-                     RoomToJournalController roomToJournalController) throws PubNubException  {
+    public RoomView(RoomMessageController roomMessageController,
+                    RoomReceiveController roomReceiveController,
+                    RoomExitController roomExitController,
+                    RoomViewModel roomViewModel,
+                    RoomToSettingController roomToSettingController,
+                    RoomToJournalController roomToJournalController) throws PubNubException {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
@@ -175,7 +174,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = currState.getUser().getName() + ": " +messageInputField.getText();
+                            String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
                                     currState.getUser(),
@@ -238,14 +237,14 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                             messageInputField.setText("");
                         }
                     }
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        if (e.getKeyCode()==KeyEvent.VK_ENTER && !e.isShiftDown()){
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER && !e.isShiftDown()) {
                             RoomState currState = roomViewModel.getState();
                             String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
@@ -294,6 +293,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public void actionPerformed(ActionEvent e) {
 
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RoomState currState = roomViewModel.getState();
@@ -301,12 +301,12 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         if (currState.getLOG_UPDATE()) {
             ArrayList<Message> newMessages = currState.getMessageLog();
             ArrayList<String> sortedMessage = SortByDate(newMessages);
-            for (String msg: sortedMessage) {
+            for (String msg : sortedMessage) {
                 listModel.addElement(msg);
             }
             currState.setOffNotice();
             scrollToBottom();
-        //Someone sent a message online, need to load
+            //Someone sent a message online, need to load
         } else if (currState.getNEW_MESSAGE_UPDATE()) {
             listModel.addElement(currState.getMessage());
             currState.setMessage("");
@@ -324,9 +324,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         return new ArrayList<>(dateFormatMap.values());
     }
 
-    private void scrollToBottom(){
-        int lastIndex = messageList.getModel().getSize()-1;
-        if(lastIndex >= 0){
+    private void scrollToBottom() {
+        int lastIndex = messageList.getModel().getSize() - 1;
+        if (lastIndex >= 0) {
             messageList.ensureIndexIsVisible(lastIndex);
         }
     }

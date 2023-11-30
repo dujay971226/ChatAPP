@@ -19,6 +19,7 @@ public class JournalDoiPresenter implements JournalDoiOutputBoundary {
 
     /**
      * Constructs a JournalDoiPresenter with the necessary view models.
+     *
      * @param viewManagerModel The model managing different views in the application.
      * @param journalViewModel The view model for the journal view.
      */
@@ -29,6 +30,7 @@ public class JournalDoiPresenter implements JournalDoiOutputBoundary {
 
     /**
      * Prepares and updates the view to display the results of DOI processing.
+     *
      * @param journalDoiOutputData The output data from the DOI processing logic.
      */
     public void prepareSuccessView(JournalDoiOutputData journalDoiOutputData) {

@@ -13,12 +13,12 @@ import java.beans.PropertyChangeSupport;
  * @author Xiaofeng Li
  */
 public class ProfileViewModel extends ViewModel {
-    final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    private ProfileState state = new ProfileState();
     public static final String TITLE = "'s Profile";
     public static final String SUBSRIBE_BUTTON_LABEL = "Subscribe";
     public static final String CREATE_BUTTON_LABEL = "Create";
     public static final String LOGOUT_BUTTON_LABEL = "Logout";
+    final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private ProfileState state = new ProfileState();
 
     /**
      * Constructs a ProfileViewModel with the default view name set to "profile".
@@ -29,6 +29,7 @@ public class ProfileViewModel extends ViewModel {
 
     /**
      * Retrieves the current state of the profile view.
+     *
      * @return The current ProfileState.
      */
     public ProfileState getState() {
@@ -37,6 +38,7 @@ public class ProfileViewModel extends ViewModel {
 
     /**
      * Sets the state of the profile view to the specified ProfileState.
+     *
      * @param state The new state to be set for the profile view.
      */
     public void setState(ProfileState state) {
@@ -45,6 +47,7 @@ public class ProfileViewModel extends ViewModel {
 
     /**
      * Adds a property change listener to this model.
+     *
      * @param listener The PropertyChangeListener to be added.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {

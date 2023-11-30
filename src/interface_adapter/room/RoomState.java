@@ -44,7 +44,7 @@ public class RoomState {
 
     public RoomState() throws PubNubException {
         UserId userId = new UserId("Jay");
-        PNConfiguration pnConfiguration =  new PNConfiguration(userId);
+        PNConfiguration pnConfiguration = new PNConfiguration(userId);
         PubNub pubnub = new PubNub(pnConfiguration);
         this.config = pubnub;
     }
@@ -53,20 +53,40 @@ public class RoomState {
         return this.channel;
     }
 
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
     public User getUser() {
         return this.currUser;
+    }
+
+    public void setUser(User user) {
+        this.currUser = user;
     }
 
     public ArrayList<Message> getMessageLog() {
         return this.messageLog;
     }
 
+    public void setMessageLog(ArrayList<Message> msgs) {
+        this.messageLog = msgs;
+    }
+
     public String getMessage() {
         return this.message;
     }
 
+    public void setMessage(String msg) {
+        this.message = msg;
+    }
+
     public PubNub getConfig() {
         return config;
+    }
+
+    public void setConfig(PubNub config) {
+        this.config = config;
     }
 
     public boolean getLOG_UPDATE() {
@@ -75,26 +95,6 @@ public class RoomState {
 
     public boolean getNEW_MESSAGE_UPDATE() {
         return this.NEW_MESSAGE_UPDATE;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
-    public void setUser(User user) {
-        this.currUser = user;
-    }
-
-    public void setMessageLog(ArrayList<Message> msgs) {
-        this.messageLog = msgs;
-    }
-
-    public void setMessage(String msg) {
-        this.message = msg;
-    }
-
-    public void setConfig(PubNub config) {
-        this.config = config;
     }
 
     public void setNotice() {

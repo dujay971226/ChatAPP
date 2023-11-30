@@ -10,15 +10,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoundary{
+public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoundary {
     final ShowChannelHistoryOutputBoundary showChannelHistoryPresenter;
 
-    public ShowChannelHistoryInteractor(ShowChannelHistoryOutputBoundary showChannelHistoryOutputBoundary){
+    public ShowChannelHistoryInteractor(ShowChannelHistoryOutputBoundary showChannelHistoryOutputBoundary) {
         this.showChannelHistoryPresenter = showChannelHistoryOutputBoundary;
     }
+
     @Override
     public void execute(ShowChannelHistoryInputData showChannelHistoryInputData) {
         PubNub pubnub = showChannelHistoryInputData.getConfig();
@@ -30,7 +32,7 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
         String channelName = showChannelHistoryInputData.getChannelName();
 
         pubnub.fetchMessages()
-                .channels(Arrays.asList(channelName))
+                .channels(Collections.singletonList(channelName))
                 .maximumPerChannel(100)
                 .includeMessageActions(true)
                 .includeMeta(true)

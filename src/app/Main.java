@@ -23,12 +23,14 @@ import java.io.IOException;
 
 /**
  * Main class for running the application.
+ *
  * @author huangzhihao
  */
 public class Main {
 
     /**
      * Run application using SwingUtilities.invokeLater.
+     *
      * @param args not used
      */
     public static void main(String[] args) {
@@ -85,17 +87,16 @@ public class Main {
         ProfileView profileView = ProfileUseCaseFactory.create(viewManagerModel, createRoomViewModel,
                 subscribeRoomViewModel, loginViewModel, profileViewModel, channelDataAccessObject);
         CreateRoomView createRoomView = CreateRoomUseCaseFactory.create(viewManagerModel, createRoomViewModel,
-                roomViewModel,subscribeRoomViewModel, profileViewModel, journalViewModel, settingViewModel,
+                roomViewModel, subscribeRoomViewModel, profileViewModel, journalViewModel, settingViewModel,
                 channelDataAccessObject);
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
                 settingViewModel, channelDataAccessObject);
-        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);
+        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel, roomViewModel);
         ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
                 settingViewModel, channelHistoryViewModel);
         SettingView settingView = ChannelSettingUseCaseFactory.create(viewManagerModel, settingViewModel,
                 channelHistoryViewModel, roomViewModel);
-
 
 
         // Add views to views.

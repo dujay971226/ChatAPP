@@ -3,8 +3,13 @@ package use_case.setting.settingtochannelhistory;
 import com.pubnub.api.PubNub;
 
 public class SettingToChannelHistoryInputData {
-    private String channelName;
-    private PubNub config;
+    private final String channelName;
+    private final PubNub config;
+
+    public SettingToChannelHistoryInputData(String channelName, PubNub config) {
+        this.config = config;
+        this.channelName = channelName;
+    }
 
     public String getChannelName() {
         return channelName;
@@ -12,11 +17,6 @@ public class SettingToChannelHistoryInputData {
 
     public PubNub getConfig() {
         return config;
-    }
-
-    public SettingToChannelHistoryInputData(String channelName, PubNub config){
-        this.config = config;
-        this.channelName = channelName;
     }
 
 }

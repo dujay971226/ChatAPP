@@ -9,6 +9,7 @@ import java.util.Collections;
 
 /**
  * Interactor of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomInteractor implements CreateRoomInputBoundary {
@@ -18,6 +19,7 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
 
     /**
      * Initializes a createRoomInteractor instance given a data access object and presenter.
+     *
      * @param createRoomOutputBoundary presenter of create room.
      */
     public CreateRoomInteractor(CreateRoomOutputBoundary createRoomOutputBoundary,
@@ -29,6 +31,7 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
 
     /**
      * Executes based on input data. Data access object stores data and presenter prepares view.
+     *
      * @param createRoomInputData input data of create room
      */
     @Override

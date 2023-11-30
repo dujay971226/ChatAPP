@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Input data of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomInputData {
@@ -20,10 +21,11 @@ public class CreateRoomInputData {
 
     /**
      * Initializes a CreateRoomInputData instance.
+     *
      * @param channelName channel name
-     * @param config instance of PubNub
-     * @param user user
-     * @param channelLog channel history
+     * @param config      instance of PubNub
+     * @param user        user
+     * @param channelLog  channel history
      */
     public CreateRoomInputData(String channelName, PubNub config, User user, ArrayList<Channel> channelLog) {
         this.channelName = channelName;
@@ -34,6 +36,7 @@ public class CreateRoomInputData {
 
     /**
      * Gets channel name.
+     *
      * @return channel name
      */
     public String getChannelName() {
@@ -42,20 +45,29 @@ public class CreateRoomInputData {
 
     /**
      * Gets config.
+     *
      * @return config
      */
-    public PubNub getConfig() {return config; }
+    public PubNub getConfig() {
+        return config;
+    }
 
     /**
      * Gets user.
+     *
      * @return user
      */
-    public User getUser() {return user; }
+    public User getUser() {
+        return user;
+    }
 
     /**
      * Gets channel history.
+     *
      * @return channel log
      */
-    public ArrayList<Channel> getChannelLog() {return channelLog; }
+    public ArrayList<Channel> getChannelLog() {
+        return channelLog;
+    }
 
 }

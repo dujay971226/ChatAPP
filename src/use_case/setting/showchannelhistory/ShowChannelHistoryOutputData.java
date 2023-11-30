@@ -7,8 +7,14 @@ import java.util.List;
 
 public class ShowChannelHistoryOutputData {
     private final List<PNFetchMessageItem> channelMessages;
-    private PubNub config;
-    private String channelName;
+    private final PubNub config;
+    private final String channelName;
+
+    public ShowChannelHistoryOutputData(List<PNFetchMessageItem> channelMessages, PubNub config, String channelName) {
+        this.channelMessages = channelMessages;
+        this.config = config;
+        this.channelName = channelName;
+    }
 
     public PubNub getConfig() {
         return config;
@@ -16,12 +22,6 @@ public class ShowChannelHistoryOutputData {
 
     public String getChannelName() {
         return channelName;
-    }
-
-    public ShowChannelHistoryOutputData(List<PNFetchMessageItem> channelMessages, PubNub config, String channelName) {
-        this.channelMessages = channelMessages;
-        this.config = config;
-        this.channelName = channelName;
     }
 
     public List<PNFetchMessageItem> getChannelMessages() {

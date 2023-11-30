@@ -16,7 +16,8 @@ public class ProfileState {
 
     /**
      * Constructs a new ProfileState instance with specified user and configuration.
-     * @param user The user associated with this profile.
+     *
+     * @param user   The user associated with this profile.
      * @param config The configuration settings for the profile.
      */
     public ProfileState(User user, PubNub config) {
@@ -27,26 +28,12 @@ public class ProfileState {
     /**
      * Default constructor for ProfileState. Initializes with default user and no configuration.
      */
-    public ProfileState() {}
-
-    /**
-     * Sets the user for this profile state.
-     * @param user The new user to be set.
-     */
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    /**
-     * Sets the configuration for this profile state.
-     * @param config The new configuration to be set.
-     */
-    public void setConfig(PubNub config) {
-        this.config = config;
+    public ProfileState() {
     }
 
     /**
      * Retrieves the configuration of this profile.
+     *
      * @return The current PubNub configuration.
      */
     public PubNub getConfig() {
@@ -54,10 +41,29 @@ public class ProfileState {
     }
 
     /**
+     * Sets the configuration for this profile state.
+     *
+     * @param config The new configuration to be set.
+     */
+    public void setConfig(PubNub config) {
+        this.config = config;
+    }
+
+    /**
      * Retrieves the user of this profile.
+     *
      * @return The current user.
      */
     public User getUser() {
         return user;
+    }
+
+    /**
+     * Sets the user for this profile state.
+     *
+     * @param user The new user to be set.
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 }

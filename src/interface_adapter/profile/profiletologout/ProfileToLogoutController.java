@@ -14,6 +14,7 @@ public class ProfileToLogoutController {
 
     /**
      * Constructs a ProfileToLogoutController with a specified input boundary.
+     *
      * @param logoutInputBoundary The input boundary that provides the logic
      *                            for processing logout operations.
      */

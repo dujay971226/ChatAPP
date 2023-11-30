@@ -22,25 +22,26 @@ import use_case.setting.settingtochannelhistory.SettingToChannelHistoryOutputBou
 import view.SettingView;
 
 public class ChannelSettingUseCaseFactory {
-    public static SettingView create(ViewManagerModel viewManagerModel, SettingViewModel settingViewModel, ChannelHistoryViewModel channelHistoryViewModel, RoomViewModel roomViewModel){
+    public static SettingView create(ViewManagerModel viewManagerModel, SettingViewModel settingViewModel, ChannelHistoryViewModel channelHistoryViewModel, RoomViewModel roomViewModel) {
         ShowSettingController showSettingController = createSetting(viewManagerModel, settingViewModel);
         SettingToChannelHistoryController settingToChannelHistoryController = createToChannel(viewManagerModel, channelHistoryViewModel);
         ReturnToChannelController returnToChannelController = createReturn(viewManagerModel, roomViewModel);
         return new SettingView(settingViewModel, showSettingController, settingToChannelHistoryController, returnToChannelController);
     }
 
-    public static SettingToChannelHistoryController createToChannel(ViewManagerModel viewManagerModel, ChannelHistoryViewModel channelHistoryViewModel){
+    public static SettingToChannelHistoryController createToChannel(ViewManagerModel viewManagerModel, ChannelHistoryViewModel channelHistoryViewModel) {
         SettingToChannelHistoryOutputBoundary settingToChannelHistoryPresenter = new SettingToChannelHistoryPresenter(viewManagerModel, channelHistoryViewModel);
         SettingToChannelHistoryInputBoundary settingToChannelHistoryInteractor = new SettingToChannelHistoryInteractor(settingToChannelHistoryPresenter);
         return new SettingToChannelHistoryController(settingToChannelHistoryInteractor);
     }
-    public static ShowSettingController createSetting(ViewManagerModel viewManagerModel, SettingViewModel settingViewModel){
+
+    public static ShowSettingController createSetting(ViewManagerModel viewManagerModel, SettingViewModel settingViewModel) {
         ShowSettingOutputBoundary showSettingPresenter = new ShowSettingPresenter(viewManagerModel, settingViewModel);
         ShowSettingInputBoundary showSettingInteractor = new ShowSettingInteractor(showSettingPresenter);
         return new ShowSettingController(showSettingInteractor);
     }
 
-    public static ReturnToChannelController createReturn(ViewManagerModel viewManagerModel, RoomViewModel roomViewModel){
+    public static ReturnToChannelController createReturn(ViewManagerModel viewManagerModel, RoomViewModel roomViewModel) {
         ReturnToChannelOutputBoundary returnToChannelOutputBoundary = new ReturnToChannelPresenter(roomViewModel, viewManagerModel);
         ReturnToChannelInputBoundary returnToChannelInputBoundary = new ReturnToChannelInteractor(returnToChannelOutputBoundary);
         return new ReturnToChannelController(returnToChannelInputBoundary);

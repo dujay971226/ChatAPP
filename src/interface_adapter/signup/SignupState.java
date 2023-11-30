@@ -39,57 +39,21 @@ public class SignupState {
     }
 
     /**
-     * Gets the error related to the username in the signup state.
-     *
-     * @return The username error, or null if no error.
-     */
-    public String getUsernameError() {
-        return usernameError;
-    }
-
-    /**
-     * Gets the current password in the signup state.
-     *
-     * @return The password.
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Gets the error related to the password in the signup state.
-     *
-     * @return The password error, or null if no error.
-     */
-    public String getPasswordError() {
-        return passwordError;
-    }
-
-    /**
-     * Gets the current repeat password in the signup state.
-     *
-     * @return The repeat password.
-     */
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
-
-    /**
-     * Gets the error related to the repeat password in the signup state.
-     *
-     * @return The repeat password error, or null if no error.
-     */
-    public String getRepeatPasswordError() {
-        return repeatPasswordError;
-    }
-
-    /**
      * Sets the username in the signup state.
      *
      * @param username The new username.
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Gets the error related to the username in the signup state.
+     *
+     * @return The username error, or null if no error.
+     */
+    public String getUsernameError() {
+        return usernameError;
     }
 
     /**
@@ -102,12 +66,30 @@ public class SignupState {
     }
 
     /**
+     * Gets the current password in the signup state.
+     *
+     * @return The password.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
      * Sets the password in the signup state.
      *
      * @param password The new password.
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Gets the error related to the password in the signup state.
+     *
+     * @return The password error, or null if no error.
+     */
+    public String getPasswordError() {
+        return passwordError;
     }
 
     /**
@@ -120,12 +102,30 @@ public class SignupState {
     }
 
     /**
+     * Gets the current repeat password in the signup state.
+     *
+     * @return The repeat password.
+     */
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    /**
      * Sets the repeat password in the signup state.
      *
      * @param repeatPassword The new repeat password.
      */
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
+    }
+
+    /**
+     * Gets the error related to the repeat password in the signup state.
+     *
+     * @return The repeat password error, or null if no error.
+     */
+    public String getRepeatPasswordError() {
+        return repeatPasswordError;
     }
 
     /**

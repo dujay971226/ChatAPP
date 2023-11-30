@@ -5,6 +5,7 @@ import entity.User;
 
 /**
  * Output data of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomOutputData {
@@ -15,6 +16,7 @@ public class CreateRoomOutputData {
 
     /**
      * Initializes a CreateRoomOutputData instance.
+     *
      * @param channelName channel name
      */
     public CreateRoomOutputData(String channelName, PubNub config, User user) {
@@ -25,6 +27,7 @@ public class CreateRoomOutputData {
 
     /**
      * Gets channel name.
+     *
      * @return channel name
      */
     public String getChannelName() {
@@ -33,6 +36,7 @@ public class CreateRoomOutputData {
 
     /**
      * Gets config.
+     *
      * @return instance of PubNub
      */
     public PubNub getConfig() {
@@ -41,6 +45,7 @@ public class CreateRoomOutputData {
 
     /**
      * Gets user.
+     *
      * @return user
      */
     public User getUser() {

@@ -25,7 +25,8 @@ public class LoginState {
     /**
      * Default constructor for LoginState.
      */
-    public LoginState() {}
+    public LoginState() {
+    }
 
     /**
      * Gets the current username in the login state.
@@ -34,33 +35,6 @@ public class LoginState {
      */
     public String getUsername() {
         return username;
-    }
-
-    /**
-     * Gets the error related to the username in the login state.
-     *
-     * @return The username error, or null if no error.
-     */
-    public String getUsernameError() {
-        return usernameError;
-    }
-
-    /**
-     * Gets the current password in the login state.
-     *
-     * @return The password.
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Gets the error related to the password in the login state.
-     *
-     * @return The password error, or null if no error.
-     */
-    public String getPasswordError() {
-        return passwordError;
     }
 
     /**
@@ -73,6 +47,15 @@ public class LoginState {
     }
 
     /**
+     * Gets the error related to the username in the login state.
+     *
+     * @return The username error, or null if no error.
+     */
+    public String getUsernameError() {
+        return usernameError;
+    }
+
+    /**
      * Sets the username error in the login state.
      *
      * @param usernameError The new username error.
@@ -82,12 +65,30 @@ public class LoginState {
     }
 
     /**
+     * Gets the current password in the login state.
+     *
+     * @return The password.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
      * Sets the password in the login state.
      *
      * @param password The new password.
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * Gets the error related to the password in the login state.
+     *
+     * @return The password error, or null if no error.
+     */
+    public String getPasswordError() {
+        return passwordError;
     }
 
     /**

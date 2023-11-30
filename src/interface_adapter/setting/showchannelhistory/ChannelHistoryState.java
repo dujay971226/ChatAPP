@@ -14,14 +14,6 @@ public class ChannelHistoryState {
     private String channelMessageError;
     private String deleteMessageError;
 
-    public String getDeleteMessageError() {
-        return deleteMessageError;
-    }
-
-    public void setDeleteMessageError(String deleteMessageError) {
-        this.deleteMessageError = deleteMessageError;
-    }
-
     private PubNub config;
     private String channel;
     private HashMap<Long, String> deleteMessages = new HashMap<>();
@@ -35,6 +27,14 @@ public class ChannelHistoryState {
         this.config = copy.config;
         this.channel = copy.channel;
         this.deleteMessages = copy.deleteMessages;
+    }
+
+    public String getDeleteMessageError() {
+        return deleteMessageError;
+    }
+
+    public void setDeleteMessageError(String deleteMessageError) {
+        this.deleteMessageError = deleteMessageError;
     }
 
     public List<PNFetchMessageItem> getChannelMessages() {

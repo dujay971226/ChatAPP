@@ -40,8 +40,13 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         this.deleteMessageController = deleteMessageController;
         this.channelHistoryViewModel.addPropertyChangeListener(this);
 
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         JLabel title = new JLabel("Channel History");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel innerBox = new JPanel();
+        innerBox.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(0, 1));
@@ -116,9 +121,12 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         });
         buttons.add(detele);
 
+        innerBox.add(innerScrollPane);
+        innerBox.add(deteleScrollPane);
+
         this.add(title);
-        this.add(innerScrollPane);
-        this.add(deteleScrollPane);
+        this.add(innerBox);
+
         this.add(channelMessageErrorField);
         this.add(deleteMessageErrorField);
         this.add(buttons);
@@ -138,56 +146,55 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         if (state.getChannelMessageError() != null) {
             channelMessageErrorField.setText(state.getChannelMessageError());
             state.setChannelMessageError(null);
-        } else if(state.getDeleteMessages() != null){
+        } else if(state.getDeleteMessageError() != null){
             deleteMessageErrorField.setText(state.getDeleteMessageError());
             state.setDeleteMessageError(null);
-        } else {
-            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(1);
-            JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
             JScrollPane deleteScrollPanel = (JScrollPane) this.getComponent(2);
-            JPanel deletePanel = (JPanel) deleteScrollPanel.getViewport().getView();
+            JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
+            reloadDeleteMessagePanel(deleteMessagePanel);
+        } else {
+            JPanel innerBox = (JPanel) this.getComponent(2);
+            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
+            JScrollPane deleteScrollPanel = (JScrollPane) this.getComponent(1);
+            JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
 
-            reloadChannelHistoryPanel(innerPanel, deletePanel);
-        }
-    }
-
-    private void reloadChannelHistoryPanel(JPanel innerPanel, JPanel deleteMessagePanel){
-        innerPanel.removeAll();
-        ChannelHistoryState state = this.channelHistoryViewModel.getState();
-        List<PNFetchMessageItem> channelMessages = state.getChannelMessages();
-        if (channelMessages != null){
-            for (PNFetchMessageItem messageItem : channelMessages) {
-                JPanel messagePanel = new JPanel();
-                long time = messageItem.getTimetoken() / 10000000L;
-                LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
-                        TimeZone.getDefault().toZoneId());
-                String message = localDateTime + "     ";
-                message += messageItem.getMessage().getAsJsonObject().get("msg");
-                JLabel mLabel = new JLabel(message);
-                mLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                JButton addToDelete = new JButton("X");
-                addToDelete.setAlignmentX(Component.RIGHT_ALIGNMENT);
-                String finalMessage = message;
-                addToDelete.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        HashMap<Long, String> deleteMessages =  state.getDeleteMessages();
-                        deleteMessages.put(time, finalMessage);
-                        reloadDeleteMessagePanel(deleteMessagePanel);
-                    }
-                });
-                messagePanel.add(mLabel);
-                messagePanel.add(addToDelete);
-                innerPanel.add(messagePanel);
+            innerPanel.removeAll();
+            List<PNFetchMessageItem> channelMessages = state.getChannelMessages();
+            if (channelMessages != null){
+                for (PNFetchMessageItem messageItem : channelMessages) {
+                    JPanel messagePanel = new JPanel();
+                    long time = messageItem.getTimetoken() / 10000000L;
+                    LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
+                            TimeZone.getDefault().toZoneId());
+                    String message = localDateTime + "     ";
+                    message += messageItem.getMessage().getAsJsonObject().get("msg");
+                    JLabel mLabel = new JLabel(message);
+                    mLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                    JButton addToDelete = new JButton("X");
+                    addToDelete.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                    String finalMessage = message;
+                    addToDelete.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            HashMap<Long, String> deleteMessages =  state.getDeleteMessages();
+                            deleteMessages.put(time, finalMessage);
+                            reloadDeleteMessagePanel(deleteMessagePanel);
+                        }
+                    });
+                    messagePanel.add(mLabel);
+                    messagePanel.add(addToDelete);
+                    innerPanel.add(messagePanel);
+                }
+            } else{
+                innerPanel.add(new JLabel("There's no channel history till now!"));
             }
-        } else{
-            innerPanel.add(new JLabel("There's no channel history till now!"));
+
+            reloadDeleteMessagePanel(deleteMessagePanel);
+
+            innerPanel.revalidate();
+            innerPanel.repaint();
         }
-
-        reloadDeleteMessagePanel(deleteMessagePanel);
-
-        innerPanel.revalidate();
-        innerPanel.repaint();
     }
 
     private void reloadDeleteMessagePanel(JPanel deleteMessagePanel){

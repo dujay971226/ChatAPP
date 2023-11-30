@@ -19,7 +19,7 @@ public class ProfiletocreateInteractor implements ProfiletocreateInputBoundary {
     /**
      * Constructs a new ProfiletocreateInteractor with the specified profile output boundary.
      *
-     * @param profileOutputBoundary The output boundary for profile creation.
+     * @param profileOutputBoundary   The output boundary for profile creation.
      * @param channelDataAccessObject Channel data access for getting channels of a given user.
      */
     public ProfiletocreateInteractor(ProfiletocreateOutputBoundary profileOutputBoundary, iChannelDataAccessObject

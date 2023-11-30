@@ -8,7 +8,7 @@ package use_case.journal.Doi;
  */
 public class JournalDoiInputData {
 
-    private String doi;
+    private final String doi;
 
     /**
      * Constructs a JournalDoiInputData object with the provided DOI.

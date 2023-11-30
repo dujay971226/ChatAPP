@@ -1,6 +1,9 @@
 package api;
 
-import okhttp3.*;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -79,7 +82,7 @@ public class Academic {
 
     public static String searchByDOI(String DOI) {
         OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/"+DOI).newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/" + DOI).newBuilder();
         urlBuilder.addQueryParameter("fields", "title,url,abstract");
         urlBuilder.addQueryParameter("offset", "100");
         urlBuilder.addQueryParameter("limit", "1");
@@ -98,10 +101,9 @@ public class Academic {
             String title = responseBody.getString("title");
             String articleUrl = responseBody.getString("url");
             String articleAbstract = "";
-            if(!responseBody.isNull("abstract")) {
+            if (!responseBody.isNull("abstract")) {
                 articleAbstract = responseBody.getString("abstract");
-            }
-            else{
+            } else {
                 articleAbstract = "no abstract provided";
             }
             result = title + "-----" + articleUrl + "\n" + "ABSTRACT-----" + articleAbstract + "\n";

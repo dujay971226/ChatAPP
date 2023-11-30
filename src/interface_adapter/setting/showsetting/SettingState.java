@@ -14,49 +14,7 @@ public class SettingState {
     private boolean isActive = false;
     private User user;
     private Channel channel;
-
-    public void setConfig(PubNub config) {
-        this.config = config;
-        this.isActive = true;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActiveState(boolean active) {
-        isActive = active;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
-    public PubNub getConfig() {
-        return config;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Channel getChannel() {
-        return channel;
-    }
-
     private Collection<PNHereNowChannelData> channelOccupancy;
-
-    public Collection<PNHereNowChannelData> getChannelOccupancy() {
-        return channelOccupancy;
-    }
-
-    public void setChannelOccupancy(Collection<PNHereNowChannelData> channelOccupancy) {
-        this.channelOccupancy = channelOccupancy;
-    }
 
     public SettingState(SettingState copy) {
         this.loadingSubscribersError = copy.getLoadingSubscribersError();
@@ -67,7 +25,49 @@ public class SettingState {
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
-    public SettingState() {}
+    public SettingState() {
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActiveState(boolean active) {
+        isActive = active;
+    }
+
+    public PubNub getConfig() {
+        return config;
+    }
+
+    public void setConfig(PubNub config) {
+        this.config = config;
+        this.isActive = true;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    public Collection<PNHereNowChannelData> getChannelOccupancy() {
+        return channelOccupancy;
+    }
+
+    public void setChannelOccupancy(Collection<PNHereNowChannelData> channelOccupancy) {
+        this.channelOccupancy = channelOccupancy;
+    }
 
     public String getLoadingSubscribersError() {
         return loadingSubscribersError;

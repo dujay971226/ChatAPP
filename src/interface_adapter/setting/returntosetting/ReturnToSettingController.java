@@ -3,7 +3,7 @@ package interface_adapter.setting.returntosetting;
 import use_case.setting.returntosetting.ReturnToSettingInputBoundary;
 import use_case.setting.returntosetting.ReturnToSettingInputData;
 
-public class ReturnToSettingController{
+public class ReturnToSettingController {
     private final ReturnToSettingInputBoundary returnToSettingInteractor;
 
     public ReturnToSettingController(ReturnToSettingInputBoundary returnToSettingInteractor) {

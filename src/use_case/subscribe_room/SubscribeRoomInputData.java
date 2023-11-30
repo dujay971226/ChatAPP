@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Input data of subscribe room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomInputData {
@@ -19,6 +20,7 @@ public class SubscribeRoomInputData {
 
     /**
      * Initializes a SubscribeRoomInputData instance.
+     *
      * @param channelName channel name
      */
     public SubscribeRoomInputData(String channelName, PubNub config, User user,
@@ -31,6 +33,7 @@ public class SubscribeRoomInputData {
 
     /**
      * Gets channel name.
+     *
      * @return channel name
      */
     public String getChannelName() {
@@ -39,20 +42,29 @@ public class SubscribeRoomInputData {
 
     /**
      * Gets config.
+     *
      * @return config
      */
-    public PubNub getConfig() {return config; }
+    public PubNub getConfig() {
+        return config;
+    }
 
     /**
      * Gets user.
+     *
      * @return user
      */
-    public User getUser() {return user; }
+    public User getUser() {
+        return user;
+    }
 
     /**
      * Gets channel history.
+     *
      * @return channel log
      */
-    public ArrayList<Channel> getChannelLog() {return channelLog; }
+    public ArrayList<Channel> getChannelLog() {
+        return channelLog;
+    }
 
 }

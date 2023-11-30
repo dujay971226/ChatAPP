@@ -1,6 +1,6 @@
 package use_case.room.room_to_setting;
 
-public class RoomToSettingInteractor implements RoomToSettingInputBoundary{
+public class RoomToSettingInteractor implements RoomToSettingInputBoundary {
 
     final RoomToSettingOutputBoundary roomToSettingPresenter;
 

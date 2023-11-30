@@ -17,8 +17,9 @@ public class AuthorController {
 
     /**
      * Constructs a JournalIssnController with a specified input boundary.
+     *
      * @param AuthorInputBoundary The input boundary that provides the logic
-     *                                 for processing ISSN operations.
+     *                            for processing ISSN operations.
      */
     public AuthorController(AuthorInputBoundary AuthorInputBoundary) {
         this.AuthorInputBoundary = AuthorInputBoundary;
@@ -27,6 +28,7 @@ public class AuthorController {
     /**
      * Executes the operation related to ISSN management in a journal.
      * This method encapsulates the logic to process the given ISSN content.
+     *
      * @param content The ISSN content to be processed.
      * @throws IOException If there is an issue in processing the content.
      */

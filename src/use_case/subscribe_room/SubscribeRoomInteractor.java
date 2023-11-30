@@ -5,8 +5,6 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
-import data_access.iChannelDataAccessObject;
-import entity.Channel;
 import entity.Message;
 import entity.User;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +16,7 @@ import java.util.*;
 
 /**
  * Interactor of subscribe room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
@@ -26,6 +25,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 
     /**
      * Initializes a SubscribeRoomInteractor instance.
+     *
      * @param subscribeRoomOutputBoundary presenter of subscribe room
      */
     public SubscribeRoomInteractor(SubscribeRoomOutputBoundary subscribeRoomOutputBoundary) {
@@ -34,6 +34,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 
     /**
      * Executes by calling data access object.
+     *
      * @param subscribeRoomInputData input data
      */
     @Override
@@ -42,8 +43,8 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         String channelName = subscribeRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
         ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-               subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-                SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
+                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
+        SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
                 subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
         subscribeRoomPresenter.prepareSuccessView(outputData);
 
@@ -53,7 +54,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
     private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
-                .channels(Arrays.asList(channelName))
+                .channels(Collections.singletonList(channelName))
                 .maximumPerChannel(25)
                 .includeMessageActions(true)
                 .includeMeta(true)

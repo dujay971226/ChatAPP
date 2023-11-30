@@ -38,7 +38,9 @@ import java.io.IOException;
 public class RoomUseCaseFactory {
 
     //Create RoomView for main to use
-    private RoomUseCaseFactory() {}
+    private RoomUseCaseFactory() {
+    }
+
     public static RoomView create(
             ViewManagerModel viewManagerModel, RoomViewModel roomViewModel, ProfileViewModel profileViewModel, JournalViewModel journalViewModel, SettingViewModel settingViewModel) {
 

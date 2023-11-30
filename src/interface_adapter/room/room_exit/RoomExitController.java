@@ -10,6 +10,7 @@ import use_case.room.room_exit.RoomExitInputData;
 public class RoomExitController {
 
     final RoomExitInputBoundary roomExitRoomUseCaseInteractor;
+
     public RoomExitController(RoomExitInputBoundary roomExitRoomUseCaseInteractor) {
         this.roomExitRoomUseCaseInteractor = roomExitRoomUseCaseInteractor;
     }

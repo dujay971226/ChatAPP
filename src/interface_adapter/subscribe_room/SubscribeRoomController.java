@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Controller of subscribe room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomController {
@@ -18,6 +19,7 @@ public class SubscribeRoomController {
 
     /**
      * Initializes a SubscribeRoomController instance.
+     *
      * @param subscribeRoomUseCaseInteractor subscribe room use case interactor
      */
     public SubscribeRoomController(SubscribeRoomInputBoundary subscribeRoomUseCaseInteractor) {
@@ -26,6 +28,7 @@ public class SubscribeRoomController {
 
     /**
      * Creates input data and interactor executes.
+     *
      * @param channelName channel name
      */
     public void execute(String channelName, PubNub config, User user,

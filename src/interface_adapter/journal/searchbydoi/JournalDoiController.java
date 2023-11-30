@@ -17,6 +17,7 @@ public class JournalDoiController {
 
     /**
      * Constructs a JournalDoiController with a specified input boundary.
+     *
      * @param journalDoiInputBoundary The input boundary that provides the logic
      *                                for processing DOI operations.
      */
@@ -27,6 +28,7 @@ public class JournalDoiController {
     /**
      * Executes the operation related to DOI management in a journal.
      * This method encapsulates the logic to process the given DOI content.
+     *
      * @param content The DOI content to be processed.
      * @throws IOException If there is an issue in processing the content.
      */

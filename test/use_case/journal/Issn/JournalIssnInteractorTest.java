@@ -1,4 +1,4 @@
-package use_case.journal.Issn;
+package use_case.journal.author;
 
 import org.junit.Test;
 import use_case.journal.Doi.*;

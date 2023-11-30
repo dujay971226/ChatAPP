@@ -33,7 +33,7 @@ public class JournalContentInteractor implements JournalContentInputBoundary {
      */
     @Override
     public void execute(JournalContentInputData journalContentInputData) throws IOException {
-        String[] result = Journal.searchJournals(journalContentInputData.getContent());
+        String result = Journal.searchJournals(journalContentInputData.getContent());
 
         JournalContentOutputData journalContentOutputData = new JournalContentOutputData(result);
         journalContentOutputBoundary.prepareSuccessView(journalContentOutputData);

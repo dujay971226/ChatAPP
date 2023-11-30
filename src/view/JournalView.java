@@ -4,7 +4,7 @@ import interface_adapter.journal.JournalViewModel;
 import interface_adapter.journal.journaltoroom.JournalToRoomController;
 import interface_adapter.journal.searchbycontent.JournalContentController;
 import interface_adapter.journal.searchbydoi.JournalDoiController;
-import interface_adapter.journal.searchbyissn.JournalIssnController;
+import interface_adapter.journal.searchbyissn.AuthorController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,14 +24,14 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
     private final JournalViewModel journalViewModel;
     private final JButton searchcontent;
     private final JButton searchdoi;
-    private final JButton searchissn;
+    private final JButton searchauthor;
     private final JButton back;
     final JTextField contentInputField = new JTextField(15);
     final JTextField doiInputField = new JTextField(15);
-    final JTextField issnInputField = new JTextField(15);
+    final JTextField authorInputField = new JTextField(15);
     private final JournalContentController journalContentController;
     private final JournalDoiController journalDoiController;
-    private final JournalIssnController journalIssnController;
+    private final AuthorController authorController;
     private final JournalToRoomController journalToRoomController;
     private final JTextArea textArea = new JTextArea(30,100);
 
@@ -45,20 +45,20 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
      * @param journalViewModel      The view model associated with this view.
      * @param journalContentController The controller for journal content search.
      * @param journalDoiController  The controller for DOI search.
-     * @param journalIssnController The controller for ISSN search.
+     * @param authorController The controller for author search.
      * @param journalToRoomController The controller to navigate back to the main room view.
      */
-    public JournalView(JournalViewModel journalViewModel, JournalContentController journalContentController, JournalDoiController journalDoiController, JournalIssnController journalIssnController, JournalToRoomController journalToRoomController){
+    public JournalView(JournalViewModel journalViewModel, JournalContentController journalContentController, JournalDoiController journalDoiController, AuthorController authorController, JournalToRoomController journalToRoomController){
         this.journalViewModel = journalViewModel;
         this.journalContentController = journalContentController;
         this.journalDoiController = journalDoiController;
-        this.journalIssnController = journalIssnController;
+        this.authorController = authorController;
         this.journalToRoomController = journalToRoomController;
         this.journalViewModel.addPropertyChangeListener(this);
 
         LabelTextPanel contentinfo = new LabelTextPanel(new JLabel("Content"), contentInputField);
         LabelTextPanel doiinfo = new LabelTextPanel(new JLabel("Doi"), doiInputField);
-        LabelTextPanel issninfo = new LabelTextPanel(new JLabel("Issn"), issnInputField);
+        LabelTextPanel authorinfo = new LabelTextPanel(new JLabel("author"), authorInputField);
 
         JPanel contentButton = new JPanel();
         searchcontent = new JButton(JournalViewModel.SEARCH_KEY_WORD_LABEL);
@@ -68,12 +68,12 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         searchdoi = new JButton(JournalViewModel.SEARCH_DOI_LABEL);
         doiButton.add(searchdoi);
 
-        JPanel issnButton = new JPanel();
-        searchissn = new JButton(JournalViewModel.SEARCH_ISSN_LABEL);
-        issnButton.add(searchissn);
+        JPanel authorButton = new JPanel();
+        searchauthor = new JButton(JournalViewModel.SEARCH_AUTHOR_LABEL);
+        authorButton.add(searchauthor);
 
         back = new JButton(JournalViewModel.BACK_BUTTON_LABEL);
-        issnButton.add(back);
+        authorButton.add(back);
 
         textArea.setEditable(false);
         textArea.setLineWrap(true);
@@ -106,12 +106,12 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
             }
         });
 
-        searchissn.addActionListener(new ActionListener() {
+        searchauthor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(searchissn)){
+                if (e.getSource().equals(searchauthor)){
                     try {
-                        journalIssnController.execute(issnInputField.getText());
+                        authorController.execute(authorInputField.getText());
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -132,8 +132,8 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         this.add(contentButton);
         this.add(doiinfo);
         this.add(doiButton);
-        this.add(issninfo);
-        this.add(issnButton);
+        this.add(authorinfo);
+        this.add(authorButton);
         this.add(jScrollPane);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }

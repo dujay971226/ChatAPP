@@ -1,6 +1,5 @@
 package use_case.journal.Doi;
 
-import api.CORE;
 import api.Journal;
 
 import java.io.IOException;

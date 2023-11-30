@@ -17,13 +17,11 @@ public class JournalContentOutputData {
     /**
      * Constructs a new instance of the JournalContentOutputData class.
      *
-     * @param list An array of strings containing the results of the journal content operation.
+     * @param result containing the results of the journal content operation.
      */
-    public JournalContentOutputData(String[] list) {
+    public JournalContentOutputData(String result) {
         // Concatenate the array of strings into a single result string with line breaks.
-        for (String s : list) {
-            result = result + s + "\n";
-        }
+        this.result = result;
     }
 
     /**

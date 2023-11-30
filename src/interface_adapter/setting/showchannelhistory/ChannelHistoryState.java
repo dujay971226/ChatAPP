@@ -7,13 +7,23 @@ import entity.Channel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public class ChannelHistoryState {
     private List<PNFetchMessageItem> channelMessages;
     private String channelMessageError;
+    private String deleteMessageError;
+
+    public String getDeleteMessageError() {
+        return deleteMessageError;
+    }
+
+    public void setDeleteMessageError(String deleteMessageError) {
+        this.deleteMessageError = deleteMessageError;
+    }
 
     private PubNub config;
-    private Channel channel;
+    private String channel;
     private HashMap<Long, String> deleteMessages = new HashMap<>();
 
     public ChannelHistoryState() {
@@ -51,11 +61,11 @@ public class ChannelHistoryState {
         this.config = config;
     }
 
-    public Channel getChannel() {
+    public String getChannel() {
         return channel;
     }
 
-    public void setChannel(Channel channel) {
+    public void setChannel(String channel) {
         this.channel = channel;
     }
 

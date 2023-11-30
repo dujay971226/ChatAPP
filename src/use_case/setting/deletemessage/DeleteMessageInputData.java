@@ -6,10 +6,27 @@ import java.time.LocalDateTime;
 
 public class DeleteMessageInputData{
     private long startTime;
-    private long[] startTimeLists;
+
+    // Since we will process the data inside the interactor, then it would be redundant to cast the Object[] array to Long[] in the view
+    private Object[] startTimeLists;
     private long endTime;
     private String channelName;
     private PubNub config;
+
+
+
+    public DeleteMessageInputData(long startTime, long endTime, String channelName, PubNub config){
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.channelName = channelName;
+        this.config = config;
+    }
+
+    public DeleteMessageInputData(Object[] startTime, String channelName, PubNub config){
+        this.startTimeLists = startTime;
+        this.channelName = channelName;
+        this.config = config;
+    }
 
     public long getStartTime() {
         return startTime;
@@ -19,21 +36,12 @@ public class DeleteMessageInputData{
         return endTime;
     }
 
-    public DeleteMessageInputData(long startTime, long endTime, String channelName, PubNub config){
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.channelName = channelName;
-        this.config = config;
-    }
-
-    public DeleteMessageInputData(long[] startTime, String channelName, PubNub config){
-        this.startTimeLists = startTime;
-        this.channelName = channelName;
-        this.config = config;
-    }
-
     public PubNub getConfig() {
         return config;
+    }
+
+    public Object[] getStartTimeLists() {
+        return startTimeLists;
     }
 
     public String getChannelName(){

@@ -27,21 +27,29 @@ public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
         // getting all the needed data from the InputData
         PubNub pubnub = deleteMessageInputData.getConfig();
 
-        long startTime = deleteMessageInputData.getStartTime();
-        long endTime = deleteMessageInputData.getEndTime();
-
         String channelName = deleteMessageInputData.getChannelName();
 
-        pubnub.deleteMessages()
+        Object[] startTimeLists = deleteMessageInputData.getStartTimeLists();
+
+        // for each timestamp in the startTimeLists, delete their corresponding messages.
+        for(Object start : startTimeLists){
+            long startTime = (Long) start;
+            pubnub.deleteMessages()
                 .channels(Arrays.asList(channelName))
                 .start(startTime)
-                .end(endTime)
+                .end(startTime + 1)
                 .async(new PNCallback<PNDeleteMessagesResult>() {
                     @Override
                     public void onResponse(PNDeleteMessagesResult result, PNStatus status) {
                         // The deleteMessages() method does not return actionable data, be sure to check the status
                         // object on the outcome of the operation by checking the status.isError().
+                        if (status.isError()){
+                            deleteMessagePresenter.prepareFailView("Error: "+status.getErrorData()+ "happens when deleting message with timestamp:" + startTime);
+                        }
                     }
                 });
+        }
+        deleteMessagePresenter.prepareSuccessView(new DeleteMessageOutputData());
+
     }
 }

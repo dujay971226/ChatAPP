@@ -5,6 +5,7 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
+import entity.Channel;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -42,7 +43,7 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
                     public void onResponse(PNFetchMessagesResult result, PNStatus status) {
                         if (!status.isError()) {
                             Map<String, List<PNFetchMessageItem>> channels = result.getChannels();
-                            ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(channels.get(channelName));
+                            ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(channels.get(channelName), pubnub, channelName);
                             showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
                         } else {
                             showChannelHistoryPresenter.prepareFailView(status.getErrorData().toString());

@@ -6,29 +6,28 @@ import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
 import use_case.setting.deletemessage.DeleteMessageOutputBoundary;
 import use_case.setting.deletemessage.DeleteMessageOutputData;
 
+import java.util.HashMap;
+
 public class DeleteMessagePresenter implements DeleteMessageOutputBoundary {
     private final ChannelHistoryViewModel channelHistoryViewModel;
-    private final ViewManagerModel viewManagerModel;
 
-    public DeleteMessagePresenter(ChannelHistoryViewModel channelHistoryViewModel, ViewManagerModel viewManagerModel) {
+    public DeleteMessagePresenter(ChannelHistoryViewModel channelHistoryViewModel) {
         this.channelHistoryViewModel = channelHistoryViewModel;
-        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(DeleteMessageOutputData deleteMessageOutputData) {
         ChannelHistoryState channelHistoryState = channelHistoryViewModel.getState();
-        channelHistoryState.setChannelMessages(deleteMessageOutputData.getChannelMessages());
+        channelHistoryState.setDeleteMessages(new HashMap<>());
         channelHistoryViewModel.setState(channelHistoryState);
         channelHistoryViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
         ChannelHistoryState channelHistoryState = channelHistoryViewModel.getState();
-        channelHistoryState.setChannelMessageError(error);
+        channelHistoryState.setDeleteMessages(new HashMap<>());
+        channelHistoryState.setDeleteMessageError(error);
         channelHistoryViewModel.setState(channelHistoryState);
         channelHistoryViewModel.firePropertyChanged();
     }

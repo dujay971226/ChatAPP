@@ -21,6 +21,7 @@ public class ShowSettingInteractor implements ShowSettingInputBoundary {
         pubnub.hereNow()
             // tailor the next two lines to example
             .channels(Arrays.asList(currentChannel))
+            .includeState(true)
             .includeUUIDs(true)
             .async(new PNCallback<PNHereNowResult>() {
                 @Override

@@ -32,6 +32,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         this.showChannelHistoryController = showChannelHistoryController;
         this.returnToChannelController = returnToChannelController;
         this.settingViewModel.addPropertyChangeListener(this);
+        this.add(new JLabel("Current Online Users"));
 
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(0, 5));
@@ -84,7 +85,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             loadingSubcribersErrorField.setText(state.getLoadingSubscribersError());
             state.setLoadingSubscribersError(null);
         } else {
-            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(1);
             JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
 
             innerPanel.removeAll();

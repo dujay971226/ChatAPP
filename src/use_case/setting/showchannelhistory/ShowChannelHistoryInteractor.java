@@ -29,9 +29,6 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
         long endTime = zdt.toInstant().toEpochMilli();
 
         String channelName = showChannelHistoryInputData.getChannelName();
-        ArrayList<String> channels = new ArrayList<String>();
-
-        channels.add(channelName);
 
         pubnub.fetchMessages()
                 .channels(Arrays.asList(channelName))

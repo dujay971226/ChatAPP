@@ -1,6 +1,5 @@
 package interface_adapter.setting.deletemessage;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryState;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
 import use_case.setting.deletemessage.DeleteMessageOutputBoundary;

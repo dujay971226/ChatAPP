@@ -7,8 +7,6 @@ import interface_adapter.setting.returntochannel.ReturnToChannelPresenter;
 import interface_adapter.setting.settingtochannelhistory.SettingToChannelHistoryController;
 import interface_adapter.setting.settingtochannelhistory.SettingToChannelHistoryPresenter;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
-import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
-import interface_adapter.setting.showchannelhistory.ShowChannelHistoryPresenter;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.setting.showsetting.ShowSettingController;
 import interface_adapter.setting.showsetting.ShowSettingPresenter;
@@ -21,9 +19,6 @@ import use_case.setting.returntochannel.ReturnToChannelOutputBoundary;
 import use_case.setting.settingtochannelhistory.SettingToChannelHistoryInputBoundary;
 import use_case.setting.settingtochannelhistory.SettingToChannelHistoryInteractor;
 import use_case.setting.settingtochannelhistory.SettingToChannelHistoryOutputBoundary;
-import use_case.setting.showchannelhistory.ShowChannelHistoryInputBoundary;
-import use_case.setting.showchannelhistory.ShowChannelHistoryInteractor;
-import use_case.setting.showchannelhistory.ShowChannelHistoryOutputBoundary;
 import view.SettingView;
 
 public class ChannelSettingUseCaseFactory {

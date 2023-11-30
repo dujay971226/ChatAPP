@@ -4,7 +4,6 @@ import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import com.pubnub.api.models.consumer.presence.PNHereNowOccupantData;
 import interface_adapter.setting.returntochannel.ReturnToChannelController;
 import interface_adapter.setting.settingtochannelhistory.SettingToChannelHistoryController;
-import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
 import interface_adapter.setting.showsetting.SettingState;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.setting.showsetting.ShowSettingController;
@@ -16,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
+
+import static java.lang.Thread.sleep;
 
 public class SettingView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "channel setting";
@@ -70,6 +71,11 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         this.add(buttons);
         JLabel loading = new JLabel("loading user...");
         innerPanel.add(loading);
+
+        try {
+            sleep(100);
+        } catch (InterruptedException ignored) {
+        }
         innerPanel.revalidate();
         innerPanel.repaint();
     }
@@ -96,6 +102,11 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
                 for (PNHereNowOccupantData occupant : channelData.getOccupants()) {
                     innerPanel.add(new JLabel(occupant.getUuid()));
                 }
+            }
+
+            try {
+                sleep(100);
+            } catch (InterruptedException ignored) {
             }
 
             innerPanel.revalidate();

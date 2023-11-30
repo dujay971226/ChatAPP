@@ -5,8 +5,6 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
-import data_access.iChannelDataAccessObject;
-import entity.Channel;
 import entity.Message;
 import entity.User;
 import org.jetbrains.annotations.NotNull;

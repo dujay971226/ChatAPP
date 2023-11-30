@@ -1,21 +1,11 @@
 package use_case.create_room;
 
 import com.pubnub.api.PubNub;
-import com.pubnub.api.callbacks.PNCallback;
-import com.pubnub.api.models.consumer.PNStatus;
-import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
-import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
-import data_access.ChannelDataAccessObject;
 import data_access.iChannelDataAccessObject;
 import entity.Channel;
-import entity.Message;
-import entity.User;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Interactor of create room.

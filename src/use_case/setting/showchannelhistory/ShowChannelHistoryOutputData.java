@@ -2,7 +2,6 @@ package use_case.setting.showchannelhistory;
 
 import com.pubnub.api.PubNub;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
-import entity.Channel;
 
 import java.util.List;
 

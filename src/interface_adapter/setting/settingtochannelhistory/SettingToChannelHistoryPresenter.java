@@ -3,7 +3,6 @@ package interface_adapter.setting.settingtochannelhistory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryState;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
-import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.setting.settingtochannelhistory.SettingToChannelHistoryOutputBoundary;
 import use_case.setting.settingtochannelhistory.SettingToChannelHistoryOutputData;
 

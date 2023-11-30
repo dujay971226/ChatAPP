@@ -1,10 +1,7 @@
 package use_case.create_room;
 
 import com.pubnub.api.PubNub;
-import entity.Message;
 import entity.User;
-
-import java.util.ArrayList;
 
 /**
  * Output data of create room.

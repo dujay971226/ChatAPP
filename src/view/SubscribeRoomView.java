@@ -17,11 +17,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.nio.channels.SelectableChannel;
 import java.util.ArrayList;
 
 /**
  * View shown when user is asked to join a room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -33,16 +33,17 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     private final SubscribeRoomViewModel subscribeRoomViewModel;
     private final SubscribeRoomController subscribeRoomController;
     private final ProfileToCreateController profileToCreateController;
-    private String[] channelNames;
-    private DefaultListModel<String> channelListModel;
     private final JList<String> channelList;
     private final JButton subscribeButton;
     private final JButton toCreateButton;
+    private String[] channelNames;
+    private DefaultListModel<String> channelListModel;
 
     /**
      * Initializes a SubscribeRoomView instance.
+     *
      * @param controller controller of subscribe room
-     * @param viewModel view model of subscribe room
+     * @param viewModel  view model of subscribe room
      */
     public SubscribeRoomView(SubscribeRoomController controller, SubscribeRoomViewModel viewModel,
                              ProfileToCreateController profileToCreateController) {
@@ -104,10 +105,12 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
         LabelTextPanel searchPanel = new LabelTextPanel(new JLabel(subscribeRoomViewModel.TF_LABEL), search);
         searchPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
@@ -135,8 +138,9 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
 
     /**
      * Shows error message if exists.
+     *
      * @param evt A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
+     *            and the property that has changed.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -161,6 +165,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
     /**
      * When button is clicked, controller executes according to the selection made. If one selection was recorded,
      * then prompts user to make one.
+     *
      * @param e the event to be processed
      */
     @Override

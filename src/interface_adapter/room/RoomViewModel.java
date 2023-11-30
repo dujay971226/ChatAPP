@@ -15,7 +15,6 @@ public class RoomViewModel extends ViewModel {
     public static String TITLE_LABEL = "Chat Room";
     public static final String UPLOAD_BUTTON_LABEL = "Upload File";
     public static final String SEND_BUTTON_LABEL = "Send";
-
     private RoomState state = new RoomState();
 
     public RoomViewModel() throws PubNubException {

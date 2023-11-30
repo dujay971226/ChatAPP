@@ -8,15 +8,15 @@ import entity.User;
  */
 public class LoginOutputData {
     private final User user;
-    private boolean useCaseFailed;
-    private PubNub config;
+    private final boolean useCaseFailed;
+    private final PubNub config;
 
     /**
      * Constructs a new instance of LoginOutputData.
      *
-     * @param user           The authenticated user.
-     * @param config         Configuration data.
-     * @param useCaseFailed  Indicates whether the use case encountered an error.
+     * @param user          The authenticated user.
+     * @param config        Configuration data.
+     * @param useCaseFailed Indicates whether the use case encountered an error.
      */
     public LoginOutputData(User user, PubNub config, boolean useCaseFailed) {
         this.user = user;

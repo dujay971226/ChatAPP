@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+
 /**
  * The JournalView class represents the user interface for the journal-related functionality.
  * It allows users to search for journal content, DOI, and ISSN, as well as navigate back to the main room view.
@@ -21,19 +22,19 @@ import java.io.IOException;
  */
 public class JournalView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "journal";
+    final JTextField contentInputField = new JTextField(15);
+    final JTextField doiInputField = new JTextField(15);
+    final JTextField authorInputField = new JTextField(15);
     private final JournalViewModel journalViewModel;
     private final JButton searchcontent;
     private final JButton searchdoi;
     private final JButton searchauthor;
     private final JButton back;
-    final JTextField contentInputField = new JTextField(15);
-    final JTextField doiInputField = new JTextField(15);
-    final JTextField authorInputField = new JTextField(15);
     private final JournalContentController journalContentController;
     private final JournalDoiController journalDoiController;
     private final AuthorController authorController;
     private final JournalToRoomController journalToRoomController;
-    private final JTextArea textArea = new JTextArea(30,100);
+    private final JTextArea textArea = new JTextArea(30, 100);
 
 
     JScrollPane jScrollPane = new JScrollPane(textArea);
@@ -42,13 +43,13 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
     /**
      * Constructs a new JournalView instance.
      *
-     * @param journalViewModel      The view model associated with this view.
+     * @param journalViewModel         The view model associated with this view.
      * @param journalContentController The controller for journal content search.
-     * @param journalDoiController  The controller for DOI search.
-     * @param authorController The controller for author search.
-     * @param journalToRoomController The controller to navigate back to the main room view.
+     * @param journalDoiController     The controller for DOI search.
+     * @param authorController         The controller for author search.
+     * @param journalToRoomController  The controller to navigate back to the main room view.
      */
-    public JournalView(JournalViewModel journalViewModel, JournalContentController journalContentController, JournalDoiController journalDoiController, AuthorController authorController, JournalToRoomController journalToRoomController){
+    public JournalView(JournalViewModel journalViewModel, JournalContentController journalContentController, JournalDoiController journalDoiController, AuthorController authorController, JournalToRoomController journalToRoomController) {
         this.journalViewModel = journalViewModel;
         this.journalContentController = journalContentController;
         this.journalDoiController = journalDoiController;
@@ -83,7 +84,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         searchcontent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(searchcontent)){
+                if (e.getSource().equals(searchcontent)) {
                     try {
                         journalContentController.execute(contentInputField.getText());
                     } catch (IOException ex) {
@@ -96,7 +97,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         searchdoi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(searchdoi)){
+                if (e.getSource().equals(searchdoi)) {
                     try {
                         journalDoiController.execute(doiInputField.getText());
                     } catch (IOException ex) {
@@ -109,7 +110,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         searchauthor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(searchauthor)){
+                if (e.getSource().equals(searchauthor)) {
                     try {
                         authorController.execute(authorInputField.getText());
                     } catch (IOException ex) {
@@ -122,7 +123,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource().equals(back)){
+                if (e.getSource().equals(back)) {
                     journalToRoomController.execute();
                 }
             }
@@ -147,7 +148,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
      *
      * @param evt The property change event.
      */
-    public void propertyChange(PropertyChangeEvent evt){
+    public void propertyChange(PropertyChangeEvent evt) {
         textArea.setText(journalViewModel.getState().getSearchResult());
     }
 }

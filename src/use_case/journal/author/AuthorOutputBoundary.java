@@ -13,6 +13,6 @@ public interface AuthorOutputBoundary {
      *
      * @param authorOutputData The output data containing the result of the ISSN-based journal operation.
      */
-    public void prepareSuccessView(AuthorOutputData authorOutputData);
+    void prepareSuccessView(AuthorOutputData authorOutputData);
 }
 

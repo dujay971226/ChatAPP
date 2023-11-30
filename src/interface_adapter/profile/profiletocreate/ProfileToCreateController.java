@@ -17,6 +17,7 @@ public class ProfileToCreateController {
 
     /**
      * Constructs a ProfileToCreateController with a specified input boundary.
+     *
      * @param profileInputBoundary The input boundary that provides the logic
      *                             for processing profile creation operations.
      */
@@ -27,7 +28,8 @@ public class ProfileToCreateController {
     /**
      * Executes the operation related to profile creation.
      * This method encapsulates the logic to process the user and configuration data for profile creation.
-     * @param user The user data to be processed.
+     *
+     * @param user   The user data to be processed.
      * @param config The configuration settings for the user's profile.
      */
     public void execute(User user, PubNub config) {

@@ -15,6 +15,7 @@ import view.RoomView;
 
 /**
  * Presenter of subscribe room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
@@ -28,9 +29,10 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
 
     /**
      * Initializes a subscribeRoomPresenter instance.
-     * @param managerModel view manager
+     *
+     * @param managerModel           view manager
      * @param subscribeRoomViewModel subscribe room view model
-     * @param roomViewModel room view model
+     * @param roomViewModel          room view model
      */
     public SubscribeRoomPresenter(ViewManagerModel managerModel, SubscribeRoomViewModel subscribeRoomViewModel,
                                   RoomViewModel roomViewModel, ProfileViewModel profileViewModel,
@@ -45,6 +47,7 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
 
     /**
      * Transitions to room view.
+     *
      * @param outputData output data.
      */
     @Override
@@ -65,6 +68,7 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
 
     /**
      * Pop up with error message.
+     *
      * @param error error string
      */
     @Override

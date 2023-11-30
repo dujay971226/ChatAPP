@@ -5,14 +5,14 @@ import com.pubnub.api.callbacks.SubscribeCallback;
 import entity.Channel;
 import entity.User;
 
-public class RoomExitInputData{
+public class RoomExitInputData {
 
     private final User currUser;
     private final Channel channel;
     private final PubNub config;
     private final SubscribeCallback listener;
 
-    public RoomExitInputData (User user, Channel channel, PubNub config, SubscribeCallback listener) {
+    public RoomExitInputData(User user, Channel channel, PubNub config, SubscribeCallback listener) {
         this.currUser = user;
         this.channel = channel;
         this.config = config;
@@ -27,7 +27,9 @@ public class RoomExitInputData{
         return config;
     }
 
-    public Channel getChannel() { return channel; }
+    public Channel getChannel() {
+        return channel;
+    }
 
     public SubscribeCallback getListener() {
         return listener;

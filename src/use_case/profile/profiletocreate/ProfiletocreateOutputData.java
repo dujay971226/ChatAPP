@@ -28,9 +28,13 @@ public class ProfiletocreateOutputData {
 
     /**
      * Gets the channels as an arraylist.
+     *
      * @return an arraylist of channels.
      */
-    public ArrayList<Channel> getChannelLog() {return channels; }
+    public ArrayList<Channel> getChannelLog() {
+        return channels;
+    }
+
     /**
      * Get the PubNub configuration of the created profile.
      *

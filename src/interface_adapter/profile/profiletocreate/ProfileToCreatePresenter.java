@@ -21,9 +21,10 @@ public class ProfileToCreatePresenter implements ProfiletocreateOutputBoundary {
 
     /**
      * Constructs a ProfileToCreatePresenter with the necessary view models.
-     * @param viewManagerModel The model managing different views in the application.
+     *
+     * @param viewManagerModel    The model managing different views in the application.
      * @param createRoomViewModel The view model for creating rooms.
-     * @param profileViewModel The view model for the user's profile.
+     * @param profileViewModel    The view model for the user's profile.
      */
     public ProfileToCreatePresenter(ViewManagerModel viewManagerModel, CreateRoomViewModel createRoomViewModel, ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
@@ -33,6 +34,7 @@ public class ProfileToCreatePresenter implements ProfiletocreateOutputBoundary {
 
     /**
      * Prepares and updates the view to reflect the successful creation of a profile.
+     *
      * @param outputData The output data from the profile creation process.
      */
     public void prepareSuccessView(ProfiletocreateOutputData outputData) {

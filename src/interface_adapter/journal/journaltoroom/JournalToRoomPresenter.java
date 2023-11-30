@@ -9,6 +9,7 @@ import use_case.journal.back.JournalToRoomOutputBoundary;
  * Presenter for handling the transition from the journal view to the room view.
  * This class implements the JournalToRoomOutputBoundary and is responsible for preparing
  * and updating the view models involved in this transition.
+ *
  * @author Xiaofeng Li
  */
 public class JournalToRoomPresenter implements JournalToRoomOutputBoundary {
@@ -18,9 +19,10 @@ public class JournalToRoomPresenter implements JournalToRoomOutputBoundary {
 
     /**
      * Constructs a JournalToRoomPresenter with the necessary models.
+     *
      * @param viewManagerModel The model managing different views in the application.
      * @param journalViewModel The view model for the journal view.
-     * @param roomViewModel The view model for the room view.
+     * @param roomViewModel    The view model for the room view.
      */
     public JournalToRoomPresenter(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel) {
         this.viewManagerModel = viewManagerModel;

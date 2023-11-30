@@ -16,6 +16,6 @@ public interface JournalDoiInputBoundary {
      * @param journalDoiInputData The input data containing DOI information for the operation.
      * @throws IOException If an I/O error occurs during the execution of the operation.
      */
-    public void execute(JournalDoiInputData journalDoiInputData) throws IOException;
+    void execute(JournalDoiInputData journalDoiInputData) throws IOException;
 }
 

@@ -6,6 +6,7 @@ import use_case.journal.back.JournalToRoomInputBoundary;
  * Controller class for managing the transition from the journal view to the room view.
  * This class handles the execution of the action to navigate from a journal to a room,
  * delegating the actual logic to the JournalToRoomInputBoundary.
+ *
  * @author Xiaofeng Li
  */
 public class JournalToRoomController {
@@ -13,6 +14,7 @@ public class JournalToRoomController {
 
     /**
      * Constructs a JournalToRoomController with a specified input boundary.
+     *
      * @param journalToRoomInputBoundary The input boundary that provides the logic
      *                                   for transitioning from a journal to a room.
      */

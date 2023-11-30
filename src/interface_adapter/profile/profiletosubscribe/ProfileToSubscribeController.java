@@ -17,6 +17,7 @@ public class ProfileToSubscribeController {
 
     /**
      * Constructs a ProfileToSubscribeController with a specified input boundary.
+     *
      * @param profileInputBoundary The input boundary that provides the logic
      *                             for processing subscription operations.
      */
@@ -27,7 +28,8 @@ public class ProfileToSubscribeController {
     /**
      * Executes the operation related to user subscription management.
      * This method encapsulates the logic to process the user and configuration data for subscription.
-     * @param user The user data to be processed.
+     *
+     * @param user   The user data to be processed.
      * @param config The configuration settings for the user's subscription.
      */
     public void execute(User user, PubNub config) {

@@ -2,8 +2,6 @@ package use_case.journal.Doi;
 
 import java.io.IOException;
 
-import java.io.IOException;
-
 /**
  * The JournalDoiInputBoundary interface defines the contract for executing journal DOI-related operations.
  * Implementing classes should provide the logic to handle DOI-based journal searches and related actions.

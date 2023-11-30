@@ -1,4 +1,4 @@
-package use_case.journal.Issn;
+package use_case.journal.author;
 
 /**
  * The JournalIssnInputData class represents input data for journal operations based on International Standard Serial Numbers (ISSNs).
@@ -6,7 +6,7 @@ package use_case.journal.Issn;
  *
  * @author Xiaofeng Li
  */
-public class JournalIssnInputData {
+public class AuthorInputData {
     private String issn;
 
     /**
@@ -14,7 +14,7 @@ public class JournalIssnInputData {
      *
      * @param content The ISSN content.
      */
-    public JournalIssnInputData(String content) {
+    public AuthorInputData(String content) {
         this.issn = content;
     }
 

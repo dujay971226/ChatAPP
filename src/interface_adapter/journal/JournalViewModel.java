@@ -17,7 +17,7 @@ public class JournalViewModel extends ViewModel {
     private JournalState state = new JournalState();
     public static final String SEARCH_KEY_WORD_LABEL = "Searching by keyword";
     public static final String SEARCH_DOI_LABEL = "Searching by doi";
-    public static final String SEARCH_ISSN_LABEL = "Searching by issn";
+    public static final String SEARCH_AUTHOR_LABEL = "Searching author";
     public static final String BACK_BUTTON_LABEL = "Back";
 
     /**

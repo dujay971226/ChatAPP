@@ -30,6 +30,7 @@ public class SubscribeRoomState {
      */
     public String getChannelName() {return channelName; }
 
+
     /**
      * Gets all past channels.
      * @return channel log

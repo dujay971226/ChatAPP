@@ -22,9 +22,8 @@ public interface iChannelDataAccessObject {
 
     /**
      * Saves the specified user data to the specified channel in a data source.
-     * @param channel The channel to which the user data will be saved.
+     * @param channelName The channel name of the channel to be be saved.
      * @param curr The current user whose data is to be saved.
-     * @param jsonPath The path to the data source where the data is to be saved.
      */
-    void save(Channel channel, User curr, String jsonPath);
+    void save(String channelName, User curr);
 }

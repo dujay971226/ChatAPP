@@ -37,7 +37,7 @@ public class LoginController {
     /**
      * Jumps to other views in the login use case.
      */
-    public void jump(){
+    public void jump() {
         loginUseCaseInteractor.jump();
     }
 }

@@ -22,19 +22,24 @@ import view.SubscribeRoomView;
 
 /**
  * Use case factory of subscribe room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomUseCaseFactory {
 
-    private SubscribeRoomUseCaseFactory() {}; // No access
+    private SubscribeRoomUseCaseFactory() {
+    }
+
+    // No access
 
     /**
      * Creates a subscribe room view.
-     * @param viewManagerModel view manager model
+     *
+     * @param viewManagerModel       view manager model
      * @param subscribeRoomViewModel subscribe room view model
-     * @param roomViewModel room view model
-     * @param createRoomViewModel create room view model
-     * @param profileViewModel profile view model
+     * @param roomViewModel          room view model
+     * @param createRoomViewModel    create room view model
+     * @param profileViewModel       profile view model
      * @return a subscribe room view.
      */
     public static SubscribeRoomView create(ViewManagerModel viewManagerModel,

@@ -17,6 +17,7 @@ public class JournalContentController {
 
     /**
      * Constructs a JournalContentController with a specified input boundary.
+     *
      * @param journalContentInputBoundary The input boundary that provides the logic
      *                                    for processing journal content.
      */
@@ -27,6 +28,7 @@ public class JournalContentController {
     /**
      * Executes the operation related to journal content management.
      * This method encapsulates the logic to process the given content.
+     *
      * @param content The content to be processed.
      * @throws IOException If there is an issue in processing the content.
      */

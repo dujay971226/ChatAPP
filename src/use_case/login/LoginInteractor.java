@@ -7,7 +7,7 @@ import com.pubnub.api.UserId;
 import data_access.iUserDataAccessObject;
 import entity.User;
 
-public class LoginInteractor implements LoginInputBoundary{
+public class LoginInteractor implements LoginInputBoundary {
     final iUserDataAccessObject userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
 
@@ -16,6 +16,7 @@ public class LoginInteractor implements LoginInputBoundary{
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
     }
+
     @Override
     public void execute(LoginInputData loginInputData) throws PubNubException {
         String username = loginInputData.getUsername();
@@ -32,7 +33,7 @@ public class LoginInteractor implements LoginInputBoundary{
                 UserId userId = new UserId(user.getName());
 
 
-                PNConfiguration pnConfiguration =  new PNConfiguration(userId);
+                PNConfiguration pnConfiguration = new PNConfiguration(userId);
                 pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");
                 pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd304abc");
                 pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");

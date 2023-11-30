@@ -7,7 +7,7 @@ package use_case.journal.author;
  * @author Xiaofeng Li
  */
 public class AuthorInputData {
-    private String issn;
+    private final String issn;
 
     /**
      * Constructs a JournalIssnInputData object with the provided ISSN content.

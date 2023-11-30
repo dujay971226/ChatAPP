@@ -13,12 +13,12 @@ import java.beans.PropertyChangeSupport;
  * @author Xiaofeng Li
  */
 public class JournalViewModel extends ViewModel {
-    final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    private JournalState state = new JournalState();
     public static final String SEARCH_KEY_WORD_LABEL = "Searching by keyword";
     public static final String SEARCH_DOI_LABEL = "Searching by doi";
     public static final String SEARCH_AUTHOR_LABEL = "Searching author";
     public static final String BACK_BUTTON_LABEL = "Back";
+    final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private JournalState state = new JournalState();
 
     /**
      * Constructs a JournalViewModel with the default view name set to "journal".
@@ -28,15 +28,8 @@ public class JournalViewModel extends ViewModel {
     }
 
     /**
-     * Sets the state of the journal view to the specified JournalState.
-     * @param state The new state to be set for the journal view.
-     */
-    public void setState(JournalState state) {
-        this.state = state;
-    }
-
-    /**
      * Retrieves the current state of the journal view.
+     *
      * @return The current JournalState.
      */
     public JournalState getState() {
@@ -44,7 +37,17 @@ public class JournalViewModel extends ViewModel {
     }
 
     /**
+     * Sets the state of the journal view to the specified JournalState.
+     *
+     * @param state The new state to be set for the journal view.
+     */
+    public void setState(JournalState state) {
+        this.state = state;
+    }
+
+    /**
      * Adds a property change listener to this model.
+     *
      * @param listener The PropertyChangeListener to be added.
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {

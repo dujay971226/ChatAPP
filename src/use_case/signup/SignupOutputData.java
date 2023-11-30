@@ -5,7 +5,7 @@ package use_case.signup;
  */
 public class SignupOutputData {
     private final String username;
-    private boolean useCaseFailed;
+    private final boolean useCaseFailed;
 
     /**
      * Constructs SignupOutputData with the provided username and use case status.

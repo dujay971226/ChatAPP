@@ -7,9 +7,10 @@ package use_case.journal.back;
  *
  * @author Xiaofeng Li
  */
-public class JournalToRoomInteractor implements JournalToRoomInputBoundary{
+public class JournalToRoomInteractor implements JournalToRoomInputBoundary {
     final JournalToRoomOutputBoundary journalToRoomOutputBoundary;
-    public JournalToRoomInteractor(JournalToRoomOutputBoundary journalToRoomOutputBoundary){
+
+    public JournalToRoomInteractor(JournalToRoomOutputBoundary journalToRoomOutputBoundary) {
         this.journalToRoomOutputBoundary = journalToRoomOutputBoundary;
     }
 

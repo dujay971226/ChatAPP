@@ -10,6 +10,6 @@ public interface LogoutOutputBoundary {
     /**
      * Prepares the view after a successful logout.
      */
-    public void preparesuccessview();
+    void preparesuccessview();
 }
 

@@ -17,6 +17,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * View shown when user is asked to create a room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -35,8 +36,9 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
 
     /**
      * Creates a CreateRoomView instance.
+     *
      * @param controller controller of create room
-     * @param viewModel view model of create room
+     * @param viewModel  view model of create room
      */
     public CreateRoomView(CreateRoomController controller, CreateRoomViewModel viewModel,
                           ProfileToSubscribeController profileToSubscribeController) {
@@ -71,10 +73,12 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(createRoomInfo);
@@ -83,6 +87,7 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
 
     /**
      * Controller executes when button is clicked.
+     *
      * @param e the event to be processed
      */
     @Override
@@ -100,8 +105,9 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
 
     /**
      * When called, checks if channel name error is not null. Shows error message if exists.
+     *
      * @param evt A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
+     *            and the property that has changed.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

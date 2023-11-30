@@ -15,6 +15,6 @@ public interface JournalDoiOutputBoundary {
      *
      * @param journalDoiOutputData The output data containing the result of the DOI-based journal operation.
      */
-    public void prepareSuccessView(JournalDoiOutputData journalDoiOutputData);
+    void prepareSuccessView(JournalDoiOutputData journalDoiOutputData);
 }
 

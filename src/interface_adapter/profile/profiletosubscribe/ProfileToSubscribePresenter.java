@@ -21,9 +21,10 @@ public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoun
 
     /**
      * Constructs a ProfileToSubscribePresenter with the necessary view models.
-     * @param viewManagerModel The model managing different views in the application.
+     *
+     * @param viewManagerModel       The model managing different views in the application.
      * @param subscribeRoomViewModel The view model for subscribing to rooms.
-     * @param profileViewModel The view model for the user's profile.
+     * @param profileViewModel       The view model for the user's profile.
      */
     public ProfileToSubscribePresenter(ViewManagerModel viewManagerModel, SubscribeRoomViewModel subscribeRoomViewModel, ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
@@ -33,6 +34,7 @@ public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoun
 
     /**
      * Prepares and updates the view to reflect the successful subscription process.
+     *
      * @param outputData The output data from the subscription process.
      */
     public void prepareSuccessView(ProfiletosubscribeOutputData outputData) {

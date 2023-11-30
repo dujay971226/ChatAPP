@@ -14,20 +14,22 @@ import view.RoomView;
 
 /**
  * Presenter of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomPresenter implements CreateRoomOutputBoundary {
     private final CreateRoomViewModel createRoomViewModel;
-    private ViewManagerModel viewManagerModel;
-    private RoomViewModel roomViewModel;
-    private ProfileViewModel profileViewModel;
-    private JournalViewModel journalViewModel;
-    private SettingViewModel settingViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final RoomViewModel roomViewModel;
+    private final ProfileViewModel profileViewModel;
+    private final JournalViewModel journalViewModel;
+    private final SettingViewModel settingViewModel;
 
     /**
      * Initializes a CreateRoomPresenter instance.
+     *
      * @param createRoomViewModel create room view model
-     * @param roomViewModel room view model
+     * @param roomViewModel       room view model
      */
     public CreateRoomPresenter(ViewManagerModel managerModel, CreateRoomViewModel createRoomViewModel, RoomViewModel roomViewModel, ProfileViewModel profileViewModel, JournalViewModel journalViewModel, SettingViewModel settingViewModel) {
         this.viewManagerModel = managerModel;
@@ -40,6 +42,7 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
 
     /**
      * Prepares success view. Changes view to room.
+     *
      * @param outputData output data
      */
     @Override
@@ -49,11 +52,9 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
         state.setConfig(outputData.getConfig());
         state.setUser(outputData.getUser());
         state.setNotice();
+        state.setNEW_ROOM_UPDATE();
         roomViewModel.setState(state);
         roomViewModel.firePropertyChanged();
-        RoomView newRoomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
-                journalViewModel, settingViewModel);
-        viewManagerModel.firePropertyChanged(newRoomView);
 
         viewManagerModel.setActiveView(roomViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
@@ -61,6 +62,7 @@ public class CreateRoomPresenter implements CreateRoomOutputBoundary {
 
     /**
      * Prepares Fail view. Show error.
+     *
      * @param error error message
      */
     @Override

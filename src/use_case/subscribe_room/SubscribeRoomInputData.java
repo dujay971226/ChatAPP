@@ -21,7 +21,8 @@ public class SubscribeRoomInputData {
      * Initializes a SubscribeRoomInputData instance.
      * @param channelName channel name
      */
-    public SubscribeRoomInputData(String channelName, PubNub config, User user, ArrayList<Channel> channelLog) {
+    public SubscribeRoomInputData(String channelName, PubNub config, User user,
+                                  ArrayList<Channel> channelLog) {
         this.channelName = channelName;
         this.config = config;
         this.user = user;

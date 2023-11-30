@@ -20,6 +20,7 @@ import java.util.Map;
  */
 public class ChannelDataAccessObject implements iChannelDataAccessObject {
     private final JSONObject file;
+    private final String jsonPath;
     private final Map<Channel, ArrayList<User>> accounts = new HashMap<>();
 
     /**
@@ -28,6 +29,7 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
      * @throws IOException If there is an issue reading the file.
      */
     public ChannelDataAccessObject(String jsonPath) throws IOException {
+        this.jsonPath = jsonPath;
         String data = new String(Files.readAllBytes(Paths.get(jsonPath)));
         file = new JSONObject(data);
 
@@ -37,7 +39,6 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
                 ArrayList<User> arrayList = new ArrayList<>();
                 accounts.put(channel, arrayList);
                 JSONArray users = file.getJSONArray(channelName);
-                System.out.println(users);
                 for (int i = 0; i < users.length(); i++){
                     JSONObject user = users.getJSONObject(i);
                     String username = user.keys().next();
@@ -46,7 +47,7 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
                 }
             }
         }
-        System.out.println(accounts);
+
     }
 
     /**
@@ -70,11 +71,10 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
 
     /**
      * Saves the specified user data to the specified channel in the JSON file.
-     * @param channel The channel to which the user data will be saved.
+     * @param channelName The channel name of the channel to be saved.
      * @param curr The current user whose data is to be saved.
-     * @param jsonPath The path to the JSON file where the data is to be saved.
      */
-    public void save(Channel channel, User curr, String jsonPath) {
+    public void save(String channelName, User curr) {
         JSONObject jsonObject;
 
         try {
@@ -84,11 +84,11 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
             jsonObject = new JSONObject();
         }
 
-        if (!jsonObject.has(channel.getName())) {
-            jsonObject.put(channel.getName(), new JSONArray());
+        if (!jsonObject.has(channelName)) {
+            jsonObject.put(channelName, new JSONArray());
         }
 
-        JSONArray users = jsonObject.getJSONArray(channel.getName());
+        JSONArray users = jsonObject.getJSONArray(channelName);
         boolean exist = false;
         for (int j = 0; j < users.length(); j++){
             JSONObject user = users.getJSONObject(j);

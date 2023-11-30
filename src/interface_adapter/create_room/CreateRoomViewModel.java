@@ -14,7 +14,7 @@ public class CreateRoomViewModel extends ViewModel {
     /**
      * Label of text field.
      */
-    public final String CREATE_ROOM_LABEL = "Enter room name below to create a room:";
+    public final String CREATE_ROOM_LABEL = "Enter room name here to create a room:";
 
     /**
      * Label of button.

@@ -28,7 +28,9 @@ public class CreateRoomState {
      * Sets past channels.
      * @param channelLog channel log
      */
-    public void setChannelLog(ArrayList<Channel> channelLog) {this.channelLog = channelLog; }
+    public void setChannelLog(ArrayList<Channel> channelLog) {
+        this.channelLog = channelLog;
+    }
 
     /**
      * Sets channel name.

@@ -14,6 +14,7 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import interface_adapter.signup.SignupViewModel;
+
 import interface_adapter.subscribe_room.SubscribeRoomViewModel;
 import view.*;
 
@@ -23,14 +24,12 @@ import java.io.IOException;
 
 /**
  * Main class for running the application.
- *
  * @author huangzhihao
  */
 public class Main {
 
     /**
      * Run application using SwingUtilities.invokeLater.
-     *
      * @param args not used
      */
     public static void main(String[] args) {
@@ -87,16 +86,19 @@ public class Main {
         ProfileView profileView = ProfileUseCaseFactory.create(viewManagerModel, createRoomViewModel,
                 subscribeRoomViewModel, loginViewModel, profileViewModel, channelDataAccessObject);
         CreateRoomView createRoomView = CreateRoomUseCaseFactory.create(viewManagerModel, createRoomViewModel,
-                roomViewModel, subscribeRoomViewModel, profileViewModel, journalViewModel, settingViewModel,
+                roomViewModel,subscribeRoomViewModel, profileViewModel, journalViewModel, settingViewModel,
                 channelDataAccessObject);
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
                 settingViewModel, channelDataAccessObject);
-        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel, roomViewModel);
+        RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
+                journalViewModel, settingViewModel);
+        JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);
         ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
                 settingViewModel, channelHistoryViewModel);
         SettingView settingView = ChannelSettingUseCaseFactory.create(viewManagerModel, settingViewModel,
                 channelHistoryViewModel, roomViewModel);
+
 
 
         // Add views to views.
@@ -105,6 +107,7 @@ public class Main {
         views.add(profileView, profileView.viewName);
         views.add(createRoomView, createRoomView.viewName);
         views.add(subscribeRoomView, subscribeRoomView.viewName);
+        views.add(roomView, roomView.viewName);
         views.add(journalView, journalView.viewName);
         views.add(channelHistoryView, channelHistoryView.viewName);
         views.add(settingView, settingView.viewName);

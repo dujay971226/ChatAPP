@@ -54,30 +54,27 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
                 .channels(Arrays.asList(channelName))
-                .maximumPerChannel(25)
+                .maximumPerChannel(10)
                 .includeMessageActions(true)
                 .includeMeta(true)
                 .includeMessageType(true)
                 .includeUUID(true)
-                .async(new PNCallback<PNFetchMessagesResult>() {
-                    @Override
-                    public void onResponse(@Nullable PNFetchMessagesResult pnFetchMessagesResult, @NotNull PNStatus pnStatus) {
-                        if (!pnStatus.isError()) {
-                            Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
-                            if (channels.get(channelName) != null) {
-                                for (PNFetchMessageItem messageItem : channels.get(channelName)) {
-                                    long time = messageItem.getTimetoken() / 10000000L;
-                                    LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
-                                            TimeZone.getDefault().toZoneId());
-                                    String mesString = messageItem.getMessage().getAsJsonObject().
-                                            getAsJsonPrimitive("msg").toString();
-                                    mesString = mesString.substring(1, mesString.length() - 1); // remove quotation marks
-                                    Message mes = new Message(user, mesString,
-                                            localDateTime);
-                                    messageLog.add(mes);
-                                }
-                            } // return empty arraylist if channels is null
-                        }
+                .async((pnFetchMessagesResult, pnStatus) -> {
+                    if (!pnStatus.isError()) {
+                        Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
+                        if (channels.get(channelName) != null) {
+                            for (PNFetchMessageItem messageItem : channels.get(channelName)) {
+                                long time = messageItem.getTimetoken() / 10000000L;
+                                LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
+                                        TimeZone.getDefault().toZoneId());
+                                String mesString = messageItem.getMessage().getAsJsonObject().
+                                        getAsJsonPrimitive("msg").toString();
+                                mesString = mesString.substring(1, mesString.length() - 1); // remove quotation marks
+                                Message mes = new Message(user, mesString,
+                                        localDateTime);
+                                messageLog.add(mes);
+                            }
+                        } // return empty arraylist if channels is null
                     }
                 });
         return messageLog;

@@ -4,6 +4,7 @@ import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
+import com.pubnub.api.callbacks.SubscribeCallback;
 import entity.Channel;
 import entity.Message;
 import entity.User;
@@ -26,11 +27,15 @@ public class RoomState {
 
     private PubNub config = null;
 
+    private SubscribeCallback listener;
+
     //To warn a message history was loaded
     private boolean LOG_UPDATE = false;
 
     //To warn a new message was received
     private boolean NEW_MESSAGE_UPDATE = false;
+
+    private boolean NEW_ROOM_UPDATE = false;
 
     public RoomState(RoomState copy) {
         this.channel = copy.getChannel();
@@ -40,6 +45,7 @@ public class RoomState {
         this.config = copy.getConfig();
         this.LOG_UPDATE = copy.getLOG_UPDATE();
         this.NEW_MESSAGE_UPDATE = copy.getNEW_MESSAGE_UPDATE();
+        this.NEW_ROOM_UPDATE = copy.getNEW_MESSAGE_UPDATE();
     }
 
     public RoomState() throws PubNubException {
@@ -111,5 +117,25 @@ public class RoomState {
 
     public void setOffReceiveMessageNotice() {
         this.NEW_MESSAGE_UPDATE = false;
+    }
+
+    public boolean getNEW_ROOM_UPDATE() {
+        return NEW_ROOM_UPDATE;
+    }
+
+    public void setNEW_ROOM_UPDATE() {
+        this.NEW_ROOM_UPDATE = true;
+    }
+
+    public void setOffNEW_ROOM_UPDATE() {
+        this.NEW_ROOM_UPDATE = false;
+    }
+
+    public SubscribeCallback getListener() {
+        return this.listener;
+    }
+
+    public void setListener(SubscribeCallback listener) {
+        this.listener = listener;
     }
 }

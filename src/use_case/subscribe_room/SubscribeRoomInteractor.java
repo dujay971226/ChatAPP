@@ -40,11 +40,15 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
     public void execute(SubscribeRoomInputData subscribeRoomInputData) {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
-        pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
         ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-               subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-                SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
+                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
+        SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
                 subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
+        pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
+
+        for (Message mes : messageLog) {
+            System.out.println(mes.getContent());
+        }
         subscribeRoomPresenter.prepareSuccessView(outputData);
 
     }
@@ -53,7 +57,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
     private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
-                .channels(Arrays.asList(channelName))
+                .channels(Collections.singletonList(channelName))
                 .maximumPerChannel(10)
                 .includeMessageActions(true)
                 .includeMeta(true)
@@ -74,9 +78,14 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                                         localDateTime);
                                 messageLog.add(mes);
                             }
-                        } // return empty arraylist if channels is null
+                        }  // return empty arraylist if channels is null
                     }
                 });
+        try {
+            Thread.sleep(1000);
+        } catch (IllegalArgumentException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return messageLog;
     }
 

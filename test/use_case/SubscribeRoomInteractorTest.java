@@ -1,3 +1,5 @@
+package use_case;
+
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
@@ -8,6 +10,7 @@ import entity.User;
 import interface_adapter.subscribe_room.SubscribeRoomPresenter;
 import use_case.subscribe_room.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,9 +37,10 @@ class SubscribeRoomInteractorTest {
                     assertEquals(channelName, outputData.getChannelName());
                     assertEquals(user, outputData.getUser());
                     assertEquals(pubNub, outputData.getConfig());
-                    ArrayList<Message> messages = new ArrayList<>();
-                    messages.add(new Message("testing message"));
-                    assertEquals(messages, outputData.getMessageLog());
+                    Message firstMes = outputData.getMessageLog().get(0);
+                    assertNotNull(firstMes.getTime());
+                    assertEquals(user.getName() + ": testing message", firstMes.getContent());
+                    assertEquals(user, firstMes.getUser());
                 }
 
                 @Override

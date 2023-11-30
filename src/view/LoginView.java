@@ -49,13 +49,15 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         signUp = new JButton(loginViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
-        logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
+        logIn.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(logIn)) {
                             LoginState currentState = loginViewModel.getState();
 
                             try {
+                                usernameInputField.setText("");
+                                passwordInputField.setText("");
                                 loginController.execute(
                                         currentState.getUsername(),
                                         currentState.getPassword()
@@ -71,6 +73,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                usernameInputField.setText("");
+                passwordInputField.setText("");
                 loginController.jump();
             }
         });
@@ -130,6 +134,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        } else if (state.getPasswordError() != null) {
+            JOptionPane.showMessageDialog(this, state.getPasswordError());
+        }
     }
 
     private void setFields(LoginState state) {

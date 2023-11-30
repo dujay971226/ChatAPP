@@ -1,5 +1,6 @@
 package app;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.journal.journaltoroom.JournalToRoomController;
 import interface_adapter.journal.journaltoroom.JournalToRoomPresenter;
@@ -7,10 +8,8 @@ import interface_adapter.journal.searchbycontent.JournalContentController;
 import interface_adapter.journal.searchbycontent.JournalContentPresenter;
 import interface_adapter.journal.searchbydoi.JournalDoiController;
 import interface_adapter.journal.searchbydoi.JournalDoiPresenter;
-import interface_adapter.journal.searchbyissn.JournalIssnController;
-import interface_adapter.journal.searchbyissn.JournalIssnPresenter;
-
-import interface_adapter.ViewManagerModel;
+import interface_adapter.journal.searchbyissn.AuthorController;
+import interface_adapter.journal.searchbyissn.AuthorPresenter;
 import interface_adapter.room.RoomViewModel;
 import use_case.journal.Content.JournalContentInputBoundary;
 import use_case.journal.Content.JournalContentInteractor;
@@ -18,9 +17,9 @@ import use_case.journal.Content.JournalContentOutputBoundary;
 import use_case.journal.Doi.JournalDoiInputBoundary;
 import use_case.journal.Doi.JournalDoiInteractor;
 import use_case.journal.Doi.JournalDoiOutputBoundary;
-import use_case.journal.Issn.JournalIssnInputBoundary;
-import use_case.journal.Issn.JournalIssnInteractor;
-import use_case.journal.Issn.JournalIssnOutputBoundary;
+import use_case.journal.author.AuthorInputBoundary;
+import use_case.journal.author.AuthorInteractor;
+import use_case.journal.author.AuthorOutputBoundary;
 import use_case.journal.back.JournalToRoomInputBoundary;
 import use_case.journal.back.JournalToRoomInteractor;
 import use_case.journal.back.JournalToRoomOutputBoundary;
@@ -45,9 +44,9 @@ public class JournalUsecaseFactory {
     public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel){
         JournalContentController journalContentController = createContent(viewManagerModel, journalViewModel);
         JournalDoiController journalDoiController = createDio(viewManagerModel, journalViewModel);
-        JournalIssnController journalIssnController = createIssn(viewManagerModel, journalViewModel);
+        AuthorController authorController = createIssn(viewManagerModel, journalViewModel);
         JournalToRoomController journalToRoomController = creatBack(viewManagerModel, journalViewModel, roomViewModel);
-        return new JournalView(journalViewModel, journalContentController, journalDoiController, journalIssnController, journalToRoomController);
+        return new JournalView(journalViewModel, journalContentController, journalDoiController, authorController, journalToRoomController);
     }
 
     /**
@@ -80,10 +79,10 @@ public class JournalUsecaseFactory {
      * @param journalViewModel The journal view model.
      * @return A JournalIssnController for ISSN-related operations.
      */
-    public static JournalIssnController createIssn(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
-        JournalIssnOutputBoundary journalIssnOutputBoundary = new JournalIssnPresenter(viewManagerModel, journalViewModel);
-        JournalIssnInputBoundary journalIssnInputBoundary = new JournalIssnInteractor(journalIssnOutputBoundary);
-        return new JournalIssnController(journalIssnInputBoundary);
+    public static AuthorController createIssn(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
+        AuthorOutputBoundary authorOutputBoundary = new AuthorPresenter(viewManagerModel, journalViewModel);
+        AuthorInputBoundary authorInputBoundary = new AuthorInteractor(authorOutputBoundary);
+        return new AuthorController(authorInputBoundary);
     }
 
     /**

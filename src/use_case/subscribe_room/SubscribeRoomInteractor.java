@@ -5,6 +5,7 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
+import data_access.iChannelDataAccessObject;
 import entity.Channel;
 import entity.Message;
 import entity.User;
@@ -40,31 +41,16 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
-        if (!exists(subscribeRoomInputData.getChannelName(), subscribeRoomInputData.getChannelLog())) {
-            //ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-                   // subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-            ArrayList<Message> messageLog = new ArrayList<>();
-                    SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
-                    subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
-            subscribeRoomPresenter.prepareSuccessView(outputData);
-        } else {
-            subscribeRoomPresenter.prepareFailView("Channel name does not exist, try again.");
-        }
-    }
+        ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
+               subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
+                SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
+                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
+        subscribeRoomPresenter.prepareSuccessView(outputData);
 
-    // Checks if channel exists in an arraylist of channel.
-    private boolean exists(String channel, ArrayList<Channel> channels) {
-        for (Channel c : channels) {
-            if (channel.equals(c.getName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     // Returns message history using pubnub.
     private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
-
         ArrayList<Message> messageLog = new ArrayList<>();
         pubNub.fetchMessages()
                 .channels(Arrays.asList(channelName))
@@ -78,14 +64,19 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                     public void onResponse(@Nullable PNFetchMessagesResult pnFetchMessagesResult, @NotNull PNStatus pnStatus) {
                         if (!pnStatus.isError()) {
                             Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
-                            for (PNFetchMessageItem messageItem : channels.get(channelName)) {
-                                long time = messageItem.getTimetoken() / 10000000L;
-                                LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
-                                        TimeZone.getDefault().toZoneId());
-                                Message mes = new Message(user, messageItem.getMessage().getAsString(),
-                                        localDateTime);
-                                messageLog.add(mes);
-                            }
+                            if (channels.get(channelName) != null) {
+                                for (PNFetchMessageItem messageItem : channels.get(channelName)) {
+                                    long time = messageItem.getTimetoken() / 10000000L;
+                                    LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
+                                            TimeZone.getDefault().toZoneId());
+                                    String mesString = messageItem.getMessage().getAsJsonObject().
+                                            getAsJsonPrimitive("msg").toString();
+                                    mesString = mesString.substring(1, mesString.length() - 1); // remove quotation marks
+                                    Message mes = new Message(user, mesString,
+                                            localDateTime);
+                                    messageLog.add(mes);
+                                }
+                            } // return empty arraylist if channels is null
                         }
                     }
                 });

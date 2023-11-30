@@ -1,5 +1,6 @@
 package app;
 
+import data_access.iChannelDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomViewModel;
 import interface_adapter.journal.JournalViewModel;
@@ -40,14 +41,14 @@ public class SubscribeRoomUseCaseFactory {
                                            SubscribeRoomViewModel subscribeRoomViewModel,
                                            RoomViewModel roomViewModel, CreateRoomViewModel createRoomViewModel,
                                            ProfileViewModel profileViewModel, JournalViewModel journalViewModel,
-                                           SettingViewModel settingViewModel) {
+                                           SettingViewModel settingViewModel,
+                                           iChannelDataAccessObject channelDataAccessObject) {
         SubscribeRoomController subscribeRoomController = SubscribeRoomUseCaseFactory.createSubscribeRoomController(
                 viewManagerModel, subscribeRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel);
         ProfileToCreateController profileToCreateController = SubscribeRoomUseCaseFactory.createProfileToCreateController(
-                viewManagerModel, createRoomViewModel, profileViewModel);
-        SubscribeRoomView subscribeRoomView = new SubscribeRoomView(subscribeRoomController, subscribeRoomViewModel,
+                viewManagerModel, createRoomViewModel, profileViewModel, channelDataAccessObject);
+        return new SubscribeRoomView(subscribeRoomController, subscribeRoomViewModel,
                 profileToCreateController);
-        return subscribeRoomView;
     }
 
     private static SubscribeRoomController createSubscribeRoomController(ViewManagerModel viewManagerModel,
@@ -59,18 +60,17 @@ public class SubscribeRoomUseCaseFactory {
         SubscribeRoomOutputBoundary subscribeRoomOutputBoundary = new SubscribeRoomPresenter(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel);
         SubscribeRoomInputBoundary subscribeRoomInputBoundary = new SubscribeRoomInteractor(subscribeRoomOutputBoundary);
-        SubscribeRoomController subscribeRoomController = new SubscribeRoomController(subscribeRoomInputBoundary);
-        return subscribeRoomController;
+        return new SubscribeRoomController(subscribeRoomInputBoundary);
     }
 
     private static ProfileToCreateController createProfileToCreateController(ViewManagerModel viewManagerModel,
                                                                              CreateRoomViewModel createRoomViewModel,
-                                                                             ProfileViewModel profileViewModel) {
+                                                                             ProfileViewModel profileViewModel,
+                                                                             iChannelDataAccessObject channelDataAccessObject) {
         ProfiletocreateOutputBoundary profiletocreateOutputBoundary = new ProfileToCreatePresenter(viewManagerModel,
                 createRoomViewModel, profileViewModel);
         ProfiletocreateInputBoundary profiletocreateInputBoundary = new ProfiletocreateInteractor(
-                profiletocreateOutputBoundary);
-        ProfileToCreateController profileToCreateController = new ProfileToCreateController(profiletocreateInputBoundary);
-        return profileToCreateController;
+                profiletocreateOutputBoundary, channelDataAccessObject);
+        return new ProfileToCreateController(profiletocreateInputBoundary);
     }
 }

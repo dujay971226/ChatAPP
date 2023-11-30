@@ -1,19 +1,14 @@
 package app;
 
-import com.pubnub.api.PNConfiguration;
-import com.pubnub.api.PubNub;
+
 import com.pubnub.api.PubNubException;
-import com.pubnub.api.UserId;
 import data_access.ChannelDataAccessObject;
 import data_access.UserDataAccessObject;
-import entity.Channel;
-import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_room.CreateRoomViewModel;
 import interface_adapter.journal.JournalViewModel;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.room.RoomViewModel;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
@@ -83,17 +78,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        //test add channel
-
-        //User tuser = new User("test","testp");
-        //Channel tchannel = new Channel("testchannel",tuser);
-        //channelDataAccessObject.save(tchannel,tuser,"./data/channels.json");
-
-        //
-
-
-
-
         // Initialize all views.
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, profileViewModel,
                 signupViewModel, userDataAccessObject);
@@ -106,9 +90,7 @@ public class Main {
                 channelDataAccessObject);
         SubscribeRoomView subscribeRoomView = SubscribeRoomUseCaseFactory.create(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, createRoomViewModel, profileViewModel, journalViewModel,
-                settingViewModel);
-        RoomView roomView = RoomUseCaseFactory.create(viewManagerModel, roomViewModel, profileViewModel,
-                journalViewModel, settingViewModel);
+                settingViewModel, channelDataAccessObject);
         JournalView journalView = JournalUsecaseFactory.create(viewManagerModel, journalViewModel,roomViewModel);
         ChannelHistoryView channelHistoryView = ChannelHistoryUseCaseFactory.create(viewManagerModel,
                 settingViewModel, channelHistoryViewModel);
@@ -123,7 +105,6 @@ public class Main {
         views.add(profileView, profileView.viewName);
         views.add(createRoomView, createRoomView.viewName);
         views.add(subscribeRoomView, subscribeRoomView.viewName);
-        views.add(roomView,roomView.viewName);
         views.add(journalView, journalView.viewName);
         views.add(channelHistoryView, channelHistoryView.viewName);
         views.add(settingView, settingView.viewName);

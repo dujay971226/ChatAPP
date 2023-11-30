@@ -40,22 +40,12 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
     public void execute(SubscribeRoomInputData subscribeRoomInputData) {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
-        ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-        SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
-                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
-        pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
-
-        for (Message mes : messageLog) {
-            System.out.println(mes.getContent());
-        }
-        subscribeRoomPresenter.prepareSuccessView(outputData);
-
+        User user = subscribeRoomInputData.getUser();
+        sendOutputData(channelName, pubNub, user);
     }
 
     // Returns message history using pubnub.
-    private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
-        ArrayList<Message> messageLog = new ArrayList<>();
+    private void sendOutputData(String channelName, PubNub pubNub, User user) {
         pubNub.fetchMessages()
                 .channels(Collections.singletonList(channelName))
                 .maximumPerChannel(10)
@@ -65,8 +55,9 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                 .includeUUID(true)
                 .async((pnFetchMessagesResult, pnStatus) -> {
                     if (!pnStatus.isError()) {
+                        ArrayList<Message> messageLog = new ArrayList<>();
                         Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
-                        if (channels.get(channelName) != null) {
+                        if (channels.get(channelName) != null) { // if channel exists, get message log
                             for (PNFetchMessageItem messageItem : channels.get(channelName)) {
                                 long time = messageItem.getTimetoken() / 10000000L;
                                 LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
@@ -78,15 +69,13 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                                         localDateTime);
                                 messageLog.add(mes);
                             }
-                        }  // return empty arraylist if channels is null
+                        }
+                        pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
+                        SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(channelName,
+                                pubNub, user, messageLog);
+                        subscribeRoomPresenter.prepareSuccessView(outputData);
                     }
                 });
-        try {
-            Thread.sleep(1000);
-        } catch (IllegalArgumentException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return messageLog;
     }
 
 }

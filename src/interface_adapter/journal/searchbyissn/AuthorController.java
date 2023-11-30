@@ -1,7 +1,7 @@
 package interface_adapter.journal.searchbyissn;
 
-import use_case.journal.Issn.JournalIssnInputBoundary;
-import use_case.journal.Issn.JournalIssnInputData;
+import use_case.journal.author.AuthorInputBoundary;
+import use_case.journal.author.AuthorInputData;
 
 import java.io.IOException;
 
@@ -12,16 +12,16 @@ import java.io.IOException;
  *
  * @author Xiaofeng Li
  */
-public class JournalIssnController {
-    final JournalIssnInputBoundary JournalIssnInputBoundary;
+public class AuthorController {
+    final AuthorInputBoundary AuthorInputBoundary;
 
     /**
      * Constructs a JournalIssnController with a specified input boundary.
-     * @param JournalIssnInputBoundary The input boundary that provides the logic
+     * @param AuthorInputBoundary The input boundary that provides the logic
      *                                 for processing ISSN operations.
      */
-    public JournalIssnController(JournalIssnInputBoundary JournalIssnInputBoundary) {
-        this.JournalIssnInputBoundary = JournalIssnInputBoundary;
+    public AuthorController(AuthorInputBoundary AuthorInputBoundary) {
+        this.AuthorInputBoundary = AuthorInputBoundary;
     }
 
     /**
@@ -31,8 +31,8 @@ public class JournalIssnController {
      * @throws IOException If there is an issue in processing the content.
      */
     public void execute(String content) throws IOException {
-        JournalIssnInputData journalIssnInputData = new JournalIssnInputData(content);
-        JournalIssnInputBoundary.execute(journalIssnInputData);
+        AuthorInputData authorInputData = new AuthorInputData(content);
+        AuthorInputBoundary.execute(authorInputData);
     }
 }
 

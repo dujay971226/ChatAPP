@@ -28,14 +28,5 @@ public class JournalContentInputData {
     public String getContent() {
         return content;
     }
-
-    /**
-     * Sets the content for this journal operation.
-     *
-     * @param content The content string to set.
-     */
-    public void setContent(String content) {
-        this.content = content;
-    }
 }
 

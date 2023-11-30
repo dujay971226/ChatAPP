@@ -1,6 +1,6 @@
 package use_case.journal.Content;
 
-import api.CORE;
+import api.Journal;
 
 import java.io.IOException;
 /**
@@ -33,7 +33,7 @@ public class JournalContentInteractor implements JournalContentInputBoundary {
      */
     @Override
     public void execute(JournalContentInputData journalContentInputData) throws IOException {
-        String[] result = CORE.searchJournals(journalContentInputData.getContent());
+        String result = Journal.searchJournals(journalContentInputData.getContent());
 
         JournalContentOutputData journalContentOutputData = new JournalContentOutputData(result);
         journalContentOutputBoundary.prepareSuccessView(journalContentOutputData);

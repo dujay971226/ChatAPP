@@ -5,6 +5,7 @@ import entity.Message;
 public class RoomReceiveOutputData {
 
     private final Message newMessage;
+
     public RoomReceiveOutputData(Message newMessage) {
         this.newMessage = newMessage;
     }

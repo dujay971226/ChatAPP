@@ -7,29 +7,26 @@ import java.beans.PropertyChangeSupport;
 
 /**
  * View model of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomViewModel extends ViewModel {
 
+    public static final String TITLE_LABEL = "create";
     /**
      * Label of text field.
      */
     public final String CREATE_ROOM_LABEL = "Enter room name here to create a room:";
-
     /**
      * Label of button.
      */
     public final String CREATE_BUTTON_LABEL = "Create";
-
     /**
      * Label of subscribe button
      */
     public final String TO_SUB_BUTTON_LABEL = "Join Instead";
-
-    public static final String TITLE_LABEL = "create";
-
-    private CreateRoomState state = new CreateRoomState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private CreateRoomState state = new CreateRoomState();
 
 
     /**
@@ -40,19 +37,21 @@ public class CreateRoomViewModel extends ViewModel {
     }
 
     /**
-     * Updates the state.
-     * @param state state of create room view model
-     */
-    public void setState(CreateRoomState state) {
-        this.state = state;
-    }
-
-    /**
      * Gets the state.
+     *
      * @return state of create room view model
      */
     public CreateRoomState getState() {
         return state;
+    }
+
+    /**
+     * Updates the state.
+     *
+     * @param state state of create room view model
+     */
+    public void setState(CreateRoomState state) {
+        this.state = state;
     }
 
     /**
@@ -65,6 +64,7 @@ public class CreateRoomViewModel extends ViewModel {
 
     /**
      * Adds property change listener.
+     *
      * @param listener property change listener.
      */
     @Override

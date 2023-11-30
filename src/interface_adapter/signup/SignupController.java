@@ -1,4 +1,5 @@
 package interface_adapter.signup;
+
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
 
@@ -36,7 +37,7 @@ public class SignupController {
     /**
      * Jumps to other views in the signup use case.
      */
-    public void jump(){
+    public void jump() {
         userSignupUseCaseInteractor.jump();
     }
 }

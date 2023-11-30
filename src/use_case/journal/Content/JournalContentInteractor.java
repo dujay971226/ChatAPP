@@ -3,6 +3,7 @@ package use_case.journal.Content;
 import api.Journal;
 
 import java.io.IOException;
+
 /**
  * Interactor class for handling journal content operations.
  * Implements the JournalContentInputBoundary interface and contains the business logic

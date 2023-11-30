@@ -13,10 +13,12 @@ public class JournalState {
     /**
      * Constructs a new JournalState instance with default values.
      */
-    public JournalState() {}
+    public JournalState() {
+    }
 
     /**
      * Retrieves the current search result string.
+     *
      * @return A string representing the current search result.
      */
     public String getSearchResult() {
@@ -25,6 +27,7 @@ public class JournalState {
 
     /**
      * Sets the search result string to the specified value.
+     *
      * @param searchResult The new search result string.
      */
     public void setSearchResult(String searchResult) {

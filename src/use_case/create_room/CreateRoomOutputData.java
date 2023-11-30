@@ -1,13 +1,11 @@
 package use_case.create_room;
 
 import com.pubnub.api.PubNub;
-import entity.Message;
 import entity.User;
-
-import java.util.ArrayList;
 
 /**
  * Output data of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomOutputData {
@@ -18,6 +16,7 @@ public class CreateRoomOutputData {
 
     /**
      * Initializes a CreateRoomOutputData instance.
+     *
      * @param channelName channel name
      */
     public CreateRoomOutputData(String channelName, PubNub config, User user) {
@@ -28,6 +27,7 @@ public class CreateRoomOutputData {
 
     /**
      * Gets channel name.
+     *
      * @return channel name
      */
     public String getChannelName() {
@@ -36,6 +36,7 @@ public class CreateRoomOutputData {
 
     /**
      * Gets config.
+     *
      * @return instance of PubNub
      */
     public PubNub getConfig() {
@@ -44,6 +45,7 @@ public class CreateRoomOutputData {
 
     /**
      * Gets user.
+     *
      * @return user
      */
     public User getUser() {

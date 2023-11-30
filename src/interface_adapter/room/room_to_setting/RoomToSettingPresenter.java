@@ -11,8 +11,8 @@ public class RoomToSettingPresenter implements RoomToSettingOutputBoundary {
     private final SettingViewModel settingViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public RoomToSettingPresenter (ViewManagerModel viewManagerModel,
-                                   SettingViewModel settingViewModel) {
+    public RoomToSettingPresenter(ViewManagerModel viewManagerModel,
+                                  SettingViewModel settingViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.settingViewModel = settingViewModel;
 

@@ -22,19 +22,24 @@ import view.CreateRoomView;
 
 /**
  * Use case factory of create room.
+ *
  * @author huangzhihao
  */
 public class CreateRoomUseCaseFactory {
 
-    private CreateRoomUseCaseFactory() {}; // No access
+    private CreateRoomUseCaseFactory() {
+    }
+
+    // No access
 
     /**
      * Creates a view of create room.
-     * @param viewManagerModel view manager model
-     * @param createRoomViewModel create room manager model
-     * @param roomViewModel room view model
-     * @param subscribeRoomViewModel subscribe room view model
-     * @param profileViewModel profile view model
+     *
+     * @param viewManagerModel         view manager model
+     * @param createRoomViewModel      create room manager model
+     * @param roomViewModel            room view model
+     * @param subscribeRoomViewModel   subscribe room view model
+     * @param profileViewModel         profile view model
      * @param iChannelDataAccessObject channel data access object interface
      * @return create room view
      */

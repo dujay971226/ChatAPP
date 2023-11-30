@@ -22,8 +22,11 @@ import java.io.IOException;
  */
 
 public class SignupUseCaseFactory {
-    /** Prevent instantiation. */
-    private SignupUseCaseFactory() {}
+    /**
+     * Prevent instantiation.
+     */
+    private SignupUseCaseFactory() {
+    }
 
     /** The method follows the Factory Method design pattern, initializing
      * the required components and handling potential IOExceptions during the creation process. If successful,

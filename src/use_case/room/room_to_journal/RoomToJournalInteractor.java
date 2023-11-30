@@ -1,6 +1,6 @@
 package use_case.room.room_to_journal;
 
-public class RoomToJournalInteractor implements RoomToJournalInputBoundary{
+public class RoomToJournalInteractor implements RoomToJournalInputBoundary {
 
     final RoomToJournalOutputBoundary roomToJournalPresenter;
 

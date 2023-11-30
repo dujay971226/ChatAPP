@@ -2,7 +2,7 @@ package use_case.room.room_receive;
 
 import entity.Message;
 
-public class RoomReceiveInteractor implements RoomReceiveInputBoundary{
+public class RoomReceiveInteractor implements RoomReceiveInputBoundary {
 
     final RoomReceiveOutputBoundary roomReceivePresenter;
 

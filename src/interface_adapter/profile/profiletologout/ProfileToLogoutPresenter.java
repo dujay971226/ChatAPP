@@ -19,8 +19,9 @@ public class ProfileToLogoutPresenter implements LogoutOutputBoundary {
 
     /**
      * Constructs a ProfileToLogoutPresenter with the necessary view models.
+     *
      * @param viewManagerModel The model managing different views in the application.
-     * @param loginViewModel The view model for the login view.
+     * @param loginViewModel   The view model for the login view.
      * @param profileViewModel The view model for the user's profile.
      */
     public ProfileToLogoutPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, ProfileViewModel profileViewModel) {

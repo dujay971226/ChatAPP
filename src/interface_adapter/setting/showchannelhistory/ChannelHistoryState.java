@@ -14,6 +14,15 @@ public class ChannelHistoryState {
     private String channelMessageError;
     private String deleteMessageError;
 
+    public boolean isActive() {
+        return Active;
+    }
+
+    public void setActive(boolean active) {
+        Active = active;
+    }
+
+    private boolean Active;
     private PubNub config;
     private String channel;
     private HashMap<Long, String> deleteMessages = new HashMap<>();

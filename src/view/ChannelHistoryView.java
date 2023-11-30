@@ -46,7 +46,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JPanel innerBox = new JPanel();
-        innerBox.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        innerBox.setLayout(new BoxLayout(innerBox, BoxLayout.X_AXIS));
 
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(0, 1));
@@ -153,10 +153,10 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
             reloadDeleteMessagePanel(deleteMessagePanel);
         } else {
-            JPanel innerBox = (JPanel) this.getComponent(2);
-            JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(0);
+            JPanel innerBox = (JPanel) this.getComponent(1);
+            JScrollPane innerScrollPanel = (JScrollPane) innerBox.getComponent(0);
             JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
-            JScrollPane deleteScrollPanel = (JScrollPane) this.getComponent(1);
+            JScrollPane deleteScrollPanel = (JScrollPane) innerBox.getComponent(1);
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
 
             innerPanel.removeAll();

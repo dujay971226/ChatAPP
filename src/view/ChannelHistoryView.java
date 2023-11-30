@@ -5,6 +5,7 @@ import interface_adapter.setting.deletemessage.DeleteMessageController;
 import interface_adapter.setting.returntosetting.ReturnToSettingController;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryState;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryViewModel;
+import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
     public final String viewName = "channel history";
     private final ChannelHistoryViewModel channelHistoryViewModel;
+    private final ShowChannelHistoryController showChannelHistoryController;
     private final ReturnToSettingController returnToSettingController;
     private final DeleteMessageController deleteMessageController;
     private final JLabel channelMessageErrorField = new JLabel();
@@ -34,8 +36,9 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
     /**
      * A window with a title and a JButton.
      */
-    public ChannelHistoryView(ChannelHistoryViewModel channelHistoryViewModel, ReturnToSettingController returnToSettingController, DeleteMessageController deleteMessageController) {
+    public ChannelHistoryView(ChannelHistoryViewModel channelHistoryViewModel, ShowChannelHistoryController showChannelHistoryController, ReturnToSettingController returnToSettingController, DeleteMessageController deleteMessageController) {
         this.channelHistoryViewModel = channelHistoryViewModel;
+        this.showChannelHistoryController = showChannelHistoryController;
         this.returnToSettingController = returnToSettingController;
         this.deleteMessageController = deleteMessageController;
         this.channelHistoryViewModel.addPropertyChangeListener(this);
@@ -142,11 +145,13 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ChannelHistoryState state = (ChannelHistoryState) evt.getNewValue();
-
-        if (state.getChannelMessageError() != null) {
+        if (state.isActive()){
+            state.setActive(false);
+            showChannelHistoryController.execute(state.getChannel(), state.getConfig());
+        } else if (state.getChannelMessageError() != null) {
             channelMessageErrorField.setText(state.getChannelMessageError());
             state.setChannelMessageError(null);
-        } else if(state.getDeleteMessageError() != null){
+        } else if(state.getDeleteMessageError() != null) {
             deleteMessageErrorField.setText(state.getDeleteMessageError());
             state.setDeleteMessageError(null);
             JScrollPane deleteScrollPanel = (JScrollPane) this.getComponent(2);
@@ -158,6 +163,12 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             JPanel innerPanel = (JPanel) innerScrollPanel.getViewport().getView();
             JScrollPane deleteScrollPanel = (JScrollPane) innerBox.getComponent(1);
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
+
+            reloadDeleteMessagePanel(deleteMessagePanel);
+
+            if (state.isUpdateDelete()){
+                showChannelHistoryController.execute(state.getChannel(), state.getConfig());
+            }
 
             innerPanel.removeAll();
             List<PNFetchMessageItem> channelMessages = state.getChannelMessages();
@@ -189,8 +200,6 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             } else{
                 innerPanel.add(new JLabel("There's no channel history till now!"));
             }
-
-            reloadDeleteMessagePanel(deleteMessagePanel);
 
             innerPanel.revalidate();
             innerPanel.repaint();

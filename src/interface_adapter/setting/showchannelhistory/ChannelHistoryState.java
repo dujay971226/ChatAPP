@@ -13,16 +13,9 @@ public class ChannelHistoryState {
     private List<PNFetchMessageItem> channelMessages;
     private String channelMessageError;
     private String deleteMessageError;
+    private boolean Active = false;
+    private boolean UpdateDelete = false;
 
-    public boolean isActive() {
-        return Active;
-    }
-
-    public void setActive(boolean active) {
-        Active = active;
-    }
-
-    private boolean Active;
     private PubNub config;
     private String channel;
     private HashMap<Long, String> deleteMessages = new HashMap<>();
@@ -64,6 +57,22 @@ public class ChannelHistoryState {
 
     public PubNub getConfig() {
         return config;
+    }
+
+    public boolean isUpdateDelete() {
+        return UpdateDelete;
+    }
+
+    public void setUpdateDelete(boolean updateDelete) {
+        UpdateDelete = updateDelete;
+    }
+
+    public boolean isActive() {
+        return Active;
+    }
+
+    public void setActive(boolean active) {
+        Active = active;
     }
 
     public void setConfig(PubNub config) {

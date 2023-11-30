@@ -19,6 +19,7 @@ public class DeleteMessagePresenter implements DeleteMessageOutputBoundary {
     public void prepareSuccessView(DeleteMessageOutputData deleteMessageOutputData) {
         ChannelHistoryState channelHistoryState = channelHistoryViewModel.getState();
         channelHistoryState.setDeleteMessages(new HashMap<>());
+        channelHistoryState.setUpdateDelete(true);
         channelHistoryViewModel.setState(channelHistoryState);
         channelHistoryViewModel.firePropertyChanged();
     }

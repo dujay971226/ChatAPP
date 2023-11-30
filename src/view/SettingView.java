@@ -3,6 +3,7 @@ package view;
 import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import com.pubnub.api.models.consumer.presence.PNHereNowOccupantData;
 import interface_adapter.setting.returntochannel.ReturnToChannelController;
+import interface_adapter.setting.settingtochannelhistory.SettingToChannelHistoryController;
 import interface_adapter.setting.showchannelhistory.ShowChannelHistoryController;
 import interface_adapter.setting.showsetting.SettingState;
 import interface_adapter.setting.showsetting.SettingViewModel;
@@ -20,16 +21,16 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
     public final String viewName = "channel setting";
     private final SettingViewModel settingViewModel;
     private final ShowSettingController showSettingController;
-    private final ShowChannelHistoryController showChannelHistoryController;
+    private final SettingToChannelHistoryController settingToChannelHistoryController;
     private final ReturnToChannelController returnToChannelController;
     private final JLabel loadingSubcribersErrorField = new JLabel();
     final JButton cancel;
     final JButton channelhistory;
 
-    public SettingView(SettingViewModel settingViewModel, ShowSettingController showSettingController, ShowChannelHistoryController showChannelHistoryController, ReturnToChannelController returnToChannelController){
+    public SettingView(SettingViewModel settingViewModel, ShowSettingController showSettingController, SettingToChannelHistoryController settingToChannelHistoryController, ReturnToChannelController returnToChannelController){
         this.settingViewModel = settingViewModel;
         this.showSettingController = showSettingController;
-        this.showChannelHistoryController = showChannelHistoryController;
+        this.settingToChannelHistoryController = settingToChannelHistoryController;
         this.returnToChannelController = returnToChannelController;
         this.settingViewModel.addPropertyChangeListener(this);
         this.add(new JLabel("Current Online Users"));
@@ -58,7 +59,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(channelhistory)) {
                     SettingState state = settingViewModel.getState();
-                    showChannelHistoryController.execute(state.getChannel().getName(), state.getConfig());
+                    settingToChannelHistoryController.execute(state.getChannel().getName(), state.getConfig());
                 }
             }
         });

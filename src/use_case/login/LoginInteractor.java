@@ -20,7 +20,8 @@ public class LoginInteractor implements LoginInputBoundary{
     public void execute(LoginInputData loginInputData) throws PubNubException {
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();
-        if (!userDataAccessObject.existsByName(username)) {
+        if (username.equals(""))loginPresenter.prepareFailView("user name could not be empty");
+        else if (!userDataAccessObject.existsByName(username)) {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
         } else {
             String pwd = userDataAccessObject.get(username).getPassword();
@@ -30,7 +31,6 @@ public class LoginInteractor implements LoginInputBoundary{
 
                 User user = userDataAccessObject.get(loginInputData.getUsername());
                 UserId userId = new UserId(user.getName());
-
 
                 PNConfiguration pnConfiguration =  new PNConfiguration(userId);
                 pnConfiguration.setSubscribeKey("sub-c-17a51508-3839-46d9-b8ee-b10b9b46bfa4");

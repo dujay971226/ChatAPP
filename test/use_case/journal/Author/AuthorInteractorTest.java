@@ -1,4 +1,4 @@
-package use_case.journal.Author;
+package use_case.journal.author;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

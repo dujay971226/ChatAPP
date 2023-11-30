@@ -11,7 +11,7 @@ import entity.User;
  * @author Xiaofeng Li
  */
 public class ProfileState {
-    private User user = new User("123", "");
+    private User user = new User("", "");
     private PubNub config;
 
     /**

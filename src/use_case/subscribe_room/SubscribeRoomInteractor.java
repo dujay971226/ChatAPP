@@ -42,17 +42,8 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
-        ArrayList<Message> messageLog = getMessageLog(subscribeRoomInputData.getChannelName(),
-                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser());
-        SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
-                subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
-        subscribeRoomPresenter.prepareSuccessView(outputData);
-
-    }
-
-    // Returns message history using pubnub.
-    private ArrayList<Message> getMessageLog(String channelName, PubNub pubNub, User user) {
         ArrayList<Message> messageLog = new ArrayList<>();
+
         pubNub.fetchMessages()
                 .channels(Collections.singletonList(channelName))
                 .maximumPerChannel(25)
@@ -65,6 +56,8 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                     public void onResponse(@Nullable PNFetchMessagesResult pnFetchMessagesResult, @NotNull PNStatus pnStatus) {
                         if (!pnStatus.isError()) {
                             Map<String, List<PNFetchMessageItem>> channels = pnFetchMessagesResult.getChannels();
+                            SubscribeRoomOutputData outputData = new SubscribeRoomOutputData(subscribeRoomInputData.getChannelName(),
+                                    subscribeRoomInputData.getConfig(), subscribeRoomInputData.getUser(), messageLog);
                             if (channels.get(channelName) != null) {
                                 for (PNFetchMessageItem messageItem : channels.get(channelName)) {
                                     long time = messageItem.getTimetoken() / 10000000L;
@@ -73,15 +66,14 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                                     String mesString = messageItem.getMessage().getAsJsonObject().
                                             getAsJsonPrimitive("msg").toString();
                                     mesString = mesString.substring(1, mesString.length() - 1); // remove quotation marks
-                                    Message mes = new Message(user, mesString,
+                                    Message mes = new Message(new User(messageItem.getUuid()), mesString,
                                             localDateTime);
                                     messageLog.add(mes);
                                 }
                             } // return empty arraylist if channels is null
+                            subscribeRoomPresenter.prepareSuccessView(outputData);
                         }
                     }
                 });
-        return messageLog;
     }
-
 }

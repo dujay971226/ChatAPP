@@ -3,13 +3,12 @@ package use_case.setting.deletemessage;
 import com.pubnub.api.PubNub;
 
 public class DeleteMessageInputData {
+    private final String channelName;
+    private final PubNub config;
     private long startTime;
-
     // Since we will process the data inside the interactor, then it would be redundant to cast the Object[] array to Long[] in the view
     private Object[] startTimeLists;
     private long endTime;
-    private final String channelName;
-    private final PubNub config;
 
 
     public DeleteMessageInputData(long startTime, long endTime, String channelName, PubNub config) {

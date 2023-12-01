@@ -1,15 +1,17 @@
 package interface_adapter.setting.showchannelhistory;
 
 import com.pubnub.api.PubNub;
-import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
+import entity.Message;
+import entity.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ChannelHistoryState {
-    private List<PNFetchMessageItem> channelMessages;
+    private ArrayList<Message> channelMessages;
     private String channelMessageError;
     private String deleteMessageError;
+    private User currentUser;
     private boolean Active = false;
     private boolean UpdateDelete = false;
 
@@ -21,11 +23,23 @@ public class ChannelHistoryState {
     }
 
     public ChannelHistoryState(ChannelHistoryState copy) {
+        this.deleteMessageError = copy.deleteMessageError;
+        this.Active = copy.Active;
+        this.UpdateDelete = copy.UpdateDelete;
         this.channelMessages = copy.channelMessages;
         this.channelMessageError = copy.channelMessageError;
         this.config = copy.config;
+        this.currentUser = copy.currentUser;
         this.channel = copy.channel;
         this.deleteMessages = copy.deleteMessages;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public String getDeleteMessageError() {
@@ -36,11 +50,11 @@ public class ChannelHistoryState {
         this.deleteMessageError = deleteMessageError;
     }
 
-    public List<PNFetchMessageItem> getChannelMessages() {
+    public ArrayList<Message> getChannelMessages() {
         return channelMessages;
     }
 
-    public void setChannelMessages(List<PNFetchMessageItem> channelMessages) {
+    public void setChannelMessages(ArrayList<Message> channelMessages) {
         this.channelMessages = channelMessages;
     }
 

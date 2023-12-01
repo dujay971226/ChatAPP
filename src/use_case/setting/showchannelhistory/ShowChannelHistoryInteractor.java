@@ -5,14 +5,15 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
+import entity.Message;
+import entity.User;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoundary {
     final ShowChannelHistoryOutputBoundary showChannelHistoryPresenter;
@@ -42,9 +43,23 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
                     @Override
                     public void onResponse(PNFetchMessagesResult result, PNStatus status) {
                         if (!status.isError()) {
-                            Map<String, List<PNFetchMessageItem>> channels = result.getChannels();
-                            ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(channels.get(channelName), pubnub, channelName);
-                            showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
+                            List<PNFetchMessageItem> channelMessages = result.getChannels().get(channelName);
+                            ArrayList<Message> messages = new ArrayList<>();
+                            if (channelMessages != null) {
+                                for (PNFetchMessageItem messageItem : channelMessages) {
+                                    String username = messageItem.getUuid();
+                                    String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
+
+                                    // remove quotation marks
+                                    content = content.substring(1, content.length() - 1);
+                                    messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
+                                }
+                                ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);
+                                showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
+                            } else {
+                                ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(new ArrayList<>(), pubnub, channelName);
+                                showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
+                            }
                         } else {
                             showChannelHistoryPresenter.prepareFailView(status.getErrorData().toString());
                         }

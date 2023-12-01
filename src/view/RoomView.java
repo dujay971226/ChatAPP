@@ -328,10 +328,19 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         if (currState.getLOG_UPDATE()) {
             listModel.removeAllElements();
             ArrayList<Message> newMessages = currState.getMessageLog();
+            int i = 0;
+            while(i < 5 & newMessages == null){
+                try {
+                    sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+                i++;
+            }
             ArrayList<String> sortedMessage = SortByDate(newMessages);
             for (String msg: sortedMessage) {
                 listModel.addElement(msg);
             }
+
             currState.setOffNotice();
             scrollToBottom();
 
@@ -345,13 +354,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             scrollToBottom();
         }
 
-        try {
-            sleep(100);
-        } catch (InterruptedException ignored) {
-        }
-
-        messageList.revalidate();
-        messageList.repaint();
+//        messageList.revalidate();
+//        messageList.repaint();
     }
 
 

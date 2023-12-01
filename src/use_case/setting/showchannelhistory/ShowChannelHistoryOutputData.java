@@ -1,14 +1,12 @@
 package use_case.setting.showchannelhistory;
 
 import com.pubnub.api.PubNub;
-import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import entity.Message;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ShowChannelHistoryOutputData {
-    private final ArrayList<Message>  channelMessages;
+    private final ArrayList<Message> channelMessages;
     private final PubNub config;
     private final String channelName;
 

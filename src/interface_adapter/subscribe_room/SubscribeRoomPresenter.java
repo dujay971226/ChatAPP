@@ -1,7 +1,6 @@
 package interface_adapter.subscribe_room;
 
 
-import app.RoomUseCaseFactory;
 import entity.Channel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
@@ -11,9 +10,6 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.subscribe_room.SubscribeRoomOutputBoundary;
 import use_case.subscribe_room.SubscribeRoomOutputData;
-import view.RoomView;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Presenter of subscribe room.

@@ -1,6 +1,5 @@
 package interface_adapter.create_room;
 
-import app.RoomUseCaseFactory;
 import entity.Channel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.journal.JournalViewModel;
@@ -10,7 +9,6 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.setting.showsetting.SettingViewModel;
 import use_case.create_room.CreateRoomOutputBoundary;
 import use_case.create_room.CreateRoomOutputData;
-import view.RoomView;
 
 /**
  * Presenter of create room.

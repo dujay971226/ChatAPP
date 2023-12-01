@@ -11,7 +11,9 @@ import entity.User;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoundary {
     final ShowChannelHistoryOutputBoundary showChannelHistoryPresenter;
@@ -43,13 +45,13 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
                         if (!status.isError()) {
                             List<PNFetchMessageItem> channelMessages = result.getChannels().get(channelName);
                             ArrayList<Message> messages = new ArrayList<>();
-                            if (channelMessages != null){
-                                for (PNFetchMessageItem messageItem: channelMessages){
+                            if (channelMessages != null) {
+                                for (PNFetchMessageItem messageItem : channelMessages) {
                                     String username = messageItem.getUuid();
                                     String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
 
                                     // remove quotation marks
-                                    content = content.substring(1, content.length() -1);
+                                    content = content.substring(1, content.length() - 1);
                                     messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
                                 }
                                 ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);

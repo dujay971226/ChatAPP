@@ -1,6 +1,5 @@
 package view;
 
-import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import entity.Message;
 import interface_adapter.setting.deletemessage.DeleteMessageController;
 import interface_adapter.setting.returntosetting.ReturnToSettingController;
@@ -14,12 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.TimeZone;
 
 import static java.lang.Thread.sleep;
 
@@ -183,7 +178,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
                         messagePanel.add(mLabel);
 
-                        if (messageItem.getUser().getName().equals(state.getCurrentUser().getName())){
+                        if (messageItem.getUser().getName().equals(state.getCurrentUser().getName())) {
                             JButton addToDelete = new JButton("X");
                             addToDelete.setAlignmentX(Component.RIGHT_ALIGNMENT);
                             addToDelete.addActionListener(new ActionListener() {

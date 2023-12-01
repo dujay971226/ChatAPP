@@ -8,8 +8,8 @@ import java.util.TimeZone;
 public class Message {
     private final String content;
     private final LocalDateTime msgDate;
-    private long timeStamp;
     private final User user;
+    private long timeStamp;
 
     public Message(String msg) {
         this.user = null;
@@ -23,16 +23,16 @@ public class Message {
         this.content = msg;
     }
 
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
     public Message(User user, String msg, long rawTimeStamp) {
         this.user = user;
         this.timeStamp = rawTimeStamp;
         this.msgDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(rawTimeStamp / 10000000L),
                 TimeZone.getDefault().toZoneId());
         this.content = msg;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
     }
 
     public String getContent() {

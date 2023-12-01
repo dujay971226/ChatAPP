@@ -8,14 +8,14 @@ public class SettingToChannelHistoryOutputData {
     private final PubNub config;
     private final User user;
 
-    public User getUser() {
-        return user;
-    }
-
     public SettingToChannelHistoryOutputData(String channelName, PubNub config, User user) {
         this.config = config;
         this.channelName = channelName;
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public String getChannelName() {

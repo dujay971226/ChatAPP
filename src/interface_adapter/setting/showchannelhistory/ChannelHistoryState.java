@@ -1,14 +1,11 @@
 package interface_adapter.setting.showchannelhistory;
 
 import com.pubnub.api.PubNub;
-import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
-import com.sun.security.auth.UnixNumericUserPrincipal;
 import entity.Message;
 import entity.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ChannelHistoryState {
     private ArrayList<Message> channelMessages;
@@ -53,11 +50,11 @@ public class ChannelHistoryState {
         this.deleteMessageError = deleteMessageError;
     }
 
-    public ArrayList<Message>  getChannelMessages() {
+    public ArrayList<Message> getChannelMessages() {
         return channelMessages;
     }
 
-    public void setChannelMessages(ArrayList<Message>  channelMessages) {
+    public void setChannelMessages(ArrayList<Message> channelMessages) {
         this.channelMessages = channelMessages;
     }
 

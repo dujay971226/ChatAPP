@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class ReturnToChannelInputData {
     private final ArrayList<Message> channelHistory;
+
     public ReturnToChannelInputData(ArrayList<Message> channelHistory) {
         this.channelHistory = channelHistory;
     }

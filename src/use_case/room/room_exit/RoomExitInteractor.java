@@ -3,8 +3,9 @@ package use_case.room.room_exit;
 import com.pubnub.api.PubNub;
 
 import java.util.Arrays;
+import java.util.Collections;
 
-public class RoomExitInteractor implements RoomExitInputBoundary{
+public class RoomExitInteractor implements RoomExitInputBoundary {
 
     final RoomExitOutputBoundary roomExitPresenter;
 
@@ -19,7 +20,7 @@ public class RoomExitInteractor implements RoomExitInputBoundary{
 
         pubnub.removeListener(roomExitInputData.getListener());
         pubnub.unsubscribe()
-                .channels(Arrays.asList(roomExitInputData.getChannel().getName()))
+                .channels(Collections.singletonList(roomExitInputData.getChannel().getName()))
                 .execute();
 
         roomExitPresenter.prepareProfileView();

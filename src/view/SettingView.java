@@ -50,7 +50,8 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(cancel)) {
-                    returnToChannelController.execute();
+                    SettingState state = settingViewModel.getState();
+                    returnToChannelController.execute(state.getChannelHistory());
                 }
             }
         });

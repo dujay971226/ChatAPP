@@ -3,8 +3,10 @@ package interface_adapter.setting.showsetting;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import entity.Channel;
+import entity.Message;
 import entity.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class SettingState {
@@ -15,6 +17,7 @@ public class SettingState {
     private User user;
     private Channel channel;
     private Collection<PNHereNowChannelData> channelOccupancy;
+    private ArrayList<Message> channelHistory;
 
     public SettingState(SettingState copy) {
         this.loadingSubscribersError = copy.getLoadingSubscribersError();
@@ -22,6 +25,8 @@ public class SettingState {
         this.isActive = copy.isActive();
         this.user = copy.getUser();
         this.channel = copy.getChannel();
+        this.channelOccupancy = copy.channelOccupancy;
+        this.channelHistory = copy.channelHistory;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -59,6 +64,14 @@ public class SettingState {
 
     public void setChannel(Channel channel) {
         this.channel = channel;
+    }
+
+    public ArrayList<Message> getChannelHistory() {
+        return channelHistory;
+    }
+
+    public void setChannelHistory(ArrayList<Message> channelHistory) {
+        this.channelHistory = channelHistory;
     }
 
     public Collection<PNHereNowChannelData> getChannelOccupancy() {

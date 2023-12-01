@@ -9,6 +9,6 @@ public class ReturnToChannelInteractor implements ReturnToChannelInputBoundary {
 
     @Override
     public void execute(ReturnToChannelInputData returnToChannelInputData) {
-        returnToChannelPresenter.prepareSuccessView(new ReturnToChannelOutputData());
+        returnToChannelPresenter.prepareSuccessView(new ReturnToChannelOutputData(returnToChannelInputData.getChannelHistory()));
     }
 }

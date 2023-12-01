@@ -20,6 +20,7 @@ public class SettingToChannelHistoryPresenter implements SettingToChannelHistory
         ChannelHistoryState state = channelHistoryViewModel.getState();
         state.setConfig(response.getConfig());
         state.setChannel(response.getChannelName());
+        state.setCurrentUser(response.getUser());
         state.setActive(true);
         channelHistoryViewModel.setState(state);
         channelHistoryViewModel.firePropertyChanged();

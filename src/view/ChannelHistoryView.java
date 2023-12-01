@@ -66,7 +66,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(cancel)) {
-                    returnToSettingController.execute();
+                    ChannelHistoryState state = channelHistoryViewModel.getState();
+                    returnToSettingController.execute(state.getChannelMessages());
                 }
             }
         });
@@ -179,18 +180,24 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
                         JLabel mLabel = new JLabel(messageItem.toString());
                         mLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                        JButton addToDelete = new JButton("X");
-                        addToDelete.setAlignmentX(Component.RIGHT_ALIGNMENT);
-                        addToDelete.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                HashMap<Long, String> deleteMessages = state.getDeleteMessages();
-                                deleteMessages.put(messageItem.getTimeStamp(), messageItem.toString());
-                                reloadDeleteMessagePanel(deleteMessagePanel);
-                            }
-                        });
+
                         messagePanel.add(mLabel);
-                        messagePanel.add(addToDelete);
+
+                        if (messageItem.getUser().getName().equals(state.getCurrentUser().getName())){
+                            JButton addToDelete = new JButton("X");
+                            addToDelete.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                            addToDelete.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    HashMap<Long, String> deleteMessages = state.getDeleteMessages();
+                                    deleteMessages.put(messageItem.getTimeStamp(), messageItem.toString());
+                                    reloadDeleteMessagePanel(deleteMessagePanel);
+                                }
+                            });
+
+                            messagePanel.add(addToDelete);
+                        }
+
                         innerPanel.add(messagePanel);
                     }
                 } else {

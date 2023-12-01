@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static java.lang.Thread.sleep;
+
 public class RoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "room";
@@ -332,6 +334,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             }
             currState.setOffNotice();
             scrollToBottom();
+
         //Someone sent a message online, need to load
         }
         if (currState.getNEW_MESSAGE_UPDATE()) {
@@ -342,6 +345,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             scrollToBottom();
         }
 
+        try {
+            sleep(100);
+        } catch (InterruptedException ignored) {
+        }
+
+        messageList.revalidate();
+        messageList.repaint();
     }
 
 

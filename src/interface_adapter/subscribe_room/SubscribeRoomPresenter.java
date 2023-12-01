@@ -13,6 +13,8 @@ import use_case.subscribe_room.SubscribeRoomOutputBoundary;
 import use_case.subscribe_room.SubscribeRoomOutputData;
 import view.RoomView;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Presenter of subscribe room.
  *
@@ -59,6 +61,7 @@ public class SubscribeRoomPresenter implements SubscribeRoomOutputBoundary {
         state.setMessageLog(outputData.getMessageLog());
         state.setNotice();
         state.setNEW_ROOM_UPDATE();
+
         roomViewModel.setState(state);
         roomViewModel.firePropertyChanged();
 

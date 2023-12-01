@@ -49,6 +49,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return msgDate + "     " + user + " : " + content;
+        return msgDate + "     " + content;
     }
 }

@@ -43,14 +43,18 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
                         if (!status.isError()) {
                             List<PNFetchMessageItem> channelMessages = result.getChannels().get(channelName);
                             ArrayList<Message> messages = new ArrayList<>();
-                            for (PNFetchMessageItem messageItem: channelMessages){
-                                String username = messageItem.getUuid();
-                                String usermessage = messageItem.getMessage().getAsJsonObject().get("msg").toString();
-                                String content = usermessage.substring(username.length() + 3, usermessage.length() - 1);
-                                messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
+                            if (channelMessages != null){
+                                for (PNFetchMessageItem messageItem: channelMessages){
+                                    String username = messageItem.getUuid();
+                                    String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
+                                    messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
+                                }
+                                ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);
+                                showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
+                            } else {
+                                ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(new ArrayList<>(), pubnub, channelName);
+                                showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
                             }
-                            ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);
-                            showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
                         } else {
                             showChannelHistoryPresenter.prepareFailView(status.getErrorData().toString());
                         }

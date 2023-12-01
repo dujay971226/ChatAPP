@@ -61,7 +61,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(channelhistory)) {
                     SettingState state = settingViewModel.getState();
-                    settingToChannelHistoryController.execute(state.getChannel().getName(), state.getConfig());
+                    settingToChannelHistoryController.execute(state.getChannel().getName(), state.getConfig(), state.getUser());
                 }
             }
         });

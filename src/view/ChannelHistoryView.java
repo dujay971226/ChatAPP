@@ -174,7 +174,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             } else {
                 innerPanel.removeAll();
                 ArrayList<Message> channelMessages = state.getChannelMessages();
-                if (channelMessages != null) {
+                if (!channelMessages.isEmpty()) {
                     for (Message messageItem : channelMessages) {
                         JPanel messagePanel = new JPanel();
 

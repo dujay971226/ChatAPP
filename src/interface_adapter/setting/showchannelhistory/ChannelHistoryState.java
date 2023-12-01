@@ -2,12 +2,14 @@ package interface_adapter.setting.showchannelhistory;
 
 import com.pubnub.api.PubNub;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
+import entity.Message;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ChannelHistoryState {
-    private List<PNFetchMessageItem> channelMessages;
+    private ArrayList<Message> channelMessages;
     private String channelMessageError;
     private String deleteMessageError;
     private boolean Active = false;
@@ -36,11 +38,11 @@ public class ChannelHistoryState {
         this.deleteMessageError = deleteMessageError;
     }
 
-    public List<PNFetchMessageItem> getChannelMessages() {
+    public ArrayList<Message>  getChannelMessages() {
         return channelMessages;
     }
 
-    public void setChannelMessages(List<PNFetchMessageItem> channelMessages) {
+    public void setChannelMessages(ArrayList<Message>  channelMessages) {
         this.channelMessages = channelMessages;
     }
 

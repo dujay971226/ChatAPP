@@ -3,7 +3,7 @@ package entity;
 public class User {
     private final String name;
 
-    private final String password;
+    private String password;
 
     /**
      * Requires: password is valid.
@@ -15,6 +15,10 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public User(String name) {
+        this.name = name;
     }
 
     /**

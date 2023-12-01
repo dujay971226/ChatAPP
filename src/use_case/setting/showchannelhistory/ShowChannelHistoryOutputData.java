@@ -2,15 +2,17 @@ package use_case.setting.showchannelhistory;
 
 import com.pubnub.api.PubNub;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
+import entity.Message;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowChannelHistoryOutputData {
-    private final List<PNFetchMessageItem> channelMessages;
+    private final ArrayList<Message>  channelMessages;
     private final PubNub config;
     private final String channelName;
 
-    public ShowChannelHistoryOutputData(List<PNFetchMessageItem> channelMessages, PubNub config, String channelName) {
+    public ShowChannelHistoryOutputData(ArrayList<Message> channelMessages, PubNub config, String channelName) {
         this.channelMessages = channelMessages;
         this.config = config;
         this.channelName = channelName;
@@ -24,7 +26,7 @@ public class ShowChannelHistoryOutputData {
         return channelName;
     }
 
-    public List<PNFetchMessageItem> getChannelMessages() {
+    public ArrayList<Message> getChannelMessages() {
         return channelMessages;
     }
 }

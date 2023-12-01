@@ -1,6 +1,7 @@
 package view;
 
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
+import entity.Message;
 import interface_adapter.setting.deletemessage.DeleteMessageController;
 import interface_adapter.setting.returntosetting.ReturnToSettingController;
 import interface_adapter.setting.showchannelhistory.ChannelHistoryState;
@@ -15,6 +16,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
@@ -170,25 +172,20 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                 showChannelHistoryController.execute(state.getChannel(), state.getConfig());
             } else {
                 innerPanel.removeAll();
-                List<PNFetchMessageItem> channelMessages = state.getChannelMessages();
+                ArrayList<Message> channelMessages = state.getChannelMessages();
                 if (channelMessages != null) {
-                    for (PNFetchMessageItem messageItem : channelMessages) {
+                    for (Message messageItem : channelMessages) {
                         JPanel messagePanel = new JPanel();
-                        long time = messageItem.getTimetoken() / 10000000L;
-                        LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(time),
-                                TimeZone.getDefault().toZoneId());
-                        String message = localDateTime + "     ";
-                        message += messageItem.getMessage().getAsJsonObject().get("msg");
-                        JLabel mLabel = new JLabel(message);
+
+                        JLabel mLabel = new JLabel(messageItem.toString());
                         mLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
                         JButton addToDelete = new JButton("X");
                         addToDelete.setAlignmentX(Component.RIGHT_ALIGNMENT);
-                        String finalMessage = message;
                         addToDelete.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 HashMap<Long, String> deleteMessages = state.getDeleteMessages();
-                                deleteMessages.put(messageItem.getTimetoken(), finalMessage);
+                                deleteMessages.put(messageItem.getTimeStamp(), messageItem.toString());
                                 reloadDeleteMessagePanel(deleteMessagePanel);
                             }
                         });

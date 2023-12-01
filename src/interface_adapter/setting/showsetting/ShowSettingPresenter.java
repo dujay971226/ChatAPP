@@ -9,7 +9,7 @@ public class ShowSettingPresenter implements ShowSettingOutputBoundary {
     private final ViewManagerModel viewManagerModel;
 
     public ShowSettingPresenter(ViewManagerModel viewManagerModel,
-                          SettingViewModel settingViewModel) {
+                                SettingViewModel settingViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.settingViewModel = settingViewModel;
     }

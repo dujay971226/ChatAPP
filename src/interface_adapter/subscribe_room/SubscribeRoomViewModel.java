@@ -7,6 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 /**
  * View model of subscribe room.
+ *
  * @author huangzhihao
  */
 public class SubscribeRoomViewModel extends ViewModel {
@@ -27,10 +28,8 @@ public class SubscribeRoomViewModel extends ViewModel {
      * To create view button label.
      */
     public final String TO_CREATE_BUTTON_LABEL = "Create Instead";
-
-    private SubscribeRoomState state = new SubscribeRoomState();
-
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private SubscribeRoomState state = new SubscribeRoomState();
 
     /**
      * Initializes a SubscribeRoomViewModel instance and calls super class instructor.
@@ -40,19 +39,21 @@ public class SubscribeRoomViewModel extends ViewModel {
     }
 
     /**
-     * Sets state.
-     * @param state current state
-     */
-    public void setState(SubscribeRoomState state) {
-        this.state = state;
-    }
-
-    /**
      * Gets state.
+     *
      * @return state of view model
      */
     public SubscribeRoomState getState() {
         return state;
+    }
+
+    /**
+     * Sets state.
+     *
+     * @param state current state
+     */
+    public void setState(SubscribeRoomState state) {
+        this.state = state;
     }
 
     /**
@@ -65,6 +66,7 @@ public class SubscribeRoomViewModel extends ViewModel {
 
     /**
      * Adds property change listener.
+     *
      * @param listener property change listener
      */
     @Override

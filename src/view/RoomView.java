@@ -1,6 +1,7 @@
 package view;
 
 
+import com.google.gson.JsonObject;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.callbacks.SubscribeCallback;
@@ -21,9 +22,11 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.room.room_exit.RoomExitController;
 import interface_adapter.room.room_message.RoomMessageController;
 import interface_adapter.room.room_receive.RoomReceiveController;
+import interface_adapter.room.room_reload.RoomReloadController;
 import interface_adapter.room.room_to_journal.RoomToJournalController;
 import interface_adapter.room.room_to_setting.RoomToSettingController;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,24 +49,28 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
+    private final RoomReloadController roomReloadController;
     private final RoomToSettingController roomToSettingController;
     private final RoomToJournalController roomToJournalController;
     private final JButton setting;
     private final JButton journal;
     private final JButton exit;
     private final JButton send;
+    private final JButton reload;
 
 
 
     public RoomView (RoomMessageController roomMessageController,
                      RoomReceiveController roomReceiveController,
                      RoomExitController roomExitController,
+                     RoomReloadController roomReloadController,
                      RoomViewModel roomViewModel,
                      RoomToSettingController roomToSettingController,
                      RoomToJournalController roomToJournalController) throws PubNubException  {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
+        this.roomReloadController = roomReloadController;
         this.roomViewModel = roomViewModel;
         this.roomToSettingController = roomToSettingController;
         this.roomToJournalController = roomToJournalController;
@@ -79,6 +86,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         //buttons to swap to journal view, setting view and profile view
         JPanel buttons_high = new JPanel();
         buttons_high.setAlignmentX(CENTER_ALIGNMENT);
+        reload = new JButton(RoomViewModel.RELOAD_BUTTON_LABEL);
+        buttons_high.add(reload);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
         buttons_high.add(journal);
         setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
@@ -100,74 +109,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         low.add(send);
 
         RoomState currState = roomViewModel.getState();
-        PubNub pubnub = currState.getConfig();
-        SubscribeCallback listener = new SubscribeCallback() {
 
-            @Override
-            public void status(PubNub pubnub, PNStatus status) {
-                if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
-
-                } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
-
-                } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
-                    // Happens as part of our regular operation. This event happens when
-                    // radio / connectivity is lost, then regained.
-                } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
-                    // Handle message decryption error. Probably client configured to
-                    // encrypt messages and on live data feed it received plain text.
-                }
-            }
-
-            @Override
-            public void message(PubNub pubnub, PNMessageResult message) {
-                // Handle new message stored in message.message
-
-                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
-                User user = currState.getUser();
-                Message newMessages = new Message(user, msg, LocalDateTime.now());
-                roomReceiveController.execute(newMessages);
-
-                /*
-                 * Log the following items with your favorite logger - message.getMessage() -
-                 * message.getSubscription() - message.getTimetoken()
-                 */
-            }
-
-            @Override
-            public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {
-
-            }
-
-            @Override
-            public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {
-
-            }
-
-            @Override
-            public void channel(@NotNull PubNub pubNub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
-
-            }
-
-            @Override
-            public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {
-
-            }
-
-            @Override
-            public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {
-
-            }
-
-            @Override
-            public void file(@NotNull PubNub pubNub, @NotNull PNFileEventResult pnFileEventResult) {
-
-            }
-
-            @Override
-            public void presence(PubNub pubnub, PNPresenceEventResult presence) {
-
-            }
-        };
 
         //Check whether send button was clicked
         send.addActionListener(
@@ -183,6 +125,17 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                                     currState.getConfig(),
                                     text
                             );
+                        }
+                    }
+                }
+        );
+
+        reload.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(reload)) {
+                            RoomState currState = roomViewModel.getState();
+                            roomReloadController.execute();
                         }
                     }
                 }
@@ -226,7 +179,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                                     currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
-                                    listener
+                                    currState.getListener()
                             );
                         }
                     }
@@ -277,10 +230,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
-
-        //Check whether someone send a message online
-        pubnub.addListener(listener);
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(top);
@@ -297,8 +246,85 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RoomState currState = roomViewModel.getState();
+        //The user joined a new room.
+        if (currState.getNEW_ROOM_UPDATE()) {
+            PubNub pubnub = currState.getConfig();
+            SubscribeCallback listener = new SubscribeCallback() {
+
+                @Override
+                public void status(PubNub pubnub, PNStatus status) {
+                    if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
+
+                    } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
+
+                    } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
+                        // Happens as part of our regular operation. This event happens when
+                        // radio / connectivity is lost, then regained.
+                    } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
+                        // Handle message decryption error. Probably client configured to
+                        // encrypt messages and on live data feed it received plain text.
+                    }
+                }
+
+                @Override
+                public void message(PubNub pubnub, PNMessageResult message) {
+                    // Handle new message stored in message.message
+
+                    String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
+                    User user = currState.getUser();
+                    Message newMessages = new Message(user, msg, LocalDateTime.now());
+                    roomReceiveController.execute(newMessages);
+
+                    /*
+                     * Log the following items with your favorite logger - message.getMessage() -
+                     * message.getSubscription() - message.getTimetoken()
+                     */
+                }
+
+                @Override
+                public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {
+
+                }
+
+                @Override
+                public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {
+
+                }
+
+                @Override
+                public void channel(@NotNull PubNub pubNub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
+
+                }
+
+                @Override
+                public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {
+
+                }
+
+                @Override
+                public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {
+
+                }
+
+                @Override
+                public void file(@NotNull PubNub pubNub, @NotNull PNFileEventResult pnFileEventResult) {
+
+                }
+
+                @Override
+                public void presence(PubNub pubnub, PNPresenceEventResult presence) {
+
+                }
+            };
+
+            currState.setListener(listener);
+            currState.setOffNEW_ROOM_UPDATE();
+            pubnub.addListener(listener);
+        }
+
         //Someone updated the message log, need to load the history message
         if (currState.getLOG_UPDATE()) {
+            listModel.removeAllElements();
             ArrayList<Message> newMessages = currState.getMessageLog();
             ArrayList<String> sortedMessage = SortByDate(newMessages);
             for (String msg: sortedMessage) {
@@ -307,7 +333,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             currState.setOffNotice();
             scrollToBottom();
         //Someone sent a message online, need to load
-        } else if (currState.getNEW_MESSAGE_UPDATE()) {
+        }
+        if (currState.getNEW_MESSAGE_UPDATE()) {
             listModel.addElement(currState.getMessage());
             currState.setMessage("");
             currState.setOffReceiveMessageNotice();

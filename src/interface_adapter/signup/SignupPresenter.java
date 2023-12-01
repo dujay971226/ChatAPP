@@ -15,7 +15,7 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
 
     /**
      * Constructs a SignupPresenter with the necessary view models and the ViewManagerModel.

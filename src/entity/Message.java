@@ -28,5 +28,7 @@ public class Message {
         return this.msgDate;
     }
 
-    public User getUser() {return this.user; }
+    public User getUser() {
+        return this.user;
+    }
 }

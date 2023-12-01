@@ -11,8 +11,8 @@ public class RoomExitPresenter implements RoomExitOutputBoundary {
 
 
     //initialization
-    public RoomExitPresenter (ViewManagerModel viewManagerModel,
-                          ProfileViewModel profileViewModel) {
+    public RoomExitPresenter(ViewManagerModel viewManagerModel,
+                             ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
     }

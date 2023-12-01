@@ -9,7 +9,7 @@ package use_case.journal.Content;
  */
 public class JournalContentInputData {
 
-    private String content;
+    private final String content;
 
     /**
      * Constructs a JournalContentInputData instance with the specified content.

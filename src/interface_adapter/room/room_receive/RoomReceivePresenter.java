@@ -10,8 +10,8 @@ public class RoomReceivePresenter implements RoomReceiveOutputBoundary {
     private final RoomViewModel roomViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public RoomReceivePresenter (ViewManagerModel viewManagerModel,
-                                 RoomViewModel roomViewModel) {
+    public RoomReceivePresenter(ViewManagerModel viewManagerModel,
+                                RoomViewModel roomViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.roomViewModel = roomViewModel;
     }

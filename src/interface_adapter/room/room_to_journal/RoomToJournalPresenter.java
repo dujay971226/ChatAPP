@@ -9,8 +9,8 @@ public class RoomToJournalPresenter implements RoomToJournalOutputBoundary {
     private final JournalViewModel journalViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public RoomToJournalPresenter (ViewManagerModel viewManagerModel,
-                                 JournalViewModel journalViewModel) {
+    public RoomToJournalPresenter(ViewManagerModel viewManagerModel,
+                                  JournalViewModel journalViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.journalViewModel = journalViewModel;
     }

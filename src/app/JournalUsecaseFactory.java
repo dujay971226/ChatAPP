@@ -30,18 +30,20 @@ import view.JournalView;
  * Factory for creating components of the journal view.
  * This class provides methods to create and assemble different controllers
  * for managing journal views in an application.
+ *
  * @author Xiaofeng Li
  */
 public class JournalUsecaseFactory {
 
     /**
      * Creates a JournalView with all necessary controllers.
+     *
      * @param viewManagerModel A view manager model used for managing views.
      * @param journalViewModel The view model for journal view.
-     * @param roomViewModel The view model for room view.
+     * @param roomViewModel    The view model for room view.
      * @return A fully constructed JournalView.
      */
-    public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel){
+    public static JournalView create(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel) {
         JournalContentController journalContentController = createContent(viewManagerModel, journalViewModel);
         JournalDoiController journalDoiController = createDio(viewManagerModel, journalViewModel);
         AuthorController authorController = createIssn(viewManagerModel, journalViewModel);
@@ -51,11 +53,12 @@ public class JournalUsecaseFactory {
 
     /**
      * Creates a controller for managing journal content.
+     *
      * @param viewManagerModel The view manager model.
      * @param journalViewModel The journal view model.
      * @return A JournalContentController for handling journal content.
      */
-    public static JournalContentController createContent(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
+    public static JournalContentController createContent(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel) {
         JournalContentOutputBoundary journalContentOutputBoundary = new JournalContentPresenter(viewManagerModel, journalViewModel);
         JournalContentInputBoundary journalContentInputBoundary = new JournalContentInteractor(journalContentOutputBoundary);
         return new JournalContentController(journalContentInputBoundary);
@@ -63,11 +66,12 @@ public class JournalUsecaseFactory {
 
     /**
      * Creates a controller for handling journal DOI (Digital Object Identifier).
+     *
      * @param viewManagerModel The view manager model.
      * @param journalViewModel The journal view model.
      * @return A JournalDoiController for DOI-related operations.
      */
-    public static JournalDoiController createDio(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
+    public static JournalDoiController createDio(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel) {
         JournalDoiOutputBoundary journalDoiOutputBoundary = new JournalDoiPresenter(viewManagerModel, journalViewModel);
         JournalDoiInputBoundary journalDoiInputBoundary = new JournalDoiInteractor(journalDoiOutputBoundary);
         return new JournalDoiController(journalDoiInputBoundary);
@@ -75,11 +79,12 @@ public class JournalUsecaseFactory {
 
     /**
      * Creates a controller for managing journal ISSN (International Standard Serial Number).
+     *
      * @param viewManagerModel The view manager model.
      * @param journalViewModel The journal view model.
      * @return A JournalIssnController for ISSN-related operations.
      */
-    public static AuthorController createIssn(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel){
+    public static AuthorController createIssn(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel) {
         AuthorOutputBoundary authorOutputBoundary = new AuthorPresenter(viewManagerModel, journalViewModel);
         AuthorInputBoundary authorInputBoundary = new AuthorInteractor(authorOutputBoundary);
         return new AuthorController(authorInputBoundary);
@@ -87,12 +92,13 @@ public class JournalUsecaseFactory {
 
     /**
      * Creates a controller for navigating back to the room view from the journal view.
+     *
      * @param viewManagerModel The view manager model.
      * @param journalViewModel The journal view model.
-     * @param roomViewModel The room view model.
+     * @param roomViewModel    The room view model.
      * @return A JournalToRoomController for handling navigation back to the room view.
      */
-    public static JournalToRoomController creatBack(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel){
+    public static JournalToRoomController creatBack(ViewManagerModel viewManagerModel, JournalViewModel journalViewModel, RoomViewModel roomViewModel) {
         JournalToRoomOutputBoundary journalToRoomOutputBoundary = new JournalToRoomPresenter(viewManagerModel, journalViewModel, roomViewModel);
         JournalToRoomInputBoundary journalToRoomInputBoundary = new JournalToRoomInteractor(journalToRoomOutputBoundary);
         return new JournalToRoomController(journalToRoomInputBoundary);

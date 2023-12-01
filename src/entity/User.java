@@ -7,11 +7,7 @@ public class User {
 
     /**
      * Requires: password is valid.
-     *
-     * @param name
-     * @param password
      */
-
     public User(String name, String password) {
         this.name = name;
         this.password = password;

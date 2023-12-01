@@ -11,6 +11,7 @@ public class Academic {
     public static String searchJournals(String content) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/search?").newBuilder();
+        urlBuilder.addQueryParameter("Key","cnzZYl3wju4CtE9gJPhja1MCaONq6nIf1rusHB1p");
         urlBuilder.addQueryParameter("query", content);
         urlBuilder.addQueryParameter("fields", "title,url,abstract");
         urlBuilder.addQueryParameter("offset", "100");
@@ -45,6 +46,7 @@ public class Academic {
     public static String searchAuthor(String name) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/author/search?").newBuilder();
+        urlBuilder.addQueryParameter("Key","cnzZYl3wju4CtE9gJPhja1MCaONq6nIf1rusHB1p");
         urlBuilder.addQueryParameter("query", name);
         urlBuilder.addQueryParameter("fields", "name,url");
         urlBuilder.addQueryParameter("offset", "100");
@@ -80,6 +82,7 @@ public class Academic {
     public static String searchByDOI(String DOI) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/"+DOI).newBuilder();
+        urlBuilder.addQueryParameter("Key","cnzZYl3wju4CtE9gJPhja1MCaONq6nIf1rusHB1p");
         urlBuilder.addQueryParameter("fields", "title,url,abstract");
         urlBuilder.addQueryParameter("offset", "100");
         urlBuilder.addQueryParameter("limit", "1");

@@ -47,6 +47,9 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
                                 for (PNFetchMessageItem messageItem: channelMessages){
                                     String username = messageItem.getUuid();
                                     String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
+
+                                    // remove quotation marks
+                                    content = content.substring(1, content.length() -1);
                                     messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
                                 }
                                 ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);

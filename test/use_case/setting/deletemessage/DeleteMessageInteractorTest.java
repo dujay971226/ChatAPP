@@ -13,11 +13,15 @@ import entity.Channel;
 import entity.Message;
 import entity.User;
 import org.junit.jupiter.api.Test;
+import use_case.setting.showchannelhistory.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DeleteMessageInteractorTest {
     User user;
@@ -29,6 +33,8 @@ public class DeleteMessageInteractorTest {
 
     @Test
     public void successTest() throws PubNubException, InterruptedException {
+
+        final Object[] timeList = new Object[1];
 
         this.user = new User("user1", "password1");
         this.channel = new Channel("channel1", user);
@@ -45,68 +51,63 @@ public class DeleteMessageInteractorTest {
         messageJsonObject.addProperty("msg", "testing");
 
         pubnub.publish()
-                .channel(channel.getName())
-                .message(messageJsonObject)
-                .async((result, publishStatus) -> {
-                });
+            .channel(channel.getName())
+            .message(messageJsonObject)
+            .async((result, publishStatus) -> {
+            });
 
-        pubnub.fetchMessages()
-            .channels(Collections.singletonList(channel.getName()))
-            .maximumPerChannel(10)
-            .includeMessageActions(true)
-            .includeMeta(true)
-            .includeMessageType(true)
-            .includeUUID(true)
-            .async(new PNCallback<PNFetchMessagesResult>() {
-               @Override
-               public void onResponse(PNFetchMessagesResult result, PNStatus status) {
-                   if (!status.isError()) {
-                       List<PNFetchMessageItem> channelMessages = result.getChannels().get(channel.getName());
-                       if (channelMessages != null) {
-                           for (PNFetchMessageItem messageItem : channelMessages) {
-                               String username = messageItem.getUuid();
-                               String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
-                               // remove quotation marks
-                               content = content.substring(1, content.length() - 1);
-                               messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
-                           }
-                           long timeStamp = messages.get(0).getTimeStamp();
+        ShowChannelHistoryInputData showChannelHistoryInputData = new ShowChannelHistoryInputData(LocalDateTime.now(), channel.getName(), pubnub);
+        ShowChannelHistoryOutputBoundary showChannelHistoryPresenter = new ShowChannelHistoryOutputBoundary() {
+            @Override
+            public void prepareSuccessView(ShowChannelHistoryOutputData showChannelHistoryOutputData) {
+                long timeStamp = showChannelHistoryOutputData.getChannelMessages().get(0).getTimeStamp();
+                timeList[0] = timeStamp;
+            }
 
-                           DeleteMessageInputData inputData = new DeleteMessageInputData(timeStamp - 1, timeStamp, channel.getName(), pubnub);
-                           DeleteMessageOutputBoundary successPresenter = new DeleteMessageOutputBoundary() {
-                               @Override
-                               public void prepareSuccessView(DeleteMessageOutputData deleteMessageOutputData) {
-                                   pubnub.fetchMessages()
-                                           .channels(Collections.singletonList(channel.getName()))
-                                           .maximumPerChannel(10)
-                                           .includeMessageActions(true)
-                                           .includeMeta(true)
-                                           .includeMessageType(true)
-                                           .includeUUID(true)
-                                           .async(new PNCallback<PNFetchMessagesResult>() {
-                                               @Override
-                                               public void onResponse(PNFetchMessagesResult result, PNStatus status) {
-                                                   if (!status.isError()) {
-                                                       List<PNFetchMessageItem> channelMessages = result.getChannels().get(channel.getName());
-                                                       assert channelMessages != null;
-                                                   }
-                                               }
-                                           });
-                               }
+            @Override
+            public void prepareFailView(String error) {
 
-                               @Override
-                               public void prepareFailView(String error) {
-                                    assert error == null;
-                               }
-                           };
+            }
+        };
 
-                           DeleteMessageInputBoundary interactor = new DeleteMessageInteractor(successPresenter);
-                           interactor.execute(inputData);
-                       }
-                       assert false;
-                   }
-               }
-           });
+        ShowChannelHistoryInputBoundary showChannelHistoryInteractor = new ShowChannelHistoryInteractor(showChannelHistoryPresenter);
+        showChannelHistoryInteractor.execute(showChannelHistoryInputData);
+
+
+        DeleteMessageInputData inputData = new DeleteMessageInputData(timeList, channel.getName(), pubnub);
+
+        assertEquals(channel.getName(), inputData.getChannelName());
+        assertEquals(pubnub, inputData.getConfig());
+        assertEquals(timeList, inputData.getStartTimeLists());
+
+        DeleteMessageOutputBoundary successPresenter = new DeleteMessageOutputBoundary() {
+            @Override
+            public void prepareSuccessView(DeleteMessageOutputData deleteMessageOutputData) {
+                pubnub.fetchMessages()
+                        .channels(Collections.singletonList(channel.getName()))
+                        .maximumPerChannel(10)
+                        .includeMessageActions(true)
+                        .includeMeta(true)
+                        .includeMessageType(true)
+                        .includeUUID(true)
+                        .async(new PNCallback<PNFetchMessagesResult>() {
+                            @Override
+                            public void onResponse(PNFetchMessagesResult result, PNStatus status) {
+                                if (!status.isError()) {
+                                    List<PNFetchMessageItem> channelMessages = result.getChannels().get(channel.getName());
+                                    assert channelMessages.isEmpty();
+                                }
+                            }
+                        });
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+            }
+        };
+
+        DeleteMessageInputBoundary interactor = new DeleteMessageInteractor(successPresenter);
+
+        interactor.execute(inputData);
     }
-
 }

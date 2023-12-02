@@ -20,7 +20,10 @@ public class SubscribeRoomOutputData {
     /**
      * Initializes a SubscribeRoomOutputData instance.
      *
-     * @param channelName
+     * @param channelName channel name
+     * @param config config
+     * @param user user
+     * @param messageLog message log
      */
     public SubscribeRoomOutputData(String channelName, PubNub config, User user, ArrayList<Message> messageLog) {
         this.channelName = channelName;

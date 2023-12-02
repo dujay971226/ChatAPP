@@ -16,19 +16,16 @@ public class SubscribeRoomInputData {
     private final String channelName;
     private final PubNub config;
     private final User user;
-    private final ArrayList<Channel> channelLog;
 
     /**
      * Initializes a SubscribeRoomInputData instance.
      *
      * @param channelName channel name
      */
-    public SubscribeRoomInputData(String channelName, PubNub config, User user,
-                                  ArrayList<Channel> channelLog) {
+    public SubscribeRoomInputData(String channelName, PubNub config, User user) {
         this.channelName = channelName;
         this.config = config;
         this.user = user;
-        this.channelLog = channelLog;
     }
 
     /**
@@ -56,15 +53,6 @@ public class SubscribeRoomInputData {
      */
     public User getUser() {
         return user;
-    }
-
-    /**
-     * Gets channel history.
-     *
-     * @return channel log
-     */
-    public ArrayList<Channel> getChannelLog() {
-        return channelLog;
     }
 
 }

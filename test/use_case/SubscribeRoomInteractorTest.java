@@ -28,15 +28,19 @@ class SubscribeRoomInteractorTest {
             PubNub pubNub = new PubNub(pnConfiguration);
             String channelName = "testing channel name";
             User user = new User("testing user", "testing password");
-            ArrayList<Channel> channelLogs = new ArrayList<>();
-            channelLogs.add(new Channel(channelName, user));
-            SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName, pubNub, user, channelLogs);
+            SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName, pubNub, user);
             SubscribeRoomOutputBoundary outputBoundary = new SubscribeRoomOutputBoundary() {
                 @Override
                 public void prepareSuccessView(SubscribeRoomOutputData outputData) {
+                    System.out.println(outputData.getChannelName());
                     assertEquals(channelName, outputData.getChannelName());
                     assertEquals(user, outputData.getUser());
                     assertEquals(pubNub, outputData.getConfig());
+                    for (Message m : outputData.getMessageLog()) {
+                        assertNotNull(m.getContent());
+                        assertNotNull(m.getTime());
+                        assertNotNull(m.getUser());
+                    }
                     Message firstMes = outputData.getMessageLog().get(0);
                     assertNotNull(firstMes.getTime());
                     assertEquals(user.getName() + ": testing message", firstMes.getContent());
@@ -45,12 +49,11 @@ class SubscribeRoomInteractorTest {
 
                 @Override
                 public void prepareFailView(String error) {
-                    fail("Use case failure is unexpected");
+                    fail("Use case failure is unexpected:" + error);
                 }
             };
             SubscribeRoomInputBoundary interactor = new SubscribeRoomInteractor(outputBoundary);
             interactor.execute(inputData);
-
         } catch (PubNubException e) {
             throw new RuntimeException(e);
         }

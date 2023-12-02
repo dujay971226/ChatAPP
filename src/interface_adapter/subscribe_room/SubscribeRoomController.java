@@ -31,10 +31,9 @@ public class SubscribeRoomController {
      *
      * @param channelName channel name
      */
-    public void execute(String channelName, PubNub config, User user,
-                        ArrayList<Channel> channelList) {
+    public void execute(String channelName, PubNub config, User user) {
         SubscribeRoomInputData inputData = new SubscribeRoomInputData(channelName,
-                config, user, channelList);
+                config, user);
         subscribeRoomUseCaseInteractor.execute(inputData);
     }
 

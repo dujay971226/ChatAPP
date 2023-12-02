@@ -26,27 +26,34 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
     private final ShowSettingController showSettingController;
     private final SettingToChannelHistoryController settingToChannelHistoryController;
     private final ReturnToChannelController returnToChannelController;
-    private final JLabel loadingSubcribersErrorField = new JLabel();
 
+    // Initialize the SettingView with controllers and a view model
     public SettingView(SettingViewModel settingViewModel, ShowSettingController showSettingController, SettingToChannelHistoryController settingToChannelHistoryController, ReturnToChannelController returnToChannelController) {
+        // Set the view model and controllers for the SettingView
         this.settingViewModel = settingViewModel;
         this.showSettingController = showSettingController;
         this.settingToChannelHistoryController = settingToChannelHistoryController;
         this.returnToChannelController = returnToChannelController;
+
+        // Register the SettingView as a property change listener for the view model
         this.settingViewModel.addPropertyChangeListener(this);
+        // Add a label for online users to the SettingView
         this.add(new JLabel("Current Online Users"));
 
+        // Set up inner panel with a grid layout and add it to a scroll pane
         JPanel innerPanel = new JPanel();
         innerPanel.setLayout(new GridLayout(0, 5));
         innerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane innerScrollPane = new JScrollPane(innerPanel);
 
-        // add the inner scorllable JPanel to the SettingView JPanel
+        // Add the inner scorllable JPanel to the SettingView JPanel
         this.add(innerScrollPane, BorderLayout.CENTER);
 
+        // Set up a button panel with cancel and channel history buttons
         JPanel buttons = new JPanel();
         cancel = new JButton(SettingViewModel.CANCEL_BUTTON_LABEL);
+        // ActionListener for cancel button handling
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(cancel)) {
@@ -55,8 +62,10 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
                 }
             }
         });
+        // Add buttons to the button panel
         buttons.add(cancel);
         channelhistory = new JButton(SettingViewModel.CHANNEL_HISTORY_BUTTON_LABEL);
+        // ActionListener for channel history button handling
         channelhistory.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(channelhistory)) {
@@ -66,17 +75,20 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             }
         });
         buttons.add(channelhistory);
+        // Configure the overall layout of the SettingView as a vertical box layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(loadingSubcribersErrorField);
+        // Add loading label to the SettingView
         this.add(buttons);
         JLabel loading = new JLabel("loading user...");
         innerPanel.add(loading);
 
+        // Wait for the async methods to finish
         try {
             sleep(300);
         } catch (InterruptedException ignored) {
         }
+        // Refresh the inner panel
         innerPanel.revalidate();
         innerPanel.repaint();
     }
@@ -91,7 +103,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
             showSettingController.execute(state.getChannel().getName(), state.getConfig());
         }
         else if (state.getLoadingSubscribersError() != null) {
-            loadingSubcribersErrorField.setText(state.getLoadingSubscribersError());
+            JOptionPane.showMessageDialog(this, state.getLoadingSubscribersError());
             state.setLoadingSubscribersError(null);
         } else {
             JScrollPane innerScrollPanel = (JScrollPane) this.getComponent(1);
@@ -116,8 +128,8 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         }
     }
 
+    // Simulate cancel button press action
     public void simulateCancelButtonPress() {
-        // Simulate the action associated with the exit button
         ActionEvent actionEvent = new ActionEvent(cancel, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
         ActionListener[] actionListeners = cancel.getActionListeners();
         for (ActionListener listener : actionListeners) {
@@ -125,8 +137,8 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         }
     }
 
+    // Simulate channel history button press action
     public void simulateChannelHistoryButtonPress() {
-        // Simulate the action associated with the exit button
         ActionEvent actionEvent = new ActionEvent(channelhistory, ActionEvent.ACTION_PERFORMED, "ChannelHistoryButtonPressed");
         ActionListener[] actionListeners = channelhistory.getActionListeners();
         for (ActionListener listener : actionListeners) {

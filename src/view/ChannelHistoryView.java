@@ -30,8 +30,6 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
     private final ShowChannelHistoryController showChannelHistoryController;
     private final ReturnToSettingController returnToSettingController;
     private final DeleteMessageController deleteMessageController;
-    private final JLabel channelMessageErrorField = new JLabel();
-    private final JLabel deleteMessageErrorField = new JLabel();
 
     /**
      * A window with a title and a JButton.
@@ -154,8 +152,6 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         // Add title, innerBox, and buttons to the main view
         this.add(title);
         this.add(innerBox);
-        this.add(channelMessageErrorField);
-        this.add(deleteMessageErrorField);
         this.add(buttons);
     }
 
@@ -174,16 +170,19 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         if (state.isActive()) {
             state.setActive(false);
             showChannelHistoryController.execute(state.getChannel(), state.getConfig());
+        // this case check if there's a Channel Message loading error
         } else if (state.getChannelMessageError() != null) {
-            channelMessageErrorField.setText(state.getChannelMessageError());
+            JOptionPane.showMessageDialog(this, state.getChannelMessageError());
             state.setChannelMessageError(null);
+        // this case check if there's a Delete Message loading error
         } else if (state.getDeleteMessageError() != null) {
-            deleteMessageErrorField.setText(state.getDeleteMessageError());
+            JOptionPane.showMessageDialog(this, state.getDeleteMessageError());
             state.setDeleteMessageError(null);
             JPanel innerBox = (JPanel) this.getComponent(1);
             JScrollPane deleteScrollPanel = (JScrollPane) innerBox.getComponent(1);
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
             reloadDeleteMessagePanel(deleteMessagePanel);
+        // reload the channel histories and to be deleted messages
         } else {
             JPanel innerBox = (JPanel) this.getComponent(1);
             JScrollPane innerScrollPanel = (JScrollPane) innerBox.getComponent(0);
@@ -191,6 +190,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             JScrollPane deleteScrollPanel = (JScrollPane) innerBox.getComponent(1);
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
 
+            //reload the channel histories
             if (state.isUpdateDelete()) {
                 state.setUpdateDelete(false);
                 reloadDeleteMessagePanel(deleteMessagePanel);

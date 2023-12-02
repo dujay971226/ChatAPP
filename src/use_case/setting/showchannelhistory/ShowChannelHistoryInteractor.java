@@ -22,6 +22,7 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
         this.showChannelHistoryPresenter = showChannelHistoryOutputBoundary;
     }
 
+    // This use case meant to get the most recent 25 history messages of the channel that the loggedIn user is in
     @Override
     public void execute(ShowChannelHistoryInputData showChannelHistoryInputData) {
         PubNub pubnub = showChannelHistoryInputData.getConfig();
@@ -61,7 +62,7 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
                             showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
                         }
                     } else {
-                        showChannelHistoryPresenter.prepareFailView(status.getErrorData().toString());
+                        showChannelHistoryPresenter.prepareFailView("Connection Error: " + status.getErrorData().getInformation());
                     }
                 }
             });

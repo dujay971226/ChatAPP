@@ -1,43 +1,35 @@
 package use_case.setting.deletemessage;
 
 import com.pubnub.api.PubNub;
+import entity.Message;
+
+import java.util.HashMap;
 
 public class DeleteMessageInputData {
     private final String channelName;
     private final PubNub config;
-    private long startTime;
     // Since we will process the data inside the interactor, then it would be redundant to cast the Object[] array to Long[] in the view
-    private Object[] startTimeLists;
-    private long endTime;
+    private Object[] startTimes;
+    private HashMap<Long, Message> deleteMessages;
 
 
-    public DeleteMessageInputData(long startTime, long endTime, String channelName, PubNub config) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+
+    public DeleteMessageInputData(Object[] startTimes, HashMap<Long, Message> deleteMessages, String channelName, PubNub config) {
+        this.startTimes = startTimes;
+        this.deleteMessages = deleteMessages;
         this.channelName = channelName;
         this.config = config;
     }
 
-    public DeleteMessageInputData(Object[] startTime, String channelName, PubNub config) {
-        this.startTimeLists = startTime;
-        this.channelName = channelName;
-        this.config = config;
+    public HashMap<Long, Message> getDeleteMessages() {
+        return deleteMessages;
     }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
     public PubNub getConfig() {
         return config;
     }
 
     public Object[] getStartTimeLists() {
-        return startTimeLists;
+        return startTimes;
     }
 
     public String getChannelName() {

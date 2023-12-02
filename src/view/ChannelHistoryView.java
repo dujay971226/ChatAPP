@@ -22,7 +22,10 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
 
     public final String viewName = "channel history";
-    final JButton cancel;
+    private final JButton cancel;
+    private final JButton delete;
+    private JButton deleteAll;
+    private final ArrayList<JButton> deleteMessageButtons = new ArrayList<>();
     private final ChannelHistoryViewModel channelHistoryViewModel;
     private final ShowChannelHistoryController showChannelHistoryController;
     private final ReturnToSettingController returnToSettingController;
@@ -72,8 +75,19 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         deletePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane deteleScrollPane = new JScrollPane(deletePanel);
-        JButton detele = new JButton("delete");
-        detele.addActionListener(new ActionListener() {
+        deleteAll = new JButton("delete all of them!");
+        delete = new JButton("delete");
+        deleteAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChannelHistoryState state = channelHistoryViewModel.getState();
+                HashMap<Long, Message> deleteMessage = state.getDeleteMessages();
+                Object[] timeTokens = deleteMessage.keySet().toArray();
+                deleteMessageController.execute(timeTokens, deleteMessage, state.getChannel(), state.getConfig());
+            }
+        });
+
+        delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame("Delete Message");
@@ -83,17 +97,16 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
                 // Add a label to the JPanel
                 JLabel label = new JLabel("Do you really want to delete these messages?");
-                JButton yesE = new JButton("delete all of them!");
-                yesE.addActionListener(new ActionListener() {
+
+                JButton no = new JButton("no");
+
+                deleteAll.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        ChannelHistoryState state = channelHistoryViewModel.getState();
-                        Object[] timeTokens = state.getDeleteMessages().keySet().toArray();
-                        deleteMessageController.execute(timeTokens, state.getChannel(), state.getConfig());
                         frame.dispose();
                     }
+
                 });
-                JButton no = new JButton("no");
                 no.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -101,7 +114,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                     }
                 });
                 panel.add(label);
-                panel.add(yesE);
+                panel.add(deleteAll);
                 panel.add(no);
 
                 // Add the JPanel to the JFrame
@@ -120,7 +133,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                 frame.setVisible(true);
             }
         });
-        buttons.add(detele);
+        buttons.add(delete);
 
         innerBox.add(innerScrollPane);
         innerBox.add(deteleScrollPane);
@@ -152,7 +165,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         } else if (state.getDeleteMessageError() != null) {
             deleteMessageErrorField.setText(state.getDeleteMessageError());
             state.setDeleteMessageError(null);
-            JScrollPane deleteScrollPanel = (JScrollPane) this.getComponent(2);
+            JPanel innerBox = (JPanel) this.getComponent(1);
+            JScrollPane deleteScrollPanel = (JScrollPane) innerBox.getComponent(1);
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
             reloadDeleteMessagePanel(deleteMessagePanel);
         } else {
@@ -170,7 +184,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                 innerPanel.removeAll();
                 ArrayList<Message> channelMessages = state.getChannelMessages();
                 if (!channelMessages.isEmpty()) {
-                    for (Message messageItem : channelMessages) {
+                    for (int i = 0; i < channelMessages.size(); i++) {
+                        Message messageItem = channelMessages.get(i);
                         JPanel messagePanel = new JPanel();
 
                         JLabel mLabel = new JLabel(messageItem.toString());
@@ -184,12 +199,13 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                             addToDelete.addActionListener(new ActionListener() {
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
-                                    HashMap<Long, String> deleteMessages = state.getDeleteMessages();
-                                    deleteMessages.put(messageItem.getTimeStamp(), messageItem.toString());
+                                    HashMap<Long, Message> deleteMessages = state.getDeleteMessages();
+                                    deleteMessages.put(messageItem.getStartTimeStamp(), messageItem);
                                     reloadDeleteMessagePanel(deleteMessagePanel);
                                 }
                             });
 
+                            deleteMessageButtons.add(addToDelete);
                             messagePanel.add(addToDelete);
                         }
 
@@ -210,10 +226,10 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
     private void reloadDeleteMessagePanel(JPanel deleteMessagePanel) {
         deleteMessagePanel.removeAll();
-        HashMap<Long, String> deleteMessage = this.channelHistoryViewModel.getState().getDeleteMessages();
+        HashMap<Long, Message> deleteMessage = this.channelHistoryViewModel.getState().getDeleteMessages();
         for (Long timestamp : deleteMessage.keySet()) {
-            String message = deleteMessage.get(timestamp);
-            JLabel mLabel = new JLabel(message);
+            Message message = deleteMessage.get(timestamp);
+            JLabel mLabel = new JLabel(message.toString());
             mLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             deleteMessagePanel.add(mLabel);
         }
@@ -223,5 +239,28 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         }
         deleteMessagePanel.revalidate();
         deleteMessagePanel.repaint();
+    }
+
+    public void simulateCancelButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(cancel, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+        ActionListener[] actionListeners = cancel.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateDeleteButtonsPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(delete, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+        ActionListener[] actionListeners = delete.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+        ActionEvent actionEvent2 = new ActionEvent(deleteAll, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+        ActionListener[] actionListeners2 = deleteAll.getActionListeners();
+        for (ActionListener listener2 : actionListeners2) {
+            listener2.actionPerformed(actionEvent2);
+        }
     }
 }

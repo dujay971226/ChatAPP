@@ -34,13 +34,13 @@ public class ProfileViewTest {
 
     @Before
     public void setUp() throws IOException {
-        // 初始化实际的ViewModel和控制器
+
         profileViewModel = new ProfileViewModel();
         viewManagerModel = new ViewManagerModel();
         subscribeRoomViewModel = new SubscribeRoomViewModel();
         createRoomViewModel = new CreateRoomViewModel();
         loginViewModel = new LoginViewModel();
-        channelDataAccessObject = new ChannelDataAccessObject("testchannel.json");
+        channelDataAccessObject = new ChannelDataAccessObject("test/testchannel.json");
         profileView = ProfileUseCaseFactory.create(viewManagerModel,createRoomViewModel,subscribeRoomViewModel,loginViewModel,profileViewModel,channelDataAccessObject);
         viewManagerModel.setActiveView(profileView.getName());
     }

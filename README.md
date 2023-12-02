@@ -36,7 +36,8 @@ Our team's primary focus for this project includes:
 
 3. **Setting Up Chat Room**
    - Create a new room to start a chat. 
-   - Join someone else's room and chat with others.
+   - Join someone else's room to chat with others with previous
+   10 messages shown.
    - Jumps to chat room view after creating or joining.
 
 4. **Channel Data Access Object (DAO):**

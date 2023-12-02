@@ -81,8 +81,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         innerPanel.repaint();
     }
 
-    public void actionPerformed(ActionEvent evt) {
-    }
+    public void actionPerformed(ActionEvent evt) {}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

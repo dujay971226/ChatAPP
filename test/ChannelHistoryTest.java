@@ -43,6 +43,7 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ChannelHistoryTest {
 
@@ -134,6 +135,9 @@ public class ChannelHistoryTest {
         currState.setChannel(channel.getName());
         currState.setConfig(pubnub);
         channelHistoryViewModel.setState(currState);
+
+        viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Test
@@ -141,10 +145,28 @@ public class ChannelHistoryTest {
         ChannelHistoryState state = channelHistoryViewModel.getState();
         channelHistoryViewModel.setState(state);
         channelHistoryViewModel.firePropertyChanged();
-        viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
 
         assertEquals(channelHistoryViewModel.getViewName(), viewManagerModel.getActiveView());
+    }
+
+    @Test
+    public void TestChannelMessageErrorNotNull () {
+
+        ChannelHistoryState state = channelHistoryViewModel.getState();
+        state.setChannelMessageError("test this");
+        channelHistoryViewModel.setState(state);
+        channelHistoryViewModel.firePropertyChanged();
+
+        assertNull(state.getChannelMessageError());
+    }
+    @Test
+    public void TestDeleteMessageErrorNotNull () {
+        ChannelHistoryState state = channelHistoryViewModel.getState();
+        state.setDeleteMessageError("test this");
+        channelHistoryViewModel.setState(state);
+        channelHistoryViewModel.firePropertyChanged();
+
+        assertNull(state.getDeleteMessageError());
     }
 
     @Test

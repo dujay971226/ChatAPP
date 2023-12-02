@@ -165,7 +165,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         } else if (state.getDeleteMessageError() != null) {
             deleteMessageErrorField.setText(state.getDeleteMessageError());
             state.setDeleteMessageError(null);
-            JScrollPane deleteScrollPanel = (JScrollPane) this.getComponent(2);
+            JPanel innerBox = (JPanel) this.getComponent(1);
+            JScrollPane deleteScrollPanel = (JScrollPane) innerBox.getComponent(1);
             JPanel deleteMessagePanel = (JPanel) deleteScrollPanel.getViewport().getView();
             reloadDeleteMessagePanel(deleteMessagePanel);
         } else {

@@ -1,17 +1,16 @@
 package app;
 
 import data_access.iUserDataAccessObject;
+import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import entity.UserFactory;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.SignupView;
-
 
 import javax.swing.*;
 import java.io.IOException;

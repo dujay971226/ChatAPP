@@ -21,7 +21,6 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.room.room_exit.RoomExitController;
 import interface_adapter.room.room_message.RoomMessageController;
 import interface_adapter.room.room_receive.RoomReceiveController;
-import interface_adapter.room.room_reload.RoomReloadController;
 import interface_adapter.room.room_to_journal.RoomToJournalController;
 import interface_adapter.room.room_to_setting.RoomToSettingController;
 import org.jetbrains.annotations.NotNull;
@@ -47,14 +46,12 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
-    private final RoomReloadController roomReloadController;
     private final RoomToSettingController roomToSettingController;
     private final RoomToJournalController roomToJournalController;
     private final JButton setting;
     private final JButton journal;
     private final JButton exit;
     private final JButton send;
-    private final JButton reload;
     DefaultListModel<String> listModel = new DefaultListModel<>();
     JList<String> messageList = new JList<String>(listModel);
 
@@ -62,14 +59,12 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public RoomView(RoomMessageController roomMessageController,
                     RoomReceiveController roomReceiveController,
                     RoomExitController roomExitController,
-                    RoomReloadController roomReloadController,
                     RoomViewModel roomViewModel,
                     RoomToSettingController roomToSettingController,
                     RoomToJournalController roomToJournalController) throws PubNubException {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
-        this.roomReloadController = roomReloadController;
         this.roomViewModel = roomViewModel;
         this.roomToSettingController = roomToSettingController;
         this.roomToJournalController = roomToJournalController;
@@ -85,8 +80,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         //buttons to swap to journal view, setting view and profile view
         JPanel buttons_high = new JPanel();
         buttons_high.setAlignmentX(CENTER_ALIGNMENT);
-        reload = new JButton(RoomViewModel.RELOAD_BUTTON_LABEL);
-        buttons_high.add(reload);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
         buttons_high.add(journal);
         setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
@@ -124,17 +117,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                                     currState.getConfig(),
                                     text
                             );
-                        }
-                    }
-                }
-        );
-
-        reload.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(reload)) {
-                            RoomState currState = roomViewModel.getState();
-                            roomReloadController.execute();
                         }
                     }
                 }

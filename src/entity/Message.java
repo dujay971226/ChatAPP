@@ -9,7 +9,8 @@ public class Message {
     private final String content;
     private final LocalDateTime msgDate;
     private final User user;
-    private long timeStamp;
+    private long startTimeStamp;
+    private long endTimeStamp;
 
     public Message(String msg) {
         this.user = null;
@@ -25,14 +26,27 @@ public class Message {
 
     public Message(User user, String msg, long rawTimeStamp) {
         this.user = user;
-        this.timeStamp = rawTimeStamp;
+        this.startTimeStamp = rawTimeStamp - 1;
+        this.endTimeStamp = startTimeStamp;
         this.msgDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(rawTimeStamp / 10000000L),
                 TimeZone.getDefault().toZoneId());
         this.content = msg;
     }
 
-    public long getTimeStamp() {
-        return timeStamp;
+    public Message(User user, String msg, long startTimeStamp, long endTimeStamp) {
+        this.user = user;
+        this.startTimeStamp = startTimeStamp;
+        this.endTimeStamp = endTimeStamp;
+        this.msgDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(startTimeStamp / 10000000L),
+                TimeZone.getDefault().toZoneId());
+        this.content = msg;
+    }
+
+    public long getStartTimeStamp() {
+        return startTimeStamp;
+    }
+    public long getEndTimeStamp() {
+        return endTimeStamp;
     }
 
     public String getContent() {

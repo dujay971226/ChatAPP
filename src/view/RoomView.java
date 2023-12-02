@@ -338,9 +338,20 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
     private ArrayList<String> SortByDate(ArrayList<Message> newMessages) {
         Map<LocalDateTime, String> dateFormatMap = new TreeMap<>();
-        newMessages.forEach(s -> dateFormatMap.put(s.getTime(), s.getContent()));
+        for (Message msg : newMessages) {
+            if (dateFormatMap.get(msg.getTime()) == null) {
+                dateFormatMap.put(msg.getTime(), msg.getContent());
+            } else  {
+                LocalDateTime newArragedTime = msg.getTime();
+                while (dateFormatMap.get(newArragedTime) != null) {
+                    newArragedTime = newArragedTime.plusSeconds(1);
+                }
+                dateFormatMap.put(newArragedTime, msg.getContent());
+            }
+        }
         return new ArrayList<>(dateFormatMap.values());
     }
+
 
     private void scrollToBottom() {
         int lastIndex = messageList.getModel().getSize() - 1;
@@ -351,8 +362,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
     //For Testing
 
+    public int getListModelSize() {
+        return listModel.getSize();
+    }
+
+
     public void simulateSend() {
-        // Simulate the action associated with the exit button
+        // Simulate the action associated with the send button
         messageInputField.setText("Hello World");
         ActionEvent actionEvent = new ActionEvent(send, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
         ActionListener[] actionListeners = send.getActionListeners();
@@ -361,8 +377,16 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         }
     }
 
-    public String simulateReceive() {
+    public void simulateEnter() throws AWTException {
+        // Simulate the action associated with pressing enter key
+        messageInputField.setText("Hello World");
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+    }
 
+    public String simulateReceive() {
+        // Simulate the action associated with the reception listener
         RoomState currState = roomViewModel.getState();
         String msg = "Hello New World";
         User user = currState.getUser();
@@ -375,7 +399,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     public void simulateExitButtonPress() {
-        // Simulate the action associated with the send button
+        // Simulate the action associated with the exit button
         ActionEvent actionEvent = new ActionEvent(exit, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
         ActionListener[] actionListeners = exit.getActionListeners();
         for (ActionListener listener : actionListeners) {
@@ -385,7 +409,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     public void simulateJournalButtonPress() {
-        // Simulate the action associated with the exit button
+        // Simulate the action associated with the journal button
         ActionEvent actionEvent = new ActionEvent(journal, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
         ActionListener[] actionListeners = journal.getActionListeners();
         for (ActionListener listener : actionListeners) {

@@ -4,6 +4,8 @@ import interface_adapter.ViewManagerModel;
 import use_case.setting.channelsetting.ShowSettingOutputBoundary;
 import use_case.setting.channelsetting.ShowSettingOutputData;
 
+import java.util.ArrayList;
+
 public class ShowSettingPresenter implements ShowSettingOutputBoundary {
     private final SettingViewModel settingViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -31,6 +33,7 @@ public class ShowSettingPresenter implements ShowSettingOutputBoundary {
     public void prepareFailView(String error) {
         SettingState settingState = settingViewModel.getState();
         settingState.setLoadingSubscribersError(error);
+        settingState.setChannelOccupancy(new ArrayList<>());
         this.settingViewModel.setState(settingState);
         this.settingViewModel.firePropertyChanged();
     }

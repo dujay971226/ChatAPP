@@ -18,9 +18,4 @@ public class ShowSettingInputData {
     public String getCurrentChannel() {
         return this.currentChannel;
     }
-
-    public void setCurrentChannel(String currentChannel) {
-        this.currentChannel = currentChannel;
-
-    }
 }

@@ -103,9 +103,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
+    public void actionPerformed(ActionEvent e) {}
 
     /**
      * Responds to property change events and updates the title label with the user's profile information.
@@ -113,9 +111,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
      * @param evt The property change event.
      */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        title.setText(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);
-    }
+    public void propertyChange(PropertyChangeEvent evt) {title.setText(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);}
     public ArrayList<JButton> getButtons(){
         ArrayList<JButton> result = new ArrayList<>();
         result.add(createchannel);

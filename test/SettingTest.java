@@ -1,5 +1,3 @@
-package use_case.setting;
-
 import app.ChannelSettingUseCaseFactory;
 import app.JournalUsecaseFactory;
 import app.ProfileUseCaseFactory;
@@ -138,11 +136,12 @@ public class SettingTest {
 
         viewManagerModel.setActiveView(settingViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-        sleep(1000);
+
     }
 
     @Test
     public void TestChannelSettingLoadingData () throws InterruptedException {
+        sleep(1000);
         SettingState state = settingViewModel.getState();
         state.setActiveState(true);
         settingViewModel.setState(state);
@@ -173,6 +172,8 @@ public class SettingTest {
 
     @Test
     public void TestSettingToChannelHistory () throws InterruptedException {
+        sleep(1000);
+
         settingView.simulateChannelHistoryButtonPress();
 
         sleep(1000);

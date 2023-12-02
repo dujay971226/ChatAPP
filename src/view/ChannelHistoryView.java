@@ -22,7 +22,10 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
 
     public final String viewName = "channel history";
-    final JButton cancel;
+    private final JButton cancel;
+    private final JButton delete;
+    private JButton deleteAll;
+    private final ArrayList<JButton> deleteMessageButtons = new ArrayList<>();
     private final ChannelHistoryViewModel channelHistoryViewModel;
     private final ShowChannelHistoryController showChannelHistoryController;
     private final ReturnToSettingController returnToSettingController;
@@ -72,8 +75,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         deletePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JScrollPane deteleScrollPane = new JScrollPane(deletePanel);
-        JButton detele = new JButton("delete");
-        detele.addActionListener(new ActionListener() {
+        delete = new JButton("delete");
+        delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame("Delete Message");
@@ -84,6 +87,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                 // Add a label to the JPanel
                 JLabel label = new JLabel("Do you really want to delete these messages?");
                 JButton yesE = new JButton("delete all of them!");
+                deleteAll = yesE;
                 yesE.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -120,7 +124,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                 frame.setVisible(true);
             }
         });
-        buttons.add(detele);
+        buttons.add(delete);
 
         innerBox.add(innerScrollPane);
         innerBox.add(deteleScrollPane);
@@ -190,6 +194,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                                 }
                             });
 
+                            deleteMessageButtons.add(addToDelete);
                             messagePanel.add(addToDelete);
                         }
 
@@ -223,5 +228,36 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         }
         deleteMessagePanel.revalidate();
         deleteMessagePanel.repaint();
+    }
+
+    public void simulateCancelButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(cancel, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+        ActionListener[] actionListeners = cancel.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateDeleteButtonsPress() {
+        // Simulate the action associated with the exit button
+        for (int i = 0; i < 3; i++){
+            JButton addToDelete = deleteMessageButtons.get(i);
+            ActionEvent actionEvent = new ActionEvent(addToDelete, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+            ActionListener[] actionListeners = addToDelete.getActionListeners();
+            for (ActionListener listener : actionListeners) {
+                listener.actionPerformed(actionEvent);
+            }
+        }
+        ActionEvent actionEvent = new ActionEvent(delete, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+        ActionListener[] actionListeners = delete.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+            ActionEvent actionEvent2 = new ActionEvent(deleteAll, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+            ActionListener[] actionListeners2 = deleteAll.getActionListeners();
+            for (ActionListener listener2 : actionListeners) {
+                listener.actionPerformed(actionEvent);
+            }
+        }
     }
 }

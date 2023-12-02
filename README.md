@@ -55,7 +55,7 @@ To achieve the functionalities mentioned above, we plan to utilize the User API 
 
 1. PubNub API: https://www.pubnub.com/docs/sdks/java/api-reference/configuration#methods
 
-2. CORE API: https://api.core.ac.uk/docs/v3
+2. SEMANTIC SCHOLAR API: https://api.semanticscholar.org/graph/v1
 
 
 

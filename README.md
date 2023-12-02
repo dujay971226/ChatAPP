@@ -37,6 +37,7 @@ Our team's primary focus for this project includes:
 3. **Setting Up Chat Room**
    - Create a new room to start a chat. 
    - Join someone else's room and chat with others.
+   - Jumps to chat room view after creating or joining.
 
 4. **Channel Data Access Object (DAO):**
     - Read local file and generate a hashmap.

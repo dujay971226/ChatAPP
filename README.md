@@ -18,7 +18,7 @@ Our team's primary focus for this project includes:
 
 5. User Experience: Creating an intuitive and user-friendly interface for seamless communication.
 
-## Features
+## Usecases
 1. **User Authentication:**
     - **Signup:**
         - Create an account with a username and password.
@@ -48,6 +48,15 @@ Our team's primary focus for this project includes:
         - Retrieve the full-text link to access the author's information.
     - **Back:**
         - Return to the chat room.
+5. **Room:**
+6. **Setting of the Room:**
+   - **Currently Active Users**
+        - Get all users currently in this room.
+   - **Room History**
+        - Fetch the most recent 100 chat history of this room. 
+   - **Delete History Message*
+        - Choose the history messages sent by you and delete.
+   - 
 
 
 ## Relevant API Documentation

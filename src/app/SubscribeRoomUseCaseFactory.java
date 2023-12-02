@@ -49,7 +49,8 @@ public class SubscribeRoomUseCaseFactory {
                                            SettingViewModel settingViewModel,
                                            iChannelDataAccessObject channelDataAccessObject) {
         SubscribeRoomController subscribeRoomController = SubscribeRoomUseCaseFactory.createSubscribeRoomController(
-                viewManagerModel, subscribeRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel);
+                viewManagerModel, subscribeRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel,
+                channelDataAccessObject);
         ProfileToCreateController profileToCreateController = SubscribeRoomUseCaseFactory.createProfileToCreateController(
                 viewManagerModel, createRoomViewModel, profileViewModel, channelDataAccessObject);
         return new SubscribeRoomView(subscribeRoomController, subscribeRoomViewModel,
@@ -61,10 +62,12 @@ public class SubscribeRoomUseCaseFactory {
                                                                          RoomViewModel roomViewModel,
                                                                          ProfileViewModel profileViewModel,
                                                                          JournalViewModel journalViewModel,
-                                                                         SettingViewModel settingViewModel) {
+                                                                         SettingViewModel settingViewModel,
+                                                                         iChannelDataAccessObject channelDataAccessObject) {
         SubscribeRoomOutputBoundary subscribeRoomOutputBoundary = new SubscribeRoomPresenter(viewManagerModel,
                 subscribeRoomViewModel, roomViewModel, profileViewModel, journalViewModel, settingViewModel);
-        SubscribeRoomInputBoundary subscribeRoomInputBoundary = new SubscribeRoomInteractor(subscribeRoomOutputBoundary);
+        SubscribeRoomInputBoundary subscribeRoomInputBoundary = new SubscribeRoomInteractor(subscribeRoomOutputBoundary,
+                channelDataAccessObject);
         return new SubscribeRoomController(subscribeRoomInputBoundary);
     }
 

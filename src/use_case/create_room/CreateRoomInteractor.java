@@ -53,14 +53,11 @@ public class CreateRoomInteractor implements CreateRoomInputBoundary {
 
     // Checks if channel exists in an arraylist of channels.
     private boolean exists(String channel, ArrayList<Channel> channels) {
-        if (channels == null) {
-            return false;
-        }
+        if (channels == null) {return false; }
         for (Channel c : channels) {
             if (channel.equals(c.getName())) {
                 return true;
             }
-        }
-        return false;
+        } return false;
     }
 }

@@ -105,12 +105,10 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {
-            }
+            public void keyPressed(KeyEvent e) {}
 
             @Override
-            public void keyReleased(KeyEvent e) {
-            }
+            public void keyReleased(KeyEvent e) {}
         });
         LabelTextPanel searchPanel = new LabelTextPanel(new JLabel(subscribeRoomViewModel.TF_LABEL), search);
         searchPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
@@ -182,6 +180,22 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         } else if (e.getSource().equals(toCreateButton)) {
             SubscribeRoomState state = subscribeRoomViewModel.getState();
             profileToCreateController.execute(state.getUser(), state.getConfig());
+        }
+    }
+
+    public void simulateSubscribeButton() {
+        ActionEvent actionEvent = new ActionEvent(subscribeButton, ActionEvent.ACTION_PERFORMED, "JoinButtonPressed");
+        ActionListener[] actionListeners = subscribeButton.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateCreateButton() {
+        ActionEvent actionEvent = new ActionEvent(toCreateButton, ActionEvent.ACTION_PERFORMED, "ToCreateButtonPressed");
+        ActionListener[] actionListeners = toCreateButton.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
         }
     }
 }

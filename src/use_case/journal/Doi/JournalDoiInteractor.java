@@ -1,6 +1,6 @@
 package use_case.journal.Doi;
 
-import api.CORE;
+import api.Journal;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ public class JournalDoiInteractor implements JournalDoiInputBoundary {
     @Override
     public void execute(JournalDoiInputData journalDoiInputData) throws IOException {
         // Retrieve the result by searching with the DOI
-        String result = CORE.searchByDOI(journalDoiInputData.getDoi());
+        String result = Journal.searchByDOI(journalDoiInputData.getDoi());
 
         // Prepare the output data
         JournalDoiOutputData journalDoiOutputData = new JournalDoiOutputData(result);

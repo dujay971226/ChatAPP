@@ -35,14 +35,14 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static java.lang.Thread.sleep;
+
 public class RoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "room";
 
     private final RoomViewModel roomViewModel;
     private final JTextArea messageInputField = new JTextArea(3, 30);
-    DefaultListModel<String> listModel = new DefaultListModel<>();
-    JList<String> messageList = new JList<String>(listModel);
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
@@ -52,15 +52,16 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton journal;
     private final JButton exit;
     private final JButton send;
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    JList<String> messageList = new JList<String>(listModel);
 
 
-
-    public RoomView (RoomMessageController roomMessageController,
-                     RoomReceiveController roomReceiveController,
-                     RoomExitController roomExitController,
-                     RoomViewModel roomViewModel,
-                     RoomToSettingController roomToSettingController,
-                     RoomToJournalController roomToJournalController) throws PubNubException  {
+    public RoomView(RoomMessageController roomMessageController,
+                    RoomReceiveController roomReceiveController,
+                    RoomExitController roomExitController,
+                    RoomViewModel roomViewModel,
+                    RoomToSettingController roomToSettingController,
+                    RoomToJournalController roomToJournalController) throws PubNubException {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
@@ -100,74 +101,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         low.add(send);
 
         RoomState currState = roomViewModel.getState();
-        PubNub pubnub = currState.getConfig();
-        SubscribeCallback listener = new SubscribeCallback() {
 
-            @Override
-            public void status(PubNub pubnub, PNStatus status) {
-                if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
-
-                } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
-
-                } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
-                    // Happens as part of our regular operation. This event happens when
-                    // radio / connectivity is lost, then regained.
-                } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
-                    // Handle message decryption error. Probably client configured to
-                    // encrypt messages and on live data feed it received plain text.
-                }
-            }
-
-            @Override
-            public void message(PubNub pubnub, PNMessageResult message) {
-                // Handle new message stored in message.message
-
-                String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
-                User user = currState.getUser();
-                Message newMessages = new Message(user, msg, LocalDateTime.now());
-                roomReceiveController.execute(newMessages);
-
-                /*
-                 * Log the following items with your favorite logger - message.getMessage() -
-                 * message.getSubscription() - message.getTimetoken()
-                 */
-            }
-
-            @Override
-            public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {
-
-            }
-
-            @Override
-            public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {
-
-            }
-
-            @Override
-            public void channel(@NotNull PubNub pubNub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
-
-            }
-
-            @Override
-            public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {
-
-            }
-
-            @Override
-            public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {
-
-            }
-
-            @Override
-            public void file(@NotNull PubNub pubNub, @NotNull PNFileEventResult pnFileEventResult) {
-
-            }
-
-            @Override
-            public void presence(PubNub pubnub, PNPresenceEventResult presence) {
-
-            }
-        };
 
         //Check whether send button was clicked
         send.addActionListener(
@@ -175,10 +109,9 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = currState.getUser().getName() + ": " +messageInputField.getText();
+                            String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
-                                    currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
                                     text
@@ -221,12 +154,11 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(exit)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = messageInputField.getText();
                             roomExitController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
-                                    listener
+                                    currState.getListener()
                             );
                         }
                     }
@@ -238,19 +170,18 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                             messageInputField.setText("");
                         }
                     }
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        if (e.getKeyCode()==KeyEvent.VK_ENTER && !e.isShiftDown()){
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER && !e.isShiftDown()) {
                             RoomState currState = roomViewModel.getState();
                             String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
-                                    currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
                                     text
@@ -277,10 +208,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 }
         );
 
-
-        //Check whether someone send a message online
-        pubnub.addListener(listener);
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(top);
@@ -294,20 +221,109 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public void actionPerformed(ActionEvent e) {
 
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RoomState currState = roomViewModel.getState();
+        //The user joined a new room.
+        if (currState.getNEW_ROOM_UPDATE()) {
+            PubNub pubnub = currState.getConfig();
+            SubscribeCallback listener = new SubscribeCallback() {
+
+                @Override
+                public void status(PubNub pubnub, PNStatus status) {
+                    if (status.getCategory() == PNStatusCategory.PNUnexpectedDisconnectCategory) {
+
+                    } else if (status.getCategory() == PNStatusCategory.PNConnectedCategory) {
+
+                    } else if (status.getCategory() == PNStatusCategory.PNReconnectedCategory) {
+                        // Happens as part of our regular operation. This event happens when
+                        // radio / connectivity is lost, then regained.
+                    } else if (status.getCategory() == PNStatusCategory.PNDecryptionErrorCategory) {
+                        // Handle message decryption error. Probably client configured to
+                        // encrypt messages and on live data feed it received plain text.
+                    }
+                }
+
+                @Override
+                public void message(PubNub pubnub, PNMessageResult message) {
+                    // Handle new message stored in message.message
+
+                    String msg = message.getMessage().getAsJsonObject().get("msg").getAsString();
+                    User user = currState.getUser();
+                    Message newMessages = new Message(user, msg, LocalDateTime.now());
+                    roomReceiveController.execute(newMessages);
+
+                    /*
+                     * Log the following items with your favorite logger - message.getMessage() -
+                     * message.getSubscription() - message.getTimetoken()
+                     */
+                }
+
+                @Override
+                public void signal(PubNub pubnub, PNSignalResult pnSignalResult) {
+
+                }
+
+                @Override
+                public void uuid(PubNub pubnub, PNUUIDMetadataResult pnUUIDMetadataResult) {
+
+                }
+
+                @Override
+                public void channel(@NotNull PubNub pubNub, @NotNull PNChannelMetadataResult pnChannelMetadataResult) {
+
+                }
+
+                @Override
+                public void membership(PubNub pubnub, PNMembershipResult pnMembershipResult) {
+
+                }
+
+                @Override
+                public void messageAction(PubNub pubnub, PNMessageActionResult pnMessageActionResult) {
+
+                }
+
+                @Override
+                public void file(@NotNull PubNub pubNub, @NotNull PNFileEventResult pnFileEventResult) {
+
+                }
+
+                @Override
+                public void presence(PubNub pubnub, PNPresenceEventResult presence) {
+
+                }
+            };
+
+            currState.setListener(listener);
+            currState.setOffNEW_ROOM_UPDATE();
+            pubnub.addListener(listener);
+        }
+
         //Someone updated the message log, need to load the history message
         if (currState.getLOG_UPDATE()) {
+            listModel.removeAllElements();
             ArrayList<Message> newMessages = currState.getMessageLog();
+            int i = 0;
+            while (i < 5 & newMessages == null) {
+                try {
+                    sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+                i++;
+            }
             ArrayList<String> sortedMessage = SortByDate(newMessages);
-            for (String msg: sortedMessage) {
+            for (String msg : sortedMessage) {
                 listModel.addElement(msg);
             }
+
             currState.setOffNotice();
             scrollToBottom();
-        //Someone sent a message online, need to load
-        } else if (currState.getNEW_MESSAGE_UPDATE()) {
+
+            //Someone sent a message online, need to load
+        }
+        if (currState.getNEW_MESSAGE_UPDATE()) {
             listModel.addElement(currState.getMessage());
             currState.setMessage("");
             currState.setOffReceiveMessageNotice();
@@ -315,6 +331,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             scrollToBottom();
         }
 
+//        messageList.revalidate();
+//        messageList.repaint();
     }
 
 
@@ -324,10 +342,63 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         return new ArrayList<>(dateFormatMap.values());
     }
 
-    private void scrollToBottom(){
-        int lastIndex = messageList.getModel().getSize()-1;
-        if(lastIndex >= 0){
+    private void scrollToBottom() {
+        int lastIndex = messageList.getModel().getSize() - 1;
+        if (lastIndex >= 0) {
             messageList.ensureIndexIsVisible(lastIndex);
+        }
+    }
+
+    //For Testing
+
+    public void simulateSend() {
+        // Simulate the action associated with the exit button
+        messageInputField.setText("Hello World");
+        ActionEvent actionEvent = new ActionEvent(send, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = send.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public String simulateReceive() {
+
+        RoomState currState = roomViewModel.getState();
+        String msg = "Hello New World";
+        User user = currState.getUser();
+        Message newMessages = new Message(user, msg, LocalDateTime.now());
+        roomReceiveController.execute(newMessages);
+
+        int lastIndex = listModel.getSize() - 1;
+        return listModel.getElementAt(lastIndex);
+
+    }
+
+    public void simulateExitButtonPress() {
+        // Simulate the action associated with the send button
+        ActionEvent actionEvent = new ActionEvent(exit, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = exit.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+
+    public void simulateJournalButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(journal, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = journal.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateSettingButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(setting, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = setting.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
         }
     }
 

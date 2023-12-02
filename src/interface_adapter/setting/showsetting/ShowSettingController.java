@@ -4,7 +4,7 @@ import com.pubnub.api.PubNub;
 import use_case.setting.channelsetting.ShowSettingInputBoundary;
 import use_case.setting.channelsetting.ShowSettingInputData;
 
-public class ShowSettingController{
+public class ShowSettingController {
     private final ShowSettingInputBoundary showSettingInteractor;
 
     public ShowSettingController(ShowSettingInputBoundary showSettingInteractor) {

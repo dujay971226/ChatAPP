@@ -17,23 +17,12 @@ public class SignupViewModel extends ViewModel {
 
     public static final String SIGNUP_BUTTON_LABEL = "Sign up";
     public static final String LOGIN_BUTTON_LABEL = "Login";
-
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private SignupState state = new SignupState();
 
     public SignupViewModel() {
         super("sign up");
     }
-
-    /**
-     * Sets the state of the signup view.
-     *
-     * @param state The new state of the signup view.
-     */
-    public void setState(SignupState state) {
-        this.state = state;
-    }
-
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     /**
      * Notifies registered listeners about changes in the ViewModel.
@@ -59,5 +48,14 @@ public class SignupViewModel extends ViewModel {
      */
     public SignupState getState() {
         return state;
+    }
+
+    /**
+     * Sets the state of the signup view.
+     *
+     * @param state The new state of the signup view.
+     */
+    public void setState(SignupState state) {
+        this.state = state;
     }
 }

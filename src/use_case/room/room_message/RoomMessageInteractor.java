@@ -26,8 +26,7 @@ public class RoomMessageInteractor implements RoomMessageInputBoundary {
                 .async((result, publishStatus) -> {
                             if (!publishStatus.isError()) {
                                 roomMessagePresenter.prepareSentView();
-                            }
-                            else {
+                            } else {
                                 roomMessagePresenter.prepareLostConnectionView();
                             }
                         }

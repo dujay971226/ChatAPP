@@ -8,6 +8,7 @@ import use_case.room.room_to_setting.RoomToSettingInputData;
 
 public class RoomToSettingController {
     final RoomToSettingInputBoundary roomToSettingUseCaseInteractor;
+
     public RoomToSettingController(RoomToSettingInputBoundary roomToSettingUseCaseInteractor) {
         this.roomToSettingUseCaseInteractor = roomToSettingUseCaseInteractor;
     }

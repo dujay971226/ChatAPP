@@ -9,7 +9,7 @@ package use_case.journal.Content;
  */
 public class JournalContentInputData {
 
-    private String content;
+    private final String content;
 
     /**
      * Constructs a JournalContentInputData instance with the specified content.
@@ -27,15 +27,6 @@ public class JournalContentInputData {
      */
     public String getContent() {
         return content;
-    }
-
-    /**
-     * Sets the content for this journal operation.
-     *
-     * @param content The content string to set.
-     */
-    public void setContent(String content) {
-        this.content = content;
     }
 }
 

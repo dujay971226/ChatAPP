@@ -1,4 +1,4 @@
-package use_case.journal.Issn;
+package use_case.journal.author;
 
 /**
  * The JournalIssnOutputData class represents the output data of a journal operation based on International Standard Serial Number (ISSN).
@@ -6,15 +6,15 @@ package use_case.journal.Issn;
  *
  * @author Xiaofeng Li
  */
-public class JournalIssnOutputData {
-    private String result;
+public class AuthorOutputData {
+    private final String result;
 
     /**
      * Constructs a JournalIssnOutputData object with the provided result.
      *
      * @param result The result of the ISSN-based journal operation.
      */
-    public JournalIssnOutputData(String result){
+    public AuthorOutputData(String result) {
         this.result = result;
     }
 

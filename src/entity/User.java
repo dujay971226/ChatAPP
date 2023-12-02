@@ -3,17 +3,18 @@ package entity;
 public class User {
     private final String name;
 
-    private final String password;
+    private String password;
 
     /**
      * Requires: password is valid.
-     * @param name
-     * @param password
      */
-
-    public User(String name, String password){
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public User(String name) {
+        this.name = name;
     }
 
     /**
@@ -21,7 +22,7 @@ public class User {
      *
      * @return The name of the user.
      */
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
@@ -30,6 +31,12 @@ public class User {
      *
      * @return The password of the user.
      */
-    public String getPassword(){return this.password;}
+    public String getPassword() {
+        return this.password;
+    }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

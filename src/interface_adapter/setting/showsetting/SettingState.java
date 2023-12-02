@@ -3,8 +3,10 @@ package interface_adapter.setting.showsetting;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.models.consumer.presence.PNHereNowChannelData;
 import entity.Channel;
+import entity.Message;
 import entity.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class SettingState {
@@ -14,14 +16,21 @@ public class SettingState {
     private boolean isActive = false;
     private User user;
     private Channel channel;
+    private Collection<PNHereNowChannelData> channelOccupancy;
+    private ArrayList<Message> channelHistory;
 
-    public void setConfig(PubNub config) {
-        this.config = config;
-        this.isActive = true;
+    public SettingState(SettingState copy) {
+        this.loadingSubscribersError = copy.getLoadingSubscribersError();
+        this.config = copy.getConfig();
+        this.isActive = copy.isActive();
+        this.user = copy.getUser();
+        this.channel = copy.getChannel();
+        this.channelOccupancy = copy.channelOccupancy;
+        this.channelHistory = copy.channelHistory;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    // Because of the previous copy constructor, the default constructor must be explicit.
+    public SettingState() {
     }
 
     public boolean isActive() {
@@ -32,23 +41,38 @@ public class SettingState {
         isActive = active;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
     public PubNub getConfig() {
         return config;
+    }
+
+    public void setConfig(PubNub config) {
+        this.config = config;
+        this.isActive = true;
     }
 
     public User getUser() {
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Channel getChannel() {
         return channel;
     }
 
-    private Collection<PNHereNowChannelData> channelOccupancy;
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    public ArrayList<Message> getChannelHistory() {
+        return channelHistory;
+    }
+
+    public void setChannelHistory(ArrayList<Message> channelHistory) {
+        this.channelHistory = channelHistory;
+    }
 
     public Collection<PNHereNowChannelData> getChannelOccupancy() {
         return channelOccupancy;
@@ -57,17 +81,6 @@ public class SettingState {
     public void setChannelOccupancy(Collection<PNHereNowChannelData> channelOccupancy) {
         this.channelOccupancy = channelOccupancy;
     }
-
-    public SettingState(SettingState copy) {
-        this.loadingSubscribersError = copy.getLoadingSubscribersError();
-        this.config = copy.getConfig();
-        this.isActive = copy.isActive();
-        this.user = copy.getUser();
-        this.channel = copy.getChannel();
-    }
-
-    // Because of the previous copy constructor, the default constructor must be explicit.
-    public SettingState() {}
 
     public String getLoadingSubscribersError() {
         return loadingSubscribersError;

@@ -16,6 +16,7 @@ import java.util.Map;
 /**
  * Data access object for managing channel and user data.
  * This class handles the loading and saving of channel and user information from and to a JSON file.
+ *
  * @author Xiaofeng Li
  */
 public class ChannelDataAccessObject implements iChannelDataAccessObject {
@@ -25,6 +26,7 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
 
     /**
      * Constructs a new ChannelDataAccessObject and loads data from the specified JSON file.
+     *
      * @param jsonPath The path to the JSON file containing channel and user data.
      * @throws IOException If there is an issue reading the file.
      */
@@ -33,13 +35,13 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
         String data = new String(Files.readAllBytes(Paths.get(jsonPath)));
         file = new JSONObject(data);
 
-        if (!file.isEmpty()){
-            for (String channelName : file.keySet()){
+        if (!file.isEmpty()) {
+            for (String channelName : file.keySet()) {
                 Channel channel = new Channel(channelName, null);
                 ArrayList<User> arrayList = new ArrayList<>();
                 accounts.put(channel, arrayList);
                 JSONArray users = file.getJSONArray(channelName);
-                for (int i = 0; i < users.length(); i++){
+                for (int i = 0; i < users.length(); i++) {
                     JSONObject user = users.getJSONObject(i);
                     String username = user.keys().next();
                     User theUser = new User(username, user.getString(username));
@@ -51,13 +53,14 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
 
     /**
      * Retrieves a list of channels that a given user is associated with.
+     *
      * @param user The user for whom to retrieve the channel list.
      * @return An ArrayList of Channels associated with the given user.
      */
     public ArrayList<Channel> getChannels(User user) {
         ArrayList<Channel> result = new ArrayList<>();
-        for (Channel channel : accounts.keySet()){
-            for (User muser: accounts.get(channel)) {
+        for (Channel channel : accounts.keySet()) {
+            for (User muser : accounts.get(channel)) {
                 if (muser.getName().equals(user.getName())) {
                     channel.setCurrUser(user);
                     result.add(channel);
@@ -70,8 +73,9 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
 
     /**
      * Saves the specified user data to the specified channel in the JSON file.
+     *
      * @param channelName The channel name of the channel to be saved.
-     * @param curr The current user whose data is to be saved.
+     * @param curr        The current user whose data is to be saved.
      */
     public void save(String channelName, User curr) {
         JSONObject jsonObject;
@@ -89,13 +93,13 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
 
         JSONArray users = jsonObject.getJSONArray(channelName);
         boolean exist = false;
-        for (int j = 0; j < users.length(); j++){
+        for (int j = 0; j < users.length(); j++) {
             JSONObject user = users.getJSONObject(j);
-            if(user.keys().next().equals(curr.getName())) {
+            if (user.keys().next().equals(curr.getName())) {
                 exist = true;
             }
         }
-        if (!exist){
+        if (!exist) {
             JSONObject addUser = new JSONObject();
             addUser.put(curr.getName(), curr.getPassword());
             users.put(addUser);

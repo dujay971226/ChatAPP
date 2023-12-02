@@ -16,8 +16,8 @@ public class SettingState {
     private boolean isActive = false;
     private User user;
     private Channel channel;
-    private Collection<PNHereNowChannelData> channelOccupancy;
-    private ArrayList<Message> channelHistory;
+    private Collection<PNHereNowChannelData> channelOccupancy = new ArrayList<>();
+    private ArrayList<Message> channelHistory = new ArrayList<>();
 
     public SettingState(SettingState copy) {
         this.loadingSubscribersError = copy.getLoadingSubscribersError();

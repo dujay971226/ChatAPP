@@ -7,7 +7,7 @@ import java.beans.PropertyChangeSupport;
 
 public class ChannelHistoryViewModel extends ViewModel {
 
-    public static final String TITLE_LABEL = "Channel History View";
+    public static final String TITLE_LABEL = "Channel History";
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);

@@ -1,9 +1,6 @@
 package api;
 
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,6 +11,7 @@ public class Academic {
     public static String searchJournals(String content) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/search?").newBuilder();
+        urlBuilder.addQueryParameter("Key","cnzZYl3wju4CtE9gJPhja1MCaONq6nIf1rusHB1p");
         urlBuilder.addQueryParameter("query", content);
         urlBuilder.addQueryParameter("fields", "title,url,abstract");
         urlBuilder.addQueryParameter("offset", "100");
@@ -48,6 +46,7 @@ public class Academic {
     public static String searchAuthor(String name) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/author/search?").newBuilder();
+        urlBuilder.addQueryParameter("Key","cnzZYl3wju4CtE9gJPhja1MCaONq6nIf1rusHB1p");
         urlBuilder.addQueryParameter("query", name);
         urlBuilder.addQueryParameter("fields", "name,url");
         urlBuilder.addQueryParameter("offset", "100");
@@ -82,7 +81,8 @@ public class Academic {
 
     public static String searchByDOI(String DOI) {
         OkHttpClient client = new OkHttpClient();
-        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/" + DOI).newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.semanticscholar.org/graph/v1/paper/"+DOI).newBuilder();
+        urlBuilder.addQueryParameter("Key","cnzZYl3wju4CtE9gJPhja1MCaONq6nIf1rusHB1p");
         urlBuilder.addQueryParameter("fields", "title,url,abstract");
         urlBuilder.addQueryParameter("offset", "100");
         urlBuilder.addQueryParameter("limit", "1");
@@ -101,9 +101,10 @@ public class Academic {
             String title = responseBody.getString("title");
             String articleUrl = responseBody.getString("url");
             String articleAbstract = "";
-            if (!responseBody.isNull("abstract")) {
+            if(!responseBody.isNull("abstract")) {
                 articleAbstract = responseBody.getString("abstract");
-            } else {
+            }
+            else{
                 articleAbstract = "no abstract provided";
             }
             result = title + "-----" + articleUrl + "\n" + "ABSTRACT-----" + articleAbstract + "\n";

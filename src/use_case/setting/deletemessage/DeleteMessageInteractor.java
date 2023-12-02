@@ -4,8 +4,10 @@ import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNDeleteMessagesResult;
+import entity.Message;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
     final DeleteMessageOutputBoundary deleteMessagePresenter;
@@ -22,13 +24,13 @@ public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
 
         String channelName = deleteMessageInputData.getChannelName();
 
-        Object[] startTimeLists = deleteMessageInputData.getStartTimeLists();
+        Object[] startTimes = deleteMessageInputData.getStartTimeLists();
+        HashMap<Long, Message> deleteMessages = deleteMessageInputData.getDeleteMessages();
 
         // for each timestamp in the startTimeLists, delete their corresponding messages.
-        for (Object start : startTimeLists) {
-            long startTime = (Long) start;
-            long startT = startTime - 1;
-            long endT = startTime + 1;
+        for (int i = 0; i < startTimes.length; i++) {
+            long startT = (Long) startTimes[i];
+            long endT = deleteMessages.get(startT).getEndTimeStamp();
             pubnub.deleteMessages()
                     .channels(Collections.singletonList(channelName))
                     .start(startT)
@@ -39,7 +41,7 @@ public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
                             // The deleteMessages() method does not return actionable data, be sure to check the status
                             // object on the outcome of the operation by checking the status.isError().
                             if (status.isError()) {
-                                deleteMessagePresenter.prepareFailView("Error: " + status.getErrorData().getInformation() + "happens when deleting message with timestamp:" + startTime);
+                                deleteMessagePresenter.prepareFailView("Error: " + status.getErrorData().getInformation() + "happens when deleting message with timestamp:" + startT);
                             }
                         }
                     });

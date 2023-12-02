@@ -81,8 +81,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         innerPanel.repaint();
     }
 
-    public void actionPerformed(ActionEvent evt) {
-    }
+    public void actionPerformed(ActionEvent evt) {}
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -90,7 +89,8 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         if (state.isActive()) {
             state.setActiveState(false);
             showSettingController.execute(state.getChannel().getName(), state.getConfig());
-        } else if (state.getLoadingSubscribersError() != null) {
+        }
+        else if (state.getLoadingSubscribersError() != null) {
             loadingSubcribersErrorField.setText(state.getLoadingSubscribersError());
             state.setLoadingSubscribersError(null);
         } else {
@@ -113,6 +113,24 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
 
             innerPanel.revalidate();
             innerPanel.repaint();
+        }
+    }
+
+    public void simulateCancelButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(cancel, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
+        ActionListener[] actionListeners = cancel.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateChannelHistoryButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(channelhistory, ActionEvent.ACTION_PERFORMED, "ChannelHistoryButtonPressed");
+        ActionListener[] actionListeners = channelhistory.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
         }
     }
 

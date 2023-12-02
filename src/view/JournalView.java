@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * The JournalView class represents the user interface for the journal-related functionality.
@@ -150,5 +151,16 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
      */
     public void propertyChange(PropertyChangeEvent evt) {
         textArea.setText(journalViewModel.getState().getSearchResult());
+    }
+    public ArrayList<JButton> getButtons(){
+        ArrayList<JButton> result = new ArrayList<>();
+        result.add(searchcontent);
+        result.add(searchdoi);
+        result.add(searchauthor);
+        result.add(back);
+        return result;
+    }
+    public String getText(){
+        return textArea.getText();
     }
 }

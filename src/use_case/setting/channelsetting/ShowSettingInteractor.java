@@ -5,7 +5,6 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.presence.PNHereNowResult;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class ShowSettingInteractor implements ShowSettingInputBoundary {

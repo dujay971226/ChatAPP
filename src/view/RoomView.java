@@ -1,7 +1,6 @@
 package view;
 
 
-import com.google.gson.JsonObject;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.callbacks.SubscribeCallback;
@@ -22,11 +21,9 @@ import interface_adapter.room.RoomViewModel;
 import interface_adapter.room.room_exit.RoomExitController;
 import interface_adapter.room.room_message.RoomMessageController;
 import interface_adapter.room.room_receive.RoomReceiveController;
-import interface_adapter.room.room_reload.RoomReloadController;
 import interface_adapter.room.room_to_journal.RoomToJournalController;
 import interface_adapter.room.room_to_setting.RoomToSettingController;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,39 +35,36 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static java.lang.Thread.sleep;
+
 public class RoomView extends JPanel implements ActionListener, PropertyChangeListener {
 
     public final String viewName = "room";
 
     private final RoomViewModel roomViewModel;
     private final JTextArea messageInputField = new JTextArea(3, 30);
-    DefaultListModel<String> listModel = new DefaultListModel<>();
-    JList<String> messageList = new JList<String>(listModel);
     private final RoomMessageController roomMessageController;
     private final RoomReceiveController roomReceiveController;
     private final RoomExitController roomExitController;
-    private final RoomReloadController roomReloadController;
     private final RoomToSettingController roomToSettingController;
     private final RoomToJournalController roomToJournalController;
     private final JButton setting;
     private final JButton journal;
     private final JButton exit;
     private final JButton send;
-    private final JButton reload;
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    JList<String> messageList = new JList<String>(listModel);
 
 
-
-    public RoomView (RoomMessageController roomMessageController,
-                     RoomReceiveController roomReceiveController,
-                     RoomExitController roomExitController,
-                     RoomReloadController roomReloadController,
-                     RoomViewModel roomViewModel,
-                     RoomToSettingController roomToSettingController,
-                     RoomToJournalController roomToJournalController) throws PubNubException  {
+    public RoomView(RoomMessageController roomMessageController,
+                    RoomReceiveController roomReceiveController,
+                    RoomExitController roomExitController,
+                    RoomViewModel roomViewModel,
+                    RoomToSettingController roomToSettingController,
+                    RoomToJournalController roomToJournalController) throws PubNubException {
         this.roomMessageController = roomMessageController;
         this.roomReceiveController = roomReceiveController;
         this.roomExitController = roomExitController;
-        this.roomReloadController = roomReloadController;
         this.roomViewModel = roomViewModel;
         this.roomToSettingController = roomToSettingController;
         this.roomToJournalController = roomToJournalController;
@@ -86,8 +80,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         //buttons to swap to journal view, setting view and profile view
         JPanel buttons_high = new JPanel();
         buttons_high.setAlignmentX(CENTER_ALIGNMENT);
-        reload = new JButton(RoomViewModel.RELOAD_BUTTON_LABEL);
-        buttons_high.add(reload);
         journal = new JButton(RoomViewModel.JOURNAL_BUTTON_LABEL);
         buttons_high.add(journal);
         setting = new JButton(RoomViewModel.SETTING_BUTTON_LABEL);
@@ -117,25 +109,13 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(send)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = currState.getUser().getName() + ": " +messageInputField.getText();
+                            String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
-                                    currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
                                     text
                             );
-                        }
-                    }
-                }
-        );
-
-        reload.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(reload)) {
-                            RoomState currState = roomViewModel.getState();
-                            roomReloadController.execute();
                         }
                     }
                 }
@@ -174,7 +154,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(exit)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = messageInputField.getText();
                             roomExitController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
@@ -191,19 +170,18 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                             messageInputField.setText("");
                         }
                     }
 
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        if (e.getKeyCode()==KeyEvent.VK_ENTER && !e.isShiftDown()){
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER && !e.isShiftDown()) {
                             RoomState currState = roomViewModel.getState();
                             String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
-                                    currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
                                     text
@@ -243,6 +221,7 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
     public void actionPerformed(ActionEvent e) {
 
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         RoomState currState = roomViewModel.getState();
@@ -326,13 +305,23 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         if (currState.getLOG_UPDATE()) {
             listModel.removeAllElements();
             ArrayList<Message> newMessages = currState.getMessageLog();
+            int i = 0;
+            while (i < 5 & newMessages == null) {
+                try {
+                    sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+                i++;
+            }
             ArrayList<String> sortedMessage = SortByDate(newMessages);
-            for (String msg: sortedMessage) {
+            for (String msg : sortedMessage) {
                 listModel.addElement(msg);
             }
+
             currState.setOffNotice();
             scrollToBottom();
-        //Someone sent a message online, need to load
+
+            //Someone sent a message online, need to load
         }
         if (currState.getNEW_MESSAGE_UPDATE()) {
             listModel.addElement(currState.getMessage());
@@ -342,6 +331,8 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
             scrollToBottom();
         }
 
+//        messageList.revalidate();
+//        messageList.repaint();
     }
 
 
@@ -351,10 +342,63 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         return new ArrayList<>(dateFormatMap.values());
     }
 
-    private void scrollToBottom(){
-        int lastIndex = messageList.getModel().getSize()-1;
-        if(lastIndex >= 0){
+    private void scrollToBottom() {
+        int lastIndex = messageList.getModel().getSize() - 1;
+        if (lastIndex >= 0) {
             messageList.ensureIndexIsVisible(lastIndex);
+        }
+    }
+
+    //For Testing
+
+    public void simulateSend() {
+        // Simulate the action associated with the exit button
+        messageInputField.setText("Hello World");
+        ActionEvent actionEvent = new ActionEvent(send, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = send.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public String simulateReceive() {
+
+        RoomState currState = roomViewModel.getState();
+        String msg = "Hello New World";
+        User user = currState.getUser();
+        Message newMessages = new Message(user, msg, LocalDateTime.now());
+        roomReceiveController.execute(newMessages);
+
+        int lastIndex = listModel.getSize() - 1;
+        return listModel.getElementAt(lastIndex);
+
+    }
+
+    public void simulateExitButtonPress() {
+        // Simulate the action associated with the send button
+        ActionEvent actionEvent = new ActionEvent(exit, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = exit.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+
+    public void simulateJournalButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(journal, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = journal.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateSettingButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(setting, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = setting.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
         }
     }
 

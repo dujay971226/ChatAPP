@@ -18,6 +18,7 @@ public class ShowSettingPresenter implements ShowSettingOutputBoundary {
     public void prepareSuccessView(ShowSettingOutputData response) {
         // On success, switch to the channel setting view.
         SettingState settingState = settingViewModel.getState();
+
         settingState.setChannelOccupancy(response.getChannelOccupancy());
         this.settingViewModel.setState(settingState);
         this.settingViewModel.firePropertyChanged();

@@ -9,6 +9,6 @@ public class ReturnToSettingInteractor implements ReturnToSettingInputBoundary {
 
     @Override
     public void execute(ReturnToSettingInputData returnToSettingInputData) {
-        returnToSettingPresenter.prepareSuccessView(new ReturnToSettingOutputData());
+        returnToSettingPresenter.prepareSuccessView(new ReturnToSettingOutputData(returnToSettingInputData.getChannelMessages()));
     }
 }

@@ -9,6 +9,6 @@ public class SettingToChannelHistoryInteractor implements SettingToChannelHistor
 
     @Override
     public void execute(SettingToChannelHistoryInputData returnToSettingInputData) {
-        returnToSettingPresenter.prepareSuccessView(new SettingToChannelHistoryOutputData(returnToSettingInputData.getChannelName(), returnToSettingInputData.getConfig()));
+        returnToSettingPresenter.prepareSuccessView(new SettingToChannelHistoryOutputData(returnToSettingInputData.getChannelName(), returnToSettingInputData.getConfig(), returnToSettingInputData.getUser()));
     }
 }

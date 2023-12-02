@@ -1,11 +1,6 @@
 package use_case.profile.profiletologout;
 
-import org.junit.Test;
-import use_case.journal.back.JournalToRoomInputBoundary;
-import use_case.journal.back.JournalToRoomInteractor;
-import use_case.journal.back.JournalToRoomOutputBoundary;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
 public class LogoutInteractorTest {
     @Test

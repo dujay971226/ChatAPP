@@ -3,28 +3,27 @@ package data_access;
 import entity.Channel;
 import entity.User;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ChannelDataAccessObjectTest {
 
     ChannelDataAccessObject channelDataAccessObject;
-    @Before
+    @BeforeAll
     public void setUp() throws Exception {
         channelDataAccessObject = new ChannelDataAccessObject("/Users/lxf0063/Desktop/ChatAPP/test/testchannel.json");
 
     }
-    @After
+    @AfterAll
     public void Teardown() throws IOException {
         String jsonString = "{\"channel1\":[{\"user1\":\"password1\"},{\"user2\":\"password2\"}],"
                 + "\"channel2\":[{\"user2\":\"password2\"}],"

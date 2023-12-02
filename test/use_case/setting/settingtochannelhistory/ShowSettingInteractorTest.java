@@ -1,20 +1,19 @@
-package use_case.profile.profiletocreate;
+package use_case.setting.settingtochannelhistory;
 
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.UserId;
-import data_access.iChannelDataAccessObject;
 import entity.Channel;
 import entity.User;
 import org.junit.jupiter.api.Test;
+import use_case.setting.channelsetting.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProfiletocreateInteractorTest {
-
+public class ShowSettingInteractorTest {
     @Test
     public void successTest() throws PubNubException {
         User user = new User("user1", "password1");
@@ -28,30 +27,21 @@ public class ProfiletocreateInteractorTest {
         pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
         PubNub pubnub = new PubNub(pnConfiguration);
 
-        ProfiletocreateInputData inputdata = new ProfiletocreateInputData(user,pubnub);
-        ProfiletocreateOutputBoundary successPresenter = new ProfiletocreateOutputBoundary() {
+        ShowSettingInputData inputData = new ShowSettingInputData(channel.getName(), pubnub);
+        ShowSettingOutputBoundary successPresenter = new ShowSettingOutputBoundary() {
             @Override
-            public void prepareSuccessView(ProfiletocreateOutputData outputData) {
-                assertEquals(user,outputData.getUser());
-                assertEquals(pubnub,outputData.getConfig());
-                assertEquals(channels,outputData.getChannelLog());
+            public void prepareSuccessView(ShowSettingOutputData showSettingOutputData) {
+                assertEquals(user,showSettingOutputData.getChannelOccupancy());
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+
             }
         };
 
-        ProfiletocreateInteractor interactor = new ProfiletocreateInteractor(successPresenter, new iChannelDataAccessObject() {
-            @Override
-            public ArrayList<Channel> getChannels(User user) {
-                return channels;
-            }
-
-            @Override
-            public void save(String channelName, User curr) {
-
-            }
-        });
-        interactor.execute(inputdata);
-
-
+        ShowSettingInputBoundary interactor = new ShowSettingInteractor(successPresenter);
+        interactor.execute(inputData);
     }
 
 }

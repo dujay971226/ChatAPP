@@ -20,8 +20,14 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for create room interactor.
+ */
 class CreateRoomInteractorTest {
 
+    /**
+     * Success Test with empty channel log.
+     */
     @org.junit.jupiter.api.Test
     void successTestWithNullChannelLog() {
         try {
@@ -58,6 +64,9 @@ class CreateRoomInteractorTest {
         }
     }
 
+    /**
+     * Success test with nonempty channel log.
+     */
     @org.junit.jupiter.api.Test
     void successTestWithNonNullChannelLog() {
         try {

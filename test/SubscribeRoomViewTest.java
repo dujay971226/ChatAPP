@@ -34,6 +34,9 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for subscribe room view.
+ */
 class SubscribeRoomViewTest {
 
     ViewManagerModel viewManagerModel;
@@ -42,6 +45,11 @@ class SubscribeRoomViewTest {
     PubNub pubNub;
     ChannelDataAccessObject channelDataAccessObject;
 
+    /**
+     * Initializes test.
+     * @throws PubNubException
+     * @throws IOException
+     */
     @BeforeEach
     void testInit() throws PubNubException, IOException {
         JFrame application = new JFrame("Chat App");
@@ -121,6 +129,9 @@ class SubscribeRoomViewTest {
         cardLayout.show(views, viewManagerModel.getActiveView());
     }
 
+    /**
+     * Tests subscribe button empty string.
+     */
     @org.junit.jupiter.api.Test
     void testSubscribeButtonEmptyString() {
         SubscribeRoomState state = subscribeRoomViewModel.getState();
@@ -130,6 +141,9 @@ class SubscribeRoomViewTest {
         assertEquals("", subscribeRoomViewModel.getState().getChannelName());
     }
 
+    /**
+     * Tests subscribe button with nonempty string.
+     */
     @org.junit.jupiter.api.Test
     void testSubscribeButtonNotEmptyString() {
         SubscribeRoomState state = subscribeRoomViewModel.getState();
@@ -141,6 +155,9 @@ class SubscribeRoomViewTest {
         assertEquals(channelName, state.getChannelName());
     }
 
+    /**
+     * Tests with nonempty channel log.
+     */
     @org.junit.jupiter.api.Test
     void testNonEmptyChannelLog() {
         SubscribeRoomState state = subscribeRoomViewModel.getState();
@@ -165,12 +182,18 @@ class SubscribeRoomViewTest {
         assertEquals("testing channel", subscribeRoomViewModel.getState().getChannelName());
     }
 
+    /**
+     * Tests to create button.
+     */
     @org.junit.jupiter.api.Test
     void testToCreateButton() {
         subscribeRoomView.simulateCreateButton();
         assertEquals("create", viewManagerModel.getActiveView());
     }
 
+    /**
+     * Tests property change.
+     */
     @org.junit.jupiter.api.Test
     void testPropertyChange() {
         SubscribeRoomState state = subscribeRoomViewModel.getState();

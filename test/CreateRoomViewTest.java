@@ -31,6 +31,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for create room view.
+ */
 class CreateRoomViewTest {
 
     private ViewManagerModel viewManagerModel;
@@ -39,7 +42,7 @@ class CreateRoomViewTest {
 
 
     /**
-     *
+     * Initializes test.
      * @throws PubNubException
      * @throws IOException
      */
@@ -124,18 +127,29 @@ class CreateRoomViewTest {
         cardLayout.show(views, viewManagerModel.getActiveView());
     }
 
+    /**
+     * Tests create button.
+     * @throws PubNubException
+     * @throws IOException
+     */
     @org.junit.jupiter.api.Test
     void testCreateButton() throws PubNubException, IOException {
         createRoomView.simulateCreateButton();
         assertEquals("room", viewManagerModel.getActiveView());
     }
 
+    /**
+     * Tests join button.
+     */
     @org.junit.jupiter.api.Test
     void testJoinButton() {
         createRoomView.simulateJoinButton();
         assertEquals("subscribe", viewManagerModel.getActiveView());
     }
 
+    /**
+     * Tests fire property change.
+     */
     @org.junit.jupiter.api.Test
     void testFirePropertyChange() {
         CreateRoomState state = createRoomViewModel.getState();
@@ -145,6 +159,9 @@ class CreateRoomViewTest {
         assertEquals(state, createRoomViewModel.getState());
     }
 
+    /**
+     * Tests channel name error.
+     */
     @org.junit.jupiter.api.Test
     void testChannelNameError() {
         CreateRoomState state = createRoomViewModel.getState();

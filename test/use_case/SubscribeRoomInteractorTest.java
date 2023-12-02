@@ -19,8 +19,14 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for subscribe room interactor.
+ */
 class SubscribeRoomInteractorTest {
 
+    /**
+     * Success test.
+     */
     @org.junit.jupiter.api.Test
     void successTestChannelExists() {
 

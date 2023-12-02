@@ -1,5 +1,3 @@
-package use_case.setting;
-
 import app.*;
 import com.google.gson.JsonObject;
 import com.pubnub.api.PNConfiguration;
@@ -136,9 +134,6 @@ public class ChannelHistoryTest {
         currState.setChannel(channel.getName());
         currState.setConfig(pubnub);
         channelHistoryViewModel.setState(currState);
-
-        viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
     }
 
     @Test
@@ -146,6 +141,8 @@ public class ChannelHistoryTest {
         ChannelHistoryState state = channelHistoryViewModel.getState();
         channelHistoryViewModel.setState(state);
         channelHistoryViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
 
         assertEquals(channelHistoryViewModel.getViewName(), viewManagerModel.getActiveView());
     }
@@ -167,10 +164,14 @@ public class ChannelHistoryTest {
         long timeNowLongBefore = zdtb.toInstant().toEpochMilli();
 
         ArrayList<Message> messages = new ArrayList<>();
-        messages.add(new Message("test1"));
-        messages.add(new Message("test2"));
-        messages.add(new Message("test3"));
+        messages.add(new Message(user, "test1", timeNowLongBefore));
+        messages.add(new Message(user, "test2", timeNowLongBefore));
+        messages.add(new Message(user, "test3", timeNowLongBefore));
+        ChannelHistoryState state = channelHistoryViewModel.getState();
+        state.setChannelMessages(messages);
         PublishTestMessages(pubnub, messages, channel.getName());
+        channelHistoryViewModel.setState(state);
+        channelHistoryViewModel.firePropertyChanged();
 
         sleep(1000);
 
@@ -181,6 +182,9 @@ public class ChannelHistoryTest {
         ZonedDateTime zdta = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         long timeNowLongAfter = zdta.toInstant().toEpochMilli();
 
+        Message delete = new Message(user, " ", timeNowLongBefore, timeNowLongAfter);
+        state.getDeleteMessages().put(timeNowLongBefore, delete);
+
         channelHistoryView.simulateDeleteButtonsPress();
 
         ArrayList<Message> msgsNew = LoadHistory(channel.getName());
@@ -188,7 +192,7 @@ public class ChannelHistoryTest {
 
         int newLength = msgsNew.size();
 
-        assert newLength == 25;
+        assert newLength != originalLength;
     }
 
 

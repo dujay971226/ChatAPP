@@ -17,7 +17,7 @@ public class ChannelHistoryState {
 
     private PubNub config;
     private String channel;
-    private HashMap<Long, String> deleteMessages = new HashMap<>();
+    private HashMap<Long, Message> deleteMessages = new HashMap<>();
 
     public ChannelHistoryState() {
     }
@@ -98,11 +98,11 @@ public class ChannelHistoryState {
         this.channel = channel;
     }
 
-    public HashMap<Long, String> getDeleteMessages() {
+    public HashMap<Long, Message> getDeleteMessages() {
         return deleteMessages;
     }
 
-    public void setDeleteMessages(HashMap<Long, String> deleteMessages) {
+    public void setDeleteMessages(HashMap<Long, Message> deleteMessages) {
         this.deleteMessages = deleteMessages;
     }
 }

@@ -4,8 +4,10 @@ import com.pubnub.api.PubNub;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNDeleteMessagesResult;
+import entity.Message;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
     final DeleteMessageOutputBoundary deleteMessagePresenter;
@@ -23,12 +25,12 @@ public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
         String channelName = deleteMessageInputData.getChannelName();
 
         Object[] startTimes = deleteMessageInputData.getStartTimeLists();
-        Object[] endTimes = deleteMessageInputData.getEndTimesLists();
+        HashMap<Long, Message> deleteMessages = deleteMessageInputData.getDeleteMessages();
 
         // for each timestamp in the startTimeLists, delete their corresponding messages.
         for (int i = 0; i < startTimes.length; i++) {
             long startT = (Long) startTimes[i];
-            long endT = (Long) endTimes[i];
+            long endT = deleteMessages.get(startT).getEndTimeStamp();
             pubnub.deleteMessages()
                     .channels(Collections.singletonList(channelName))
                     .start(startT)

@@ -33,6 +33,15 @@ public class Message {
         this.content = msg;
     }
 
+    public Message(User user, String msg, long startTimeStamp, long endTimeStamp) {
+        this.user = user;
+        this.startTimeStamp = startTimeStamp;
+        this.endTimeStamp = endTimeStamp;
+        this.msgDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(startTimeStamp / 10000000L),
+                TimeZone.getDefault().toZoneId());
+        this.content = msg;
+    }
+
     public long getStartTimeStamp() {
         return startTimeStamp;
     }

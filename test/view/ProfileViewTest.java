@@ -40,7 +40,7 @@ public class ProfileViewTest {
         subscribeRoomViewModel = new SubscribeRoomViewModel();
         createRoomViewModel = new CreateRoomViewModel();
         loginViewModel = new LoginViewModel();
-        channelDataAccessObject = new ChannelDataAccessObject("testchannel.json");
+        channelDataAccessObject = new ChannelDataAccessObject("test/testchannel.json");
         profileView = ProfileUseCaseFactory.create(viewManagerModel,createRoomViewModel,subscribeRoomViewModel,loginViewModel,profileViewModel,channelDataAccessObject);
         viewManagerModel.setActiveView(profileView.getName());
     }

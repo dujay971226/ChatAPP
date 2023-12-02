@@ -183,6 +183,9 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         }
     }
 
+    /**
+     * Simulates a subscribe button click.
+     */
     public void simulateSubscribeButton() {
         ActionEvent actionEvent = new ActionEvent(subscribeButton, ActionEvent.ACTION_PERFORMED, "JoinButtonPressed");
         ActionListener[] actionListeners = subscribeButton.getActionListeners();
@@ -191,6 +194,9 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
         }
     }
 
+    /**
+     * Simulates a create button click.
+     */
     public void simulateCreateButton() {
         ActionEvent actionEvent = new ActionEvent(toCreateButton, ActionEvent.ACTION_PERFORMED, "ToCreateButtonPressed");
         ActionListener[] actionListeners = toCreateButton.getActionListeners();

@@ -77,6 +77,8 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
                                 }
                             } // return empty arraylist if channels is null
                             subscribeRoomPresenter.prepareSuccessView(outputData);
+                        } else {
+                            subscribeRoomPresenter.prepareFailView("Connection Error: " + pnStatus.getErrorData().getInformation());
                         }
                     }
                 });

@@ -116,4 +116,30 @@ public class CreateRoomView extends JPanel implements ActionListener, PropertyCh
             JOptionPane.showMessageDialog(this, state.getChannelNameError());
         }
     }
+
+
+    /**
+     * For testing only.
+     * Simulates a button click on create.
+     */
+    public void simulateCreateButton() {
+        createRoomTextField.setText("Testing Channel");
+        ActionEvent actionEvent = new ActionEvent(createButton, ActionEvent.ACTION_PERFORMED, "CreateButtonPressed");
+        ActionListener[] actionListeners = createButton.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    /**
+     * For testing only.
+     * Simulates a button click on join.
+     */
+    public void simulateJoinButton() {
+        ActionEvent actionEvent = new ActionEvent(toSubscribeButton, ActionEvent.ACTION_PERFORMED, "JoinButtonPressed");
+        ActionListener[] actionListeners = createButton.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
 }

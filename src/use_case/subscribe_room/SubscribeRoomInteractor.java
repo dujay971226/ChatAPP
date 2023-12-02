@@ -5,6 +5,7 @@ import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.history.PNFetchMessageItem;
 import com.pubnub.api.models.consumer.history.PNFetchMessagesResult;
+import data_access.iChannelDataAccessObject;
 import entity.Message;
 import entity.User;
 import org.jetbrains.annotations.NotNull;
@@ -22,14 +23,17 @@ import java.util.*;
 public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
 
     final SubscribeRoomOutputBoundary subscribeRoomPresenter;
+    final iChannelDataAccessObject channelDataAccessObject;
 
     /**
      * Initializes a SubscribeRoomInteractor instance.
      *
      * @param subscribeRoomOutputBoundary presenter of subscribe room
      */
-    public SubscribeRoomInteractor(SubscribeRoomOutputBoundary subscribeRoomOutputBoundary) {
+    public SubscribeRoomInteractor(SubscribeRoomOutputBoundary subscribeRoomOutputBoundary,
+                                   iChannelDataAccessObject channelDataAccessObject) {
         this.subscribeRoomPresenter = subscribeRoomOutputBoundary;
+        this.channelDataAccessObject = channelDataAccessObject;
     }
 
     /**
@@ -41,6 +45,7 @@ public class SubscribeRoomInteractor implements SubscribeRoomInputBoundary {
     public void execute(SubscribeRoomInputData subscribeRoomInputData) {
         PubNub pubNub = subscribeRoomInputData.getConfig();
         String channelName = subscribeRoomInputData.getChannelName();
+        channelDataAccessObject.save(subscribeRoomInputData.getChannelName(), subscribeRoomInputData.getUser());
         pubNub.subscribe().channels(Collections.singletonList(channelName)).execute();
         ArrayList<Message> messageLog = new ArrayList<>();
 

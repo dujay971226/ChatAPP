@@ -174,7 +174,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                 innerPanel.removeAll();
                 ArrayList<Message> channelMessages = state.getChannelMessages();
                 if (!channelMessages.isEmpty()) {
-                    for (Message messageItem : channelMessages) {
+                    for (int i = 0; i < channelMessages.size(); i++) {
+                        Message messageItem = channelMessages.get(i);
                         JPanel messagePanel = new JPanel();
 
                         JLabel mLabel = new JLabel(messageItem.toString());
@@ -189,7 +190,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
                                 @Override
                                 public void actionPerformed(ActionEvent e) {
                                     HashMap<Long, String> deleteMessages = state.getDeleteMessages();
-                                    deleteMessages.put(messageItem.getTimeStamp(), messageItem.toString());
+                                    deleteMessages.put(messageItem.getStartTimeStamp(), messageItem.toString());
                                     reloadDeleteMessagePanel(deleteMessagePanel);
                                 }
                             });

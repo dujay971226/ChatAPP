@@ -11,8 +11,8 @@ public class DeleteMessageController {
         this.deleteMessageInteractor = deleteMessageInteractor;
     }
 
-    public void execute(Object[] startTime, String channelName, PubNub config) {
-        DeleteMessageInputData deleteMessageInputData = new DeleteMessageInputData(startTime, channelName, config);
+    public void execute(Object[] startTime, Object[] endTime, String channelName, PubNub config) {
+        DeleteMessageInputData deleteMessageInputData = new DeleteMessageInputData(startTime, endTime, channelName, config);
 
         deleteMessageInteractor.execute(deleteMessageInputData);
     }

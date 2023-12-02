@@ -36,6 +36,9 @@ import view.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -119,14 +122,6 @@ public class ChannelHistoryTest {
         pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
         pubnub = new PubNub(pnConfiguration);
 
-        pubnub.subscribe().channels(Collections.singletonList(channel.getName())).execute();
-        sleep(1000);
-        ArrayList<Message> messages = new ArrayList<>();
-        messages.add(new Message("test1"));
-        messages.add(new Message("test2"));
-        messages.add(new Message("test3"));
-        PublishTestMessages(pubnub, messages, channel.getName());
-
         RoomState state = roomViewModel.getState();
         state.setUser(user);
         state.setChannel(channel);
@@ -144,7 +139,6 @@ public class ChannelHistoryTest {
 
         viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-        sleep(1000);
     }
 
     @Test
@@ -166,13 +160,28 @@ public class ChannelHistoryTest {
 
     @Test
     public void TestDeleteMessage () throws InterruptedException {
-        ArrayList<Message> msgs = LoadHistory(channel.getName());
+        pubnub.subscribe().channels(Collections.singletonList(channel.getName())).execute();
         sleep(1000);
+
+        ZonedDateTime zdtb = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
+        long timeNowLongBefore = zdtb.toInstant().toEpochMilli();
+
+        ArrayList<Message> messages = new ArrayList<>();
+        messages.add(new Message("test1"));
+        messages.add(new Message("test2"));
+        messages.add(new Message("test3"));
+        PublishTestMessages(pubnub, messages, channel.getName());
+
+        sleep(1000);
+
+        ArrayList<Message> msgs = LoadHistory(channel.getName());
 
         int originalLength = msgs.size();
 
+        ZonedDateTime zdta = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
+        long timeNowLongAfter = zdta.toInstant().toEpochMilli();
+
         channelHistoryView.simulateDeleteButtonsPress();
-        sleep(1000);
 
         ArrayList<Message> msgsNew = LoadHistory(channel.getName());
         sleep(1000);

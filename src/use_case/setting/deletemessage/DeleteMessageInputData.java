@@ -6,10 +6,12 @@ public class DeleteMessageInputData {
     private final String channelName;
     private final PubNub config;
     // Since we will process the data inside the interactor, then it would be redundant to cast the Object[] array to Long[] in the view
-    private Object[] startTimeLists;
+    private Object[] startTimes;
+    private Object[] endTimes;
 
-    public DeleteMessageInputData(Object[] startTime, String channelName, PubNub config) {
-        this.startTimeLists = startTime;
+    public DeleteMessageInputData(Object[] startTimes, Object[] endTimes, String channelName, PubNub config) {
+        this.startTimes = startTimes;
+        this.endTimes = endTimes;
         this.channelName = channelName;
         this.config = config;
     }
@@ -19,7 +21,10 @@ public class DeleteMessageInputData {
     }
 
     public Object[] getStartTimeLists() {
-        return startTimeLists;
+        return startTimes;
+    }
+    public Object[] getEndTimesLists() {
+        return endTimes;
     }
 
     public String getChannelName() {

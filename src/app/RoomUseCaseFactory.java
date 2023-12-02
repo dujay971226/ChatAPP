@@ -11,8 +11,6 @@ import interface_adapter.room.room_message.RoomMessageController;
 import interface_adapter.room.room_message.RoomMessagePresenter;
 import interface_adapter.room.room_receive.RoomReceiveController;
 import interface_adapter.room.room_receive.RoomReceivePresenter;
-import interface_adapter.room.room_reload.RoomReloadController;
-import interface_adapter.room.room_reload.RoomReloadPresenter;
 import interface_adapter.room.room_to_journal.RoomToJournalController;
 import interface_adapter.room.room_to_journal.RoomToJournalPresenter;
 import interface_adapter.room.room_to_setting.RoomToSettingController;
@@ -27,9 +25,6 @@ import use_case.room.room_message.RoomMessageOutputBoundary;
 import use_case.room.room_receive.RoomReceiveInputBoundary;
 import use_case.room.room_receive.RoomReceiveInteractor;
 import use_case.room.room_receive.RoomReceiveOutputBoundary;
-import use_case.room.room_reload.RoomReloadInputBoundary;
-import use_case.room.room_reload.RoomReloadInteractor;
-import use_case.room.room_reload.RoomReloadOutputBoundary;
 import use_case.room.room_to_journal.RoomToJournalInputBoundary;
 import use_case.room.room_to_journal.RoomToJournalInteractor;
 import use_case.room.room_to_journal.RoomToJournalOutputBoundary;
@@ -55,22 +50,12 @@ public class RoomUseCaseFactory {
             RoomExitController roomExitController = createRoomExitUseCase(viewManagerModel, profileViewModel);
             RoomToSettingController roomToSettingController = createRoomToSettingUseCase(viewManagerModel, settingViewModel);
             RoomToJournalController roomToJournalController = createRoomToJournalUseCase(viewManagerModel, journalViewModel);
-            RoomReloadController roomReloadController = createRoomReloadUseCase(roomViewModel);
             return new RoomView(roomMessageController, roomReceiveController,
-                    roomExitController, roomReloadController, roomViewModel, roomToSettingController, roomToJournalController);
+                    roomExitController, roomViewModel, roomToSettingController, roomToJournalController);
         } catch (IOException | PubNubException e) {
         }
 
         return null;
-    }
-
-    private static RoomReloadController createRoomReloadUseCase(RoomViewModel roomViewModel) {
-
-        RoomReloadOutputBoundary roomReloadOutputBoundary = new RoomReloadPresenter(roomViewModel);
-
-        RoomReloadInputBoundary roomReloadInputBoundary = new RoomReloadInteractor(roomReloadOutputBoundary);
-
-        return new RoomReloadController(roomReloadInputBoundary);
     }
 
     //Create necessary Controllers for RoomView

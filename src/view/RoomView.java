@@ -112,7 +112,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                             String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
-                                    currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
                                     text
@@ -155,7 +154,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(exit)) {
                             RoomState currState = roomViewModel.getState();
-                            String text = messageInputField.getText();
                             roomExitController.execute(
                                     currState.getUser(),
                                     currState.getChannel(),
@@ -184,7 +182,6 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
                             String text = currState.getUser().getName() + ": " + messageInputField.getText();
                             messageInputField.setText("");
                             roomMessageController.execute(
-                                    currState.getUser(),
                                     currState.getChannel(),
                                     currState.getConfig(),
                                     text
@@ -349,6 +346,59 @@ public class RoomView extends JPanel implements ActionListener, PropertyChangeLi
         int lastIndex = messageList.getModel().getSize() - 1;
         if (lastIndex >= 0) {
             messageList.ensureIndexIsVisible(lastIndex);
+        }
+    }
+
+    //For Testing
+
+    public void simulateSend() {
+        // Simulate the action associated with the exit button
+        messageInputField.setText("Hello World");
+        ActionEvent actionEvent = new ActionEvent(send, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = send.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public String simulateReceive() {
+
+        RoomState currState = roomViewModel.getState();
+        String msg = "Hello New World";
+        User user = currState.getUser();
+        Message newMessages = new Message(user, msg, LocalDateTime.now());
+        roomReceiveController.execute(newMessages);
+
+        int lastIndex = listModel.getSize() - 1;
+        return listModel.getElementAt(lastIndex);
+
+    }
+
+    public void simulateExitButtonPress() {
+        // Simulate the action associated with the send button
+        ActionEvent actionEvent = new ActionEvent(exit, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = exit.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+
+    public void simulateJournalButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(journal, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = journal.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
+        }
+    }
+
+    public void simulateSettingButtonPress() {
+        // Simulate the action associated with the exit button
+        ActionEvent actionEvent = new ActionEvent(setting, ActionEvent.ACTION_PERFORMED, "ExitButtonPressed");
+        ActionListener[] actionListeners = setting.getActionListeners();
+        for (ActionListener listener : actionListeners) {
+            listener.actionPerformed(actionEvent);
         }
     }
 

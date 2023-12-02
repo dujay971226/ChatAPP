@@ -241,7 +241,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
 
     public void simulateDeleteButtonsPress() {
         // Simulate the action associated with the exit button
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < deleteMessageButtons.size(); i++){
             JButton addToDelete = deleteMessageButtons.get(i);
             ActionEvent actionEvent = new ActionEvent(addToDelete, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
             ActionListener[] actionListeners = addToDelete.getActionListeners();
@@ -255,8 +255,8 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
             listener.actionPerformed(actionEvent);
             ActionEvent actionEvent2 = new ActionEvent(deleteAll, ActionEvent.ACTION_PERFORMED, "CancelButtonPressed");
             ActionListener[] actionListeners2 = deleteAll.getActionListeners();
-            for (ActionListener listener2 : actionListeners) {
-                listener.actionPerformed(actionEvent);
+            for (ActionListener listener2 : actionListeners2) {
+                listener2.actionPerformed(actionEvent2);
             }
         }
     }

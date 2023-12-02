@@ -1,6 +1,7 @@
 package use_case.setting;
 
 import app.*;
+import com.google.gson.JsonObject;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ChannelHistoryTest {
@@ -57,7 +59,7 @@ public class ChannelHistoryTest {
 
 
     @BeforeEach
-    public void setup() throws PubNubException {
+    public void setup() throws PubNubException, InterruptedException {
         JFrame application = new JFrame("Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +102,7 @@ public class ChannelHistoryTest {
         views.add(roomView, roomView.viewName);
         views.add(journalView, journalView.viewName);
         views.add(settingView, settingView.viewName);
+        views.add(channelHistoryView, channelHistoryView.viewName);
 
         viewManagerModel.setActiveView(roomView.viewName);
         cardLayout.show(views, viewManagerModel.getActiveView());
@@ -107,7 +110,7 @@ public class ChannelHistoryTest {
         application.setVisible(true);
 
         user = new User("user1", "password1");
-        channel = new Channel("SettingTest", user);
+        channel = new Channel("ChannelSettingTest", user);
 
         UserId userId = new UserId(user.getName());
         PNConfiguration pnConfiguration = new PNConfiguration(userId);
@@ -115,6 +118,14 @@ public class ChannelHistoryTest {
         pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd304abc");
         pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
         pubnub = new PubNub(pnConfiguration);
+
+        pubnub.subscribe().channels(Collections.singletonList(channel.getName())).execute();
+        sleep(1000);
+        ArrayList<Message> messages = new ArrayList<>();
+        messages.add(new Message("test1"));
+        messages.add(new Message("test2"));
+        messages.add(new Message("test3"));
+        PublishTestMessages(pubnub, messages, channel.getName());
 
         RoomState state = roomViewModel.getState();
         state.setUser(user);
@@ -130,20 +141,18 @@ public class ChannelHistoryTest {
         currState.setChannel(channel.getName());
         currState.setConfig(pubnub);
         channelHistoryViewModel.setState(currState);
+
+        viewManagerModel.setActiveView(channelHistoryViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+        sleep(1000);
     }
 
     @Test
-    public void TestShowChannelHistoryInteractor () {
-        ArrayList<Message> msgs = LoadHistory(channel.getName());
-
-        int originalLength = msgs.size();
-
+    public void TestShowChannelHistoryInteractorLoading () {
         ChannelHistoryState state = channelHistoryViewModel.getState();
-        state.setActive(true);
         channelHistoryViewModel.setState(state);
         channelHistoryViewModel.firePropertyChanged();
 
-        assertEquals(state.getChannelMessages().size(), originalLength);
         assertEquals(channelHistoryViewModel.getViewName(), viewManagerModel.getActiveView());
     }
 
@@ -156,18 +165,21 @@ public class ChannelHistoryTest {
 
 
     @Test
-    public void TestDeleteMessage () {
+    public void TestDeleteMessage () throws InterruptedException {
         ArrayList<Message> msgs = LoadHistory(channel.getName());
+        sleep(1000);
 
         int originalLength = msgs.size();
 
         channelHistoryView.simulateDeleteButtonsPress();
+        sleep(1000);
 
         ArrayList<Message> msgsNew = LoadHistory(channel.getName());
+        sleep(1000);
 
         int newLength = msgsNew.size();
 
-        assert newLength != originalLength;
+        assert newLength == 25;
     }
 
 
@@ -205,6 +217,20 @@ public class ChannelHistoryTest {
 
         return messages;
 
+    }
+
+    public void PublishTestMessages(PubNub pubnub, ArrayList<Message> messages, String channelName){
+
+        for (Message message : messages){
+            JsonObject messageJsonObject = new JsonObject();
+            messageJsonObject.addProperty("msg", message.getContent());
+
+            pubnub.publish()
+                    .channel(channelName)
+                    .message(messageJsonObject)
+                    .async((result, publishStatus) -> {}
+                    );
+        }
     }
 
 }

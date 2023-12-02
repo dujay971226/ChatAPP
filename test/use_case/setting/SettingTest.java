@@ -4,6 +4,7 @@ import app.ChannelSettingUseCaseFactory;
 import app.JournalUsecaseFactory;
 import app.ProfileUseCaseFactory;
 import app.RoomUseCaseFactory;
+import com.google.gson.JsonObject;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
@@ -33,7 +34,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SettingTest {
@@ -52,7 +55,7 @@ public class SettingTest {
 
 
     @BeforeEach
-    public void setup() throws PubNubException {
+    public void setup() throws PubNubException, InterruptedException {
         JFrame application = new JFrame("Chat App");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,7 +104,7 @@ public class SettingTest {
         application.setVisible(true);
 
         user = new User("user1", "password1");
-        channel = new Channel("RoomTest", user);
+        channel = new Channel("SettingTest", user);
 
         UserId userId = new UserId(user.getName());
         PNConfiguration pnConfiguration = new PNConfiguration(userId);
@@ -109,6 +112,14 @@ public class SettingTest {
         pnConfiguration.setPublishKey("pub-c-67b2c306-e615-4a3b-ae82-408ffd304abc");
         pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
         pubnub = new PubNub(pnConfiguration);
+
+        pubnub.subscribe().channels(Collections.singletonList(channel.getName())).execute();
+        sleep(1000);
+        ArrayList<Message> messages = new ArrayList<>();
+        messages.add(new Message("test1"));
+        messages.add(new Message("test2"));
+        messages.add(new Message("test3"));
+        PublishTestMessages(pubnub, messages, channel.getName());
 
         RoomState state = roomViewModel.getState();
         state.setUser(user);
@@ -125,18 +136,21 @@ public class SettingTest {
         currState.setConfig(pubnub);
         settingViewModel.setState(currState);
 
-        viewManagerModel.setActiveView(settingView.viewName);
+        viewManagerModel.setActiveView(settingViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+        sleep(1000);
     }
 
     @Test
-    public void TestChannelSettingLoadingData () {
+    public void TestChannelSettingLoadingData () throws InterruptedException {
         SettingState state = settingViewModel.getState();
         state.setActiveState(true);
         settingViewModel.setState(state);
         settingViewModel.firePropertyChanged();
         settingViewModel.setState(state);
         settingViewModel.firePropertyChanged();
+
+        sleep(1000);
 
         assertEquals(settingViewModel.getViewName(), viewManagerModel.getActiveView());
     }
@@ -158,9 +172,25 @@ public class SettingTest {
     }
 
     @Test
-    public void TestSettingToChannelHistory () {
+    public void TestSettingToChannelHistory () throws InterruptedException {
         settingView.simulateChannelHistoryButtonPress();
 
+        sleep(1000);
+
         assertEquals("channel history", viewManagerModel.getActiveView());
+    }
+
+    public void PublishTestMessages(PubNub pubnub, ArrayList<Message> messages, String channelName){
+
+        for (Message message : messages){
+            JsonObject messageJsonObject = new JsonObject();
+            messageJsonObject.addProperty("msg", message.getContent());
+
+            pubnub.publish()
+                    .channel(channelName)
+                    .message(messageJsonObject)
+                    .async((result, publishStatus) -> {}
+                    );
+        }
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ChannelHistoryState {
-    private ArrayList<Message> channelMessages;
+    private ArrayList<Message> channelMessages = new ArrayList<>();
     private String channelMessageError;
     private String deleteMessageError;
     private User currentUser;

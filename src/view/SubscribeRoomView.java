@@ -177,8 +177,7 @@ public class SubscribeRoomView extends JPanel implements ActionListener, Propert
             } else {
                 subscribeRoomController.execute(subscribeRoomViewModel.getState().getChannelName(),
                         subscribeRoomViewModel.getState().getConfig(),
-                        subscribeRoomViewModel.getState().getUser(),
-                        subscribeRoomViewModel.getState().getChannelLog());
+                        subscribeRoomViewModel.getState().getUser());
             }
         } else if (e.getSource().equals(toCreateButton)) {
             SubscribeRoomState state = subscribeRoomViewModel.getState();

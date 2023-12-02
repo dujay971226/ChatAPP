@@ -48,12 +48,5 @@ public class ProfileToSubscribePresenter implements ProfiletosubscribeOutputBoun
         viewManagerModel.firePropertyChanged();
     }
 
-    /**
-     * Prepares the view to reflect a failed subscription process.
-     * This method could be expanded to include more detailed handling of different failure scenarios.
-     */
-    public void prepareFailView() {
-        // Logic to update the view in case of subscription failure
-    }
 }
 

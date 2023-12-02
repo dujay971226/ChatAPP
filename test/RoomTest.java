@@ -119,8 +119,8 @@ public class RoomTest {
         channel = new Channel("RoomTest", user);
         msg = "Message Test";
         Message message1 = new Message(user, "history1", LocalDateTime.now());
-        Message message2 = new Message(user, "history1", LocalDateTime.now());
-        Message message3 = new Message(user, "history1", LocalDateTime.now());
+        Message message2 = new Message(user, "history2", LocalDateTime.now());
+        Message message3 = new Message(user, "history3", LocalDateTime.now());
         messageLog = new ArrayList<Message>();
         messageLog.add(message1);
         messageLog.add(message2);
@@ -208,7 +208,26 @@ public class RoomTest {
 
 
     @Test
-    public void TestSendMessage () {
+    public void TestLoadMessageLog () {
+
+        int originalSize = roomView.getListModelSize();
+
+        RoomState currState = roomViewModel.getState();
+
+        currState.setMessageLog(messageLog);
+        currState.setNotice();
+        roomViewModel.setState(currState);
+        roomViewModel.firePropertyChanged();
+
+        int updatedSize = roomView.getListModelSize();
+
+        assertEquals(originalSize + 3, updatedSize);
+
+    }
+
+
+    @Test
+    public void TestSendButton () {
 
         ArrayList<Message> msgs = LoadHistory(channel.getName());
 
@@ -223,6 +242,24 @@ public class RoomTest {
         assertEquals(originalLength, updatedLength);
 
     }
+
+    @Test
+    public void TestEnterPressed () throws AWTException {
+
+        ArrayList<Message> msgs = LoadHistory(channel.getName());
+
+        int originalLength = msgs.size();
+
+        roomView.simulateEnter();
+
+        ArrayList<Message> newMsgs = LoadHistory(channel.getName());
+
+        int updatedLength = newMsgs.size();
+
+        assertEquals(originalLength, updatedLength);
+
+    }
+
 
     @Test
     public void TestReceiveMessage () throws InterruptedException {

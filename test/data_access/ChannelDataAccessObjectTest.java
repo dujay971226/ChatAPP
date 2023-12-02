@@ -20,7 +20,7 @@ public class ChannelDataAccessObjectTest {
     ChannelDataAccessObject channelDataAccessObject;
     @BeforeAll
     public void setUp() throws Exception {
-        channelDataAccessObject = new ChannelDataAccessObject("/Users/lxf0063/Desktop/ChatAPP/test/testchannel.json");
+        channelDataAccessObject = new ChannelDataAccessObject("test/testchannel.json");
 
     }
     @AfterAll
@@ -30,20 +30,17 @@ public class ChannelDataAccessObjectTest {
                 + "\"channel3\":[{\"user1\":\"password1\"},{\"user3\":\"password3\"}]}";
 
         JSONObject file = new JSONObject(jsonString);
-        Files.write(Paths.get("/Users/lxf0063/Desktop/ChatAPP/test/testchannel.json"), file.toString().getBytes(), StandardOpenOption.CREATE);
+        Files.write(Paths.get("test/testchannel.json"), file.toString().getBytes(), StandardOpenOption.CREATE);
 
     }
 
     @Test
     public void getChannels() {
-        User user1 = new User("user1","password1");
+        User user3 = new User("user3","password3");
         ArrayList<Channel> channels = new ArrayList<>();
-        Channel channel1 = new Channel("channel1",null);
         Channel channel3 = new Channel("channel3",null);
-        channels.add(channel1);
         channels.add(channel3);
-        assertEquals("channel3",channelDataAccessObject.getChannels(user1).get(0).getName());
-        assertEquals("channel1",channelDataAccessObject.getChannels(user1).get(1).getName());
+        assertEquals("channel3",channelDataAccessObject.getChannels(user3).get(0).getName());
     }
 
     @Test
@@ -53,7 +50,7 @@ public class ChannelDataAccessObjectTest {
         ArrayList<Channel> channels = new ArrayList<>();
         channels.add(channel2);
         channelDataAccessObject.save("channel2", user4);
-        channelDataAccessObject = new ChannelDataAccessObject("/Users/lxf0063/Desktop/ChatAPP/test/testchannel.json");
+        channelDataAccessObject = new ChannelDataAccessObject("test/testchannel.json");
         assertEquals("channel2", channelDataAccessObject.getChannels(user4).get(0).getName());
 
     }

@@ -64,7 +64,7 @@ public class ChannelHistoryView extends JPanel implements ActionListener, Proper
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 if (evt.getSource().equals(cancel)) {
-                    ChannelHistoryState state = channelHistoryViewModel.getState();
+                    ChannelHistoryState state = channelHistoryViewModel.getState(); state.setDeleteMessages(new HashMap<>());
                     returnToSettingController.execute(state.getChannelMessages());
                 }
             }

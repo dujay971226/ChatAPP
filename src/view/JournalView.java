@@ -88,9 +88,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
                 if (e.getSource().equals(searchcontent)) {
                     try {
                         journalContentController.execute(contentInputField.getText());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    } catch (IOException ex) {throw new RuntimeException(ex);}
                 }
             }
         });
@@ -101,9 +99,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
                 if (e.getSource().equals(searchdoi)) {
                     try {
                         journalDoiController.execute(doiInputField.getText());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    } catch (IOException ex) {throw new RuntimeException(ex);}
                 }
             }
         });
@@ -114,9 +110,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
                 if (e.getSource().equals(searchauthor)) {
                     try {
                         authorController.execute(authorInputField.getText());
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    } catch (IOException ex) {throw new RuntimeException(ex);}
                 }
             }
         });
@@ -141,8 +135,7 @@ public class JournalView extends JPanel implements ActionListener, PropertyChang
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-    }
+    public void actionPerformed(ActionEvent e) {}
 
     /**
      * Responds to property change events and updates the text area with search results.

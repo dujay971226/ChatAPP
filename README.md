@@ -34,12 +34,16 @@ Our team's primary focus for this project includes:
     - Create: Jump to the create room view.
     - Subscribe: Jump to the subscribe room view.
 
-3. **Channel Data Access Object (DAO):**
+3. **Setting Up Chat Room**
+   - Create a new room to start a chat. 
+   - Join someone else's room and chat with others.
+
+4. **Channel Data Access Object (DAO):**
     - Read local file and generate a hashmap.
     - Save data into the local database.
     - Return the channels that the current user recently joined.
 
-4. **Journal Search:**
+5. **Journal Search:**
     - **Search by Content:**
         - Retrieve the last 10 related journals and their URL links.
     - **Search by DOI:**
@@ -48,8 +52,8 @@ Our team's primary focus for this project includes:
         - Retrieve the full-text link to access the author's information.
     - **Back:**
         - Return to the chat room.
-5. **Room:**
-6. **Setting of the Room:**
+6. **Room:**
+7. **Setting of the Room:**
    - **Currently Active Users**
         - Get all users currently in this room.
    - **Room History**

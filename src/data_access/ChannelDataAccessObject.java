@@ -79,6 +79,7 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
      */
     public void save(String channelName, User curr) {
         JSONObject jsonObject;
+        Channel channel = new Channel(channelName,null);
 
         try {
             String content = new String(Files.readAllBytes(Paths.get(jsonPath)));
@@ -89,6 +90,7 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
 
         if (!jsonObject.has(channelName)) {
             jsonObject.put(channelName, new JSONArray());
+            accounts.put(channel,new ArrayList<>());
         }
 
         JSONArray users = jsonObject.getJSONArray(channelName);
@@ -100,6 +102,14 @@ public class ChannelDataAccessObject implements iChannelDataAccessObject {
             }
         }
         if (!exist) {
+            ArrayList<User> userlst = accounts.get(channel);
+            if (userlst == null) {
+                userlst = new ArrayList<>();
+                accounts.put(channel, userlst);
+            }
+            User newuser = new User(curr.getName(), curr.getPassword());
+            userlst.add(newuser);
+            accounts.put(channel,userlst);
             JSONObject addUser = new JSONObject();
             addUser.put(curr.getName(), curr.getPassword());
             users.put(addUser);

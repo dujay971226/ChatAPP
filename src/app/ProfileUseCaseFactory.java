@@ -56,10 +56,7 @@ public class ProfileUseCaseFactory {
             ProfileToLogoutController profileToLogoutController = creatProfileLogoutUsecase(viewManagerModel, loginViewModel, profileViewModel);
             return new ProfileView(profileViewModel, profileToCreateController, profileToSubscribeController, profileToLogoutController);
 
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-        }
-        return null;
+        } catch (IOException e) {JOptionPane.showMessageDialog(null, "Could not open user data file.");}return null;
     }
 
     /**

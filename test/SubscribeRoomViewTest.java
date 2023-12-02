@@ -170,4 +170,17 @@ class SubscribeRoomViewTest {
         subscribeRoomView.simulateCreateButton();
         assertEquals("create", viewManagerModel.getActiveView());
     }
+
+    @org.junit.jupiter.api.Test
+    void testPropertyChange() {
+        SubscribeRoomState state = subscribeRoomViewModel.getState();
+        state.setChannelName("new channel");
+        ArrayList<Channel> channelLog = new ArrayList<Channel>();
+        channelLog.add(new Channel("c1", state.getUser()));
+        channelLog.add(new Channel("c2", state.getUser()));
+        state.setChannelLog(channelLog);
+        subscribeRoomViewModel.firePropertyChanged();
+        assertEquals("new channel", subscribeRoomViewModel.getState().getChannelName());
+    }
+
 }

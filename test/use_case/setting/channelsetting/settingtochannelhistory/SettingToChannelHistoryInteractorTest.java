@@ -1,4 +1,4 @@
-package use_case.setting.returntosetting;
+package use_case.setting.channelsetting.settingtochannelhistory;
 
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
@@ -7,13 +7,13 @@ import com.pubnub.api.UserId;
 import entity.Channel;
 import entity.User;
 import org.junit.jupiter.api.Test;
-import use_case.setting.channelsetting.*;
+import use_case.setting.settingtochannelhistory.*;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ShowSettingInteractorTest {
+public class SettingToChannelHistoryInteractorTest {
     @Test
     public void successTest() throws PubNubException {
         User user = new User("user1", "password1");
@@ -27,11 +27,13 @@ public class ShowSettingInteractorTest {
         pnConfiguration.setSecretKey("sec-c-ZDU2ZDY5OGEtMDk5MC00MzZmLThiYWMtYzBkODI3MzY0YTk5");
         PubNub pubnub = new PubNub(pnConfiguration);
 
-        ShowSettingInputData inputData = new ShowSettingInputData(channel.getName(), pubnub);
-        ShowSettingOutputBoundary successPresenter = new ShowSettingOutputBoundary() {
+        SettingToChannelHistoryInputData inputData = new SettingToChannelHistoryInputData(channel.getName(), pubnub, user);
+        SettingToChannelHistoryOutputBoundary successPresenter = new SettingToChannelHistoryOutputBoundary() {
             @Override
-            public void prepareSuccessView(ShowSettingOutputData showSettingOutputData) {
-                assertEquals(user,showSettingOutputData.getChannelOccupancy());
+            public void prepareSuccessView(SettingToChannelHistoryOutputData outputData) {
+                assertEquals(user,outputData.getUser());
+                assertEquals(channel.getName(),outputData.getChannelName());
+                assertEquals(pubnub,outputData.getConfig());
             }
 
             @Override
@@ -40,7 +42,7 @@ public class ShowSettingInteractorTest {
             }
         };
 
-        ShowSettingInputBoundary interactor = new ShowSettingInteractor(successPresenter);
+        SettingToChannelHistoryInputBoundary interactor = new SettingToChannelHistoryInteractor(successPresenter);
         interactor.execute(inputData);
     }
 

@@ -14,9 +14,5 @@ public interface ProfiletosubscribeOutputBoundary {
      */
     void prepareSuccessView(ProfiletosubscribeOutputData outputData);
 
-    /**
-     * Prepares a view for handling subscription failures.
-     */
-    void prepareFailView();
 }
 

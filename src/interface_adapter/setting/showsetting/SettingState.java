@@ -16,6 +16,7 @@ public class SettingState {
     private boolean isActive = false;
     private User user;
     private Channel channel;
+    private long timeEntered;
     private Collection<PNHereNowChannelData> channelOccupancy = new ArrayList<>();
     private ArrayList<Message> channelHistory = new ArrayList<>();
 
@@ -24,6 +25,7 @@ public class SettingState {
         this.config = copy.getConfig();
         this.isActive = copy.isActive();
         this.user = copy.getUser();
+        this.timeEntered = copy.timeEntered;
         this.channel = copy.getChannel();
         this.channelOccupancy = copy.channelOccupancy;
         this.channelHistory = copy.channelHistory;
@@ -43,6 +45,14 @@ public class SettingState {
 
     public PubNub getConfig() {
         return config;
+    }
+
+    public void setTimeEntered(long timeEntered) {
+        this.timeEntered = timeEntered;
+    }
+
+    public long getTimeEntered() {
+        return timeEntered;
     }
 
     public void setConfig(PubNub config) {

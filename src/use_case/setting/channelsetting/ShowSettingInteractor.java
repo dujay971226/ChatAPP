@@ -14,26 +14,27 @@ public class ShowSettingInteractor implements ShowSettingInputBoundary {
         this.showSettingPresenter = showSettingPresenter;
     }
 
+    // This use case meant to get the currently active users in this channel
     @Override
     public void execute(ShowSettingInputData showSettingInputData) {
         String currentChannel = showSettingInputData.getCurrentChannel();
         PubNub pubnub = showSettingInputData.getConfig();
         pubnub.hereNow()
-                // tailor the next two lines to example
-                .channels(Collections.singletonList(currentChannel))
-                .includeState(true)
-                .includeUUIDs(true)
-                .async(new PNCallback<PNHereNowResult>() {
-                    @Override
-                    public void onResponse(PNHereNowResult result, PNStatus status) {
-                        if (!status.isError()) {
-                            ShowSettingOutputData showSettingOutputData = new ShowSettingOutputData(result.getChannels().values());
-                            showSettingPresenter.prepareSuccessView(showSettingOutputData);
-                            // handle error
-                        } else {
-                            showSettingPresenter.prepareFailView(status.getErrorData().toString());
-                        }
+            // tailor the next two lines to example
+            .channels(Collections.singletonList(currentChannel))
+            .includeState(true)
+            .includeUUIDs(true)
+            .async(new PNCallback<PNHereNowResult>() {
+                @Override
+                public void onResponse(PNHereNowResult result, PNStatus status) {
+                    if (!status.isError()) {
+                        ShowSettingOutputData showSettingOutputData = new ShowSettingOutputData(result.getChannels().values());
+                        showSettingPresenter.prepareSuccessView(showSettingOutputData);
+                        // handle error
+                    } else {
+                        showSettingPresenter.prepareFailView("Connection Error: " + status.getErrorData().getInformation());
                     }
-                });
+                }
+            });
     }
 }

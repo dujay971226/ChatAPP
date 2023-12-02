@@ -7,6 +7,7 @@ public class ReturnToChannelInteractor implements ReturnToChannelInputBoundary {
         this.returnToChannelPresenter = returnToChannelOutputBoundary;
     }
 
+    // This use case meant to switch the view to the Room View and pass necessary data to Room State
     @Override
     public void execute(ReturnToChannelInputData returnToChannelInputData) {
         returnToChannelPresenter.prepareSuccessView(new ReturnToChannelOutputData(returnToChannelInputData.getChannelHistory()));

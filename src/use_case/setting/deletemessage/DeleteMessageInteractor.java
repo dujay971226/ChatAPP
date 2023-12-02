@@ -16,6 +16,7 @@ public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
         this.deleteMessagePresenter = deleteMessageOutputBoundary;
     }
 
+    // This use case meant to delete message set by the currently loggedin user
     @Override
     public void execute(DeleteMessageInputData deleteMessageInputData) {
 
@@ -41,7 +42,7 @@ public class DeleteMessageInteractor implements DeleteMessageInputBoundary {
                             // The deleteMessages() method does not return actionable data, be sure to check the status
                             // object on the outcome of the operation by checking the status.isError().
                             if (status.isError()) {
-                                deleteMessagePresenter.prepareFailView("Error: " + status.getErrorData().getInformation() + "happens when deleting message with timestamp:" + startT);
+                                deleteMessagePresenter.prepareFailView("Connection Error: " + status.getErrorData().getInformation() + "happens when deleting message with timestamp:" + startT);
                             }
                         }
                     });

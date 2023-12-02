@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 /**
  * The ProfileView class represents the user interface for the profile-related functionality.
@@ -114,5 +115,12 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         title.setText(profileViewModel.getState().getUser().getName() + ProfileViewModel.TITLE);
+    }
+    public ArrayList<JButton> getButtons(){
+        ArrayList<JButton> result = new ArrayList<>();
+        result.add(createchannel);
+        result.add(subscribechannel);
+        result.add(logout);
+        return result;
     }
 }

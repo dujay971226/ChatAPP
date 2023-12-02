@@ -33,37 +33,37 @@ public class ShowChannelHistoryInteractor implements ShowChannelHistoryInputBoun
         String channelName = showChannelHistoryInputData.getChannelName();
 
         pubnub.fetchMessages()
-                .channels(Collections.singletonList(channelName))
-                .maximumPerChannel(100)
-                .includeMessageActions(true)
-                .includeMeta(true)
-                .includeMessageType(true)
-                .includeUUID(true)
-                .async(new PNCallback<PNFetchMessagesResult>() {
-                    @Override
-                    public void onResponse(PNFetchMessagesResult result, PNStatus status) {
-                        if (!status.isError()) {
-                            List<PNFetchMessageItem> channelMessages = result.getChannels().get(channelName);
-                            ArrayList<Message> messages = new ArrayList<>();
-                            if (channelMessages != null) {
-                                for (PNFetchMessageItem messageItem : channelMessages) {
-                                    String username = messageItem.getUuid();
-                                    String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
+            .channels(Collections.singletonList(channelName))
+            .maximumPerChannel(100)
+            .includeMessageActions(true)
+            .includeMeta(true)
+            .includeMessageType(true)
+            .includeUUID(true)
+            .async(new PNCallback<PNFetchMessagesResult>() {
+                @Override
+                public void onResponse(PNFetchMessagesResult result, PNStatus status) {
+                    if (!status.isError()) {
+                        List<PNFetchMessageItem> channelMessages = result.getChannels().get(channelName);
+                        ArrayList<Message> messages = new ArrayList<>();
+                        if (channelMessages != null) {
+                            for (PNFetchMessageItem messageItem : channelMessages) {
+                                String username = messageItem.getUuid();
+                                String content = messageItem.getMessage().getAsJsonObject().get("msg").toString();
 
-                                    // remove quotation marks
-                                    content = content.substring(1, content.length() - 1);
-                                    messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
-                                }
-                                ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);
-                                showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
-                            } else {
-                                ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(new ArrayList<>(), pubnub, channelName);
-                                showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
+                                // remove quotation marks
+                                content = content.substring(1, content.length() - 1);
+                                messages.add(new Message(new User(username), content, messageItem.getTimetoken()));
                             }
+                            ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(messages, pubnub, channelName);
+                            showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
                         } else {
-                            showChannelHistoryPresenter.prepareFailView(status.getErrorData().toString());
+                            ShowChannelHistoryOutputData showSettingOutputData = new ShowChannelHistoryOutputData(new ArrayList<>(), pubnub, channelName);
+                            showChannelHistoryPresenter.prepareSuccessView(showSettingOutputData);
                         }
+                    } else {
+                        showChannelHistoryPresenter.prepareFailView(status.getErrorData().toString());
                     }
-                });
+                }
+            });
     }
 }

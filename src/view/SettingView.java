@@ -74,7 +74,7 @@ public class SettingView extends JPanel implements ActionListener, PropertyChang
         innerPanel.add(loading);
 
         try {
-            sleep(100);
+            sleep(300);
         } catch (InterruptedException ignored) {
         }
         innerPanel.revalidate();

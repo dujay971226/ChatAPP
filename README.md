@@ -54,9 +54,8 @@ Our team's primary focus for this project includes:
         - Get all users currently in this room.
    - **Room History**
         - Fetch the most recent 100 chat history of this room. 
-   - **Delete History Message*
+   - **Delete History Message**
         - Choose the history messages sent by you and delete.
-   - 
 
 
 ## Relevant API Documentation

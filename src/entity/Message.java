@@ -27,7 +27,7 @@ public class Message {
     public Message(User user, String msg, long rawTimeStamp) {
         this.user = user;
         this.startTimeStamp = rawTimeStamp - 1;
-        this.endTimeStamp = startTimeStamp;
+        this.endTimeStamp = startTimeStamp + 1;
         this.msgDate = LocalDateTime.ofInstant(Instant.ofEpochSecond(rawTimeStamp / 10000000L),
                 TimeZone.getDefault().toZoneId());
         this.content = msg;

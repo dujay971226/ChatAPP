@@ -49,7 +49,15 @@ Our team's primary focus for this project includes:
     - **Back:**
         - Return to the chat room.
 5. **Room:**
-6. **Setting of the Room:**
+    - **Send and Receive Message**
+        - Send a Message to the server and it will be received by all members who joined this room.
+    - **Setting**
+        - Go to the Setting window of this room.
+    - **Journal**
+        - Go to the Journal Search function
+    - **Exit**
+        - Return to Profile
+7. **Setting of the Room:**
    - **Currently Active Users**
         - Get all users currently in this room.
    - **Room History**
